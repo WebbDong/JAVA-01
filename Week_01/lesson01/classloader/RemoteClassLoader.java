@@ -52,13 +52,13 @@ public class RemoteClassLoader extends BaseNoParentDelegationClassLoader {
         clazz1.getDeclaredMethod("hello").invoke(obj1);
 
         Class<?> clazz2 = Class.forName("Hello", false, remoteClassLoader);
-        Object obj3 = clazz2.getDeclaredConstructor().newInstance();
-        clazz2.getDeclaredMethod("hello").invoke(obj3);
+        Object obj2 = clazz2.getDeclaredConstructor().newInstance();
+        clazz2.getDeclaredMethod("hello").invoke(obj2);
 
         Class<?> clazz3 = Class.forName("Hello", false,
                 new RemoteClassLoader("http://192.168.238.150:36000/Hello.class"));
-        Object obj2 = clazz3.getDeclaredConstructor().newInstance();
-        clazz3.getDeclaredMethod("hello").invoke(obj2);
+        Object obj3 = clazz3.getDeclaredConstructor().newInstance();
+        clazz3.getDeclaredMethod("hello").invoke(obj3);
     }
 
 }
