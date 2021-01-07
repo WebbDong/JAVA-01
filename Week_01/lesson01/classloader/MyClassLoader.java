@@ -1,8 +1,9 @@
-package lesson01;
+package lesson01.classloader;
+
+import lesson01.util.ClassCodeUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.stream.IntStream;
 
 /**
  * @author Webb Dong
@@ -50,13 +51,11 @@ public class MyClassLoader extends ClassLoader {
         // 是否有文件后缀名
         boolean isNoFileSuffix = nameSplits.length == 1;
         if (isNoFileSuffix) {
-            // 没有文件后缀名，默认为 .class
+            // 没有文件后缀名，默认使用 .class
             name = name + ".class";
         }
         byte[] bytes = readClassAsBytes(name);
-        // 将 class 文件数据的每一个字节都用 255 减去当前的字节数值获取原字节码数据
-        IntStream.range(0, bytes.length).boxed()
-                .forEach(i -> bytes[i] = (byte) (255 - bytes[i]));
+        ClassCodeUtils.xlassDecode(bytes);
         // 将文件名去掉后缀，否则会报 NoClassDefFoundError: wrong name
         return defineClass(nameSplits[0], bytes, 0, bytes.length);
     }
@@ -89,7 +88,7 @@ public class MyClassLoader extends ClassLoader {
         Object obj1 = clazz1.getDeclaredConstructor().newInstance();
         clazz1.getDeclaredMethod("hello").invoke(obj1);
 
-        // 加载 Hello.class，调用 Class.forName 方法加载类，会遵循双亲委派机制。
+        // 加载 Hello.class，调用 Class.forName 方法加载类，会遵循双亲委派机制，使用此方式需要打破双亲委派机制
         Class<?> clazz2 = Class.forName("Hello", false, new MyClassLoader());
         Object obj2 = clazz2.getDeclaredConstructor().newInstance();
         clazz2.getDeclaredMethod("hello").invoke(obj2);
