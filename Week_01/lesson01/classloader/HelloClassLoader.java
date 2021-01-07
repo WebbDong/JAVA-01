@@ -11,7 +11,7 @@ import java.io.InputStream;
  *      容是一个 Hello.xlass 文件所有字节（x=255-x）处理后的文件。
  * @date 2021-01-07 11:01
  */
-public class MyClassLoader extends BaseNoParentDelegationClassLoader {
+public class HelloClassLoader extends BaseNoParentDelegationClassLoader {
 
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
@@ -44,13 +44,13 @@ public class MyClassLoader extends BaseNoParentDelegationClassLoader {
 
     public static void main(String[] args) throws Exception {
         // 加载 Hello.xlass
-        Class<?> clazz1 = new MyClassLoader().findClass("Hello.xlass");
+        Class<?> clazz1 = new HelloClassLoader().findClass("Hello.xlass");
         Object obj1 = clazz1.getDeclaredConstructor().newInstance();
         clazz1.getDeclaredMethod("hello").invoke(obj1);
 
         // 加载 Hello.class，调用 Class.forName 方法加载类，会遵循双亲委派机制，因为使用的字节码文件放在 classpath 中
         // 所以父类加载器会先加载到。这种情况使用此方式需要打破双亲委派机制。
-        Class<?> clazz2 = Class.forName("Hello", false, new MyClassLoader());
+        Class<?> clazz2 = Class.forName("Hello", false, new HelloClassLoader());
         Object obj2 = clazz2.getDeclaredConstructor().newInstance();
         clazz2.getDeclaredMethod("hello").invoke(obj2);
     }
