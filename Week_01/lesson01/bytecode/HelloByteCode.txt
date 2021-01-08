@@ -1,5 +1,5 @@
-D:\develop\workspace\java\JAVA-01\target\production\JAVA-01>javap -c -verbose lesson01.bytecode.HelloByteCode
-Classfile /D:/develop/workspace/java/JAVA-01/target/production/JAVA-01/lesson01/bytecode/HelloByteCode.class
+D:\lesson01\bytecode>javap -c -verbose HelloByteCode.class
+Classfile /D:/lesson01/bytecode/HelloByteCode.class
   Last modified Jan 8, 2021; size 1734 bytes
   MD5 checksum ad7790070948dad90c5120665c98ebaf
   Compiled from "HelloByteCode.java"
