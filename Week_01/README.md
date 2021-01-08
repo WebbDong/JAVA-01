@@ -6,8 +6,8 @@
   - img: 图片
   
 # 作业
-  - 第一题: [点我](#byteCodeFileAnalysis)
-  - 第二题: 
+  - 第一题: 字节码文件分析 [点我](#byteCodeFileAnalysis)
+  - 第二题: <https://github.com/WebbDong/JAVA-01/blob/main/Week_01/lesson01/classloader/HelloClassLoader.java>
   - 第三题: 
   - 第四题: 
 -------------
