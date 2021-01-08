@@ -15,6 +15,8 @@ import java.util.stream.IntStream;
  */
 public class ClassCodeUtils {
 
+    private static final int BUFFER_SIZE = 1024;
+
     private ClassCodeUtils() {}
 
     /**
@@ -64,7 +66,6 @@ public class ClassCodeUtils {
             }
             // 请求获取远程字节码文件
             List<Byte> byteList = new ArrayList<>();
-            final int BUFFER_SIZE = 1024;
             byte[] buffer = new byte[BUFFER_SIZE];
             int len;
             while ((len = in.read(buffer, 0, BUFFER_SIZE)) != -1) {

@@ -1,0 +1,303 @@
+D:\develop\workspace\java\JAVA-01\target\production\JAVA-01>javap -c -verbose lesson01.bytecode.HelloByteCode
+Classfile /D:/develop/workspace/java/JAVA-01/target/production/JAVA-01/lesson01/bytecode/HelloByteCode.class
+  Last modified Jan 8, 2021; size 1734 bytes
+  MD5 checksum ad7790070948dad90c5120665c98ebaf
+  Compiled from "HelloByteCode.java"
+public class lesson01.bytecode.HelloByteCode
+  minor version: 0
+  major version: 52
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+    #1 = Methodref          #4.#56        // java/lang/Object."<init>":()V
+    #2 = Fieldref           #57.#58       // java/lang/System.out:Ljava/io/PrintStream;
+    #3 = String             #59           // sum = %d, division = %d, multiplication = %d, sub = %d%n
+    #4 = Class              #60           // java/lang/Object
+    #5 = Methodref          #61.#62       // java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+    #6 = Methodref          #63.#64       // java/io/PrintStream.printf:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;
+    #7 = Long               6000000l
+    #9 = Float              3.14f
+   #10 = Double             4125.5647d
+   #12 = String             #65           // b = %d, l = %d, f = %f, d = %f, bool = %b%n
+   #13 = Methodref          #66.#67       // java/lang/Byte.valueOf:(B)Ljava/lang/Byte;
+   #14 = Methodref          #68.#69       // java/lang/Long.valueOf:(J)Ljava/lang/Long;
+   #15 = Methodref          #70.#71       // java/lang/Float.valueOf:(F)Ljava/lang/Float;
+   #16 = Methodref          #72.#73       // java/lang/Double.valueOf:(D)Ljava/lang/Double;
+   #17 = Methodref          #74.#75       // java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+   #18 = String             #76           // x = 10
+   #19 = Methodref          #63.#77       // java/io/PrintStream.println:(Ljava/lang/String;)V
+   #20 = String             #78           // y = 10
+   #21 = String             #79           // y = 50
+   #22 = Class              #80           // lesson01/bytecode/HelloByteCode
+   #23 = Utf8               <init>
+   #24 = Utf8               ()V
+   #25 = Utf8               Code
+   #26 = Utf8               LineNumberTable
+   #27 = Utf8               LocalVariableTable
+   #28 = Utf8               this
+   #29 = Utf8               Llesson01/bytecode/HelloByteCode;
+   #30 = Utf8               main
+   #31 = Utf8               ([Ljava/lang/String;)V
+   #32 = Utf8               i
+   #33 = Utf8               I
+   #34 = Utf8               args
+   #35 = Utf8               [Ljava/lang/String;
+   #36 = Utf8               x
+   #37 = Utf8               y
+   #38 = Utf8               sum
+   #39 = Utf8               division
+   #40 = Utf8               multiplication
+   #41 = Utf8               sub
+   #42 = Utf8               b
+   #43 = Utf8               B
+   #44 = Utf8               l
+   #45 = Utf8               J
+   #46 = Utf8               f
+   #47 = Utf8               F
+   #48 = Utf8               d
+   #49 = Utf8               D
+   #50 = Utf8               bool
+   #51 = Utf8               Z
+   #52 = Utf8               StackMapTable
+   #53 = Class              #35           // "[Ljava/lang/String;"
+   #54 = Utf8               SourceFile
+   #55 = Utf8               HelloByteCode.java
+   #56 = NameAndType        #23:#24       // "<init>":()V
+   #57 = Class              #81           // java/lang/System
+   #58 = NameAndType        #82:#83       // out:Ljava/io/PrintStream;
+   #59 = Utf8               sum = %d, division = %d, multiplication = %d, sub = %d%n
+   #60 = Utf8               java/lang/Object
+   #61 = Class              #84           // java/lang/Integer
+   #62 = NameAndType        #85:#86       // valueOf:(I)Ljava/lang/Integer;
+   #63 = Class              #87           // java/io/PrintStream
+   #64 = NameAndType        #88:#89       // printf:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;
+   #65 = Utf8               b = %d, l = %d, f = %f, d = %f, bool = %b%n
+   #66 = Class              #90           // java/lang/Byte
+   #67 = NameAndType        #85:#91       // valueOf:(B)Ljava/lang/Byte;
+   #68 = Class              #92           // java/lang/Long
+   #69 = NameAndType        #85:#93       // valueOf:(J)Ljava/lang/Long;
+   #70 = Class              #94           // java/lang/Float
+   #71 = NameAndType        #85:#95       // valueOf:(F)Ljava/lang/Float;
+   #72 = Class              #96           // java/lang/Double
+   #73 = NameAndType        #85:#97       // valueOf:(D)Ljava/lang/Double;
+   #74 = Class              #98           // java/lang/Boolean
+   #75 = NameAndType        #85:#99       // valueOf:(Z)Ljava/lang/Boolean;
+   #76 = Utf8               x = 10
+   #77 = NameAndType        #100:#101     // println:(Ljava/lang/String;)V
+   #78 = Utf8               y = 10
+   #79 = Utf8               y = 50
+   #80 = Utf8               lesson01/bytecode/HelloByteCode
+   #81 = Utf8               java/lang/System
+   #82 = Utf8               out
+   #83 = Utf8               Ljava/io/PrintStream;
+   #84 = Utf8               java/lang/Integer
+   #85 = Utf8               valueOf
+   #86 = Utf8               (I)Ljava/lang/Integer;
+   #87 = Utf8               java/io/PrintStream
+   #88 = Utf8               printf
+   #89 = Utf8               (Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;
+   #90 = Utf8               java/lang/Byte
+   #91 = Utf8               (B)Ljava/lang/Byte;
+   #92 = Utf8               java/lang/Long
+   #93 = Utf8               (J)Ljava/lang/Long;
+   #94 = Utf8               java/lang/Float
+   #95 = Utf8               (F)Ljava/lang/Float;
+   #96 = Utf8               java/lang/Double
+   #97 = Utf8               (D)Ljava/lang/Double;
+   #98 = Utf8               java/lang/Boolean
+   #99 = Utf8               (Z)Ljava/lang/Boolean;
+  #100 = Utf8               println
+  #101 = Utf8               (Ljava/lang/String;)V
+{
+  public lesson01.bytecode.HelloByteCode();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+      LineNumberTable:
+        line 8: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Llesson01/bytecode/HelloByteCode;
+
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=7, locals=15, args_size=1
+         0: bipush        10
+         2: istore_1
+         3: bipush        50
+         5: istore_2
+         6: iload_1
+         7: iload_2
+         8: iadd
+         9: bipush        60
+        11: iadd
+        12: istore_3
+        13: iload_2
+        14: iload_1
+        15: idiv
+        16: istore        4
+        18: iload_1
+        19: iload_2
+        20: imul
+        21: istore        5
+        23: iload_2
+        24: iload_1
+        25: isub
+        26: istore        6
+        28: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+        31: ldc           #3                  // String sum = %d, division = %d, multiplication = %d, sub = %d%n
+        33: iconst_4
+        34: anewarray     #4                  // class java/lang/Object
+        37: dup
+        38: iconst_0
+        39: iload_3
+        40: invokestatic  #5                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        43: aastore
+        44: dup
+        45: iconst_1
+        46: iload         4
+        48: invokestatic  #5                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        51: aastore
+        52: dup
+        53: iconst_2
+        54: iload         5
+        56: invokestatic  #5                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        59: aastore
+        60: dup
+        61: iconst_3
+        62: iload         6
+        64: invokestatic  #5                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        67: aastore
+        68: invokevirtual #6                  // Method java/io/PrintStream.printf:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;
+        71: pop
+        72: iconst_5
+        73: istore        7
+        75: ldc2_w        #7                  // long 6000000l
+        78: lstore        8
+        80: ldc           #9                  // float 3.14f
+        82: fstore        10
+        84: ldc2_w        #10                 // double 4125.5647d
+        87: dstore        11
+        89: iconst_1
+        90: istore        13
+        92: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+        95: ldc           #12                 // String b = %d, l = %d, f = %f, d = %f, bool = %b%n
+        97: iconst_5
+        98: anewarray     #4                  // class java/lang/Object
+       101: dup
+       102: iconst_0
+       103: iload         7
+       105: invokestatic  #13                 // Method java/lang/Byte.valueOf:(B)Ljava/lang/Byte;
+       108: aastore
+       109: dup
+       110: iconst_1
+       111: lload         8
+       113: invokestatic  #14                 // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+       116: aastore
+       117: dup
+       118: iconst_2
+       119: fload         10
+       121: invokestatic  #15                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+       124: aastore
+       125: dup
+       126: iconst_3
+       127: dload         11
+       129: invokestatic  #16                 // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+       132: aastore
+       133: dup
+       134: iconst_4
+       135: iload         13
+       137: invokestatic  #17                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+       140: aastore
+       141: invokevirtual #6                  // Method java/io/PrintStream.printf:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;
+       144: pop
+       145: iload_1
+       146: bipush        10
+       148: if_icmpne     159
+       151: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       154: ldc           #18                 // String x = 10
+       156: invokevirtual #19                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       159: iconst_0
+       160: istore        14
+       162: iload         14
+       164: bipush        50
+       166: if_icmpge     180
+       169: iload_3
+       170: iload         14
+       172: iadd
+       173: istore_3
+       174: iinc          14, 1
+       177: goto          162
+       180: iload_2
+       181: lookupswitch  { // 2
+                      10: 208
+                      50: 216
+                 default: 224
+            }
+       208: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       211: ldc           #20                 // String y = 10
+       213: invokevirtual #19                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       216: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       219: ldc           #21                 // String y = 50
+       221: invokevirtual #19                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       224: return
+      LineNumberTable:
+        line 11: 0
+        line 12: 3
+        line 13: 6
+        line 14: 13
+        line 15: 18
+        line 16: 23
+        line 17: 28
+        line 18: 40
+        line 17: 68
+        line 20: 72
+        line 21: 75
+        line 22: 80
+        line 23: 84
+        line 24: 89
+        line 25: 92
+        line 27: 145
+        line 28: 151
+        line 30: 159
+        line 31: 169
+        line 30: 174
+        line 33: 180
+        line 35: 208
+        line 37: 216
+        line 40: 224
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+          162      18    14     i   I
+            0     225     0  args   [Ljava/lang/String;
+            3     222     1     x   I
+            6     219     2     y   I
+           13     212     3   sum   I
+           18     207     4 division   I
+           23     202     5 multiplication   I
+           28     197     6   sub   I
+           75     150     7     b   B
+           80     145     8     l   J
+           84     141    10     f   F
+           89     136    11     d   D
+           92     133    13  bool   Z
+      StackMapTable: number_of_entries = 6
+        frame_type = 255 /* full_frame */
+          offset_delta = 159
+          locals = [ class "[Ljava/lang/String;", int, int, int, int, int, int, int, long, float, double, int ]
+          stack = []
+        frame_type = 252 /* append */
+          offset_delta = 2
+          locals = [ int ]
+        frame_type = 250 /* chop */
+          offset_delta = 17
+        frame_type = 27 /* same */
+        frame_type = 7 /* same */
+        frame_type = 7 /* same */
+}
+SourceFile: "HelloByteCode.java"
