@@ -120,27 +120,75 @@ Constant pool:
 >     - 小括号内的为形参参数类型描述，小括号右边的是方法返回值类型描述。
 >     - 下括号内 I 代表第一个参数为 int 类型，D 代表第二个参数为 double 类型。L 代表第三个参数是对象类型，java/lang/String 代表是 String 类型对象。
 >     - 小括号右边的 D 代表方法的返回值为 double 类型。
->   - flags: 访问权限修饰符，ACC_PUBLIC 代表 public 方法，ACC_STATIC 代表静态方法。
->   - Code: 为操作码和操作数区域
->     - 操作码左边的数字代表当前操作码在字节码二进制文件中的字节位置
->     - stack: 执行该方法时需要的栈深度
->     - locals: 需要在局部变量表中保留多少个槽位
->     - args_size: 方法的参数个数
->       - 此示例有3个形参，但是 args_size 是 4，这是因为非静态方法有 this 引用，this 被分配在局部变量表的第0号槽位中
->   - LineNumberTable: 行号表
->     - 将 Code 区的操作码和源代码中的行号对应，Debug 的时候可以通过行号表来看源代码执行一行时需要执行多少个 JVM 操作码
->     - 例如 line 12: 0 ，12 代表源代码的行号，0 代表 Code 区操作码的行号
->   - LocalVariableTable: 局部变量表
->     - 其中包含了方法的参数，以及在方法体内定义的局部变量。
->     - 元素个数等于 args_size
->     - Start 和 Length: 代表当前局部变量或方法参数在 Code 操作码区中的作用域范围
->       - 例如当前示例 start 为 0，length 为 49 代表该变量的作用域从 0 一直到 48 也就是整个方法体。
->     - Slot: 槽位，从0开始
->     - Name: 变量名
->     - Signature: 变量类型描述
+> 2. flags: 访问权限修饰符，ACC_PUBLIC 代表 public 方法，ACC_STATIC 代表静态方法。
+> 3. Code: 为操作码和操作数区域
+>   - 操作码左边的数字代表当前操作码在字节码二进制文件中的字节位置
+>   - stack: 执行该方法时需要的栈深度
+>   - locals: 需要在局部变量表中保留多少个槽位
+>   - args_size: 方法的参数个数
+>     - 此示例有3个形参，但是 args_size 是 4，这是因为非静态方法有 this 引用，this 被分配在局部变量表的第0号槽位中
+> 4. LineNumberTable: 行号表
+>   - 将 Code 区的操作码和源代码中的行号对应，Debug 的时候可以通过行号表来看源代码执行一行时需要执行多少个 JVM 操作码
+>   - 例如 line 12: 0 ，12代表源代码的行号，0代表 Code 区操作码的行号
+> 5. LocalVariableTable: 局部变量表
+>   - 其中包含了方法的参数，以及在方法体内定义的局部变量。
+>   - 元素个数等于 args_size
+>   - Start 和 Length: 代表当前局部变量或方法参数在 Code 操作码区中的作用域范围
+>     - 例如当前示例 start 为0，length 为49代表该变量的作用域从0一直到48，也就是整个方法体。
+>   - Slot: 槽位，从0开始
+>   - Name: 变量名
+>   - Signature: 变量类型描述
 >
 > ### (3) 方法体字节码解析
+> #### 基本数据类型变量定义
+```
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=7, locals=15, args_size=1
+         0: bipush        10
+         2: istore_1
+         3: bipush        50
+         5: istore_2
 
+         .... 其他省略
+
+        72: iconst_5
+        73: istore        7
+        75: ldc2_w        #22                 // long 6000000l
+        78: lstore        8
+        80: ldc           #24                 // float 3.14f
+        82: fstore        10
+        84: ldc2_w        #25                 // double 4125.5647d
+        87: dstore        11
+        89: iconst_1
+        90: istore        13
+
+        .... 其他省略
+
+       246: return
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+          162      18    14     i   I
+            0     247     0  args   [Ljava/lang/String;
+            3     244     1     x   I
+            6     241     2     y   I
+           13     234     3   sum   I
+           18     229     4 division   I
+           23     224     5 multiplication   I
+           28     219     6   sub   I
+           75     172     7     b   B
+           80     167     8     l   J
+           84     163    10     f   F
+           89     158    11     d   D
+           92     155    13  bool   Z
+          233      14    14 helloByteCode   Llesson01/bytecode/HelloByteCode;
+```
+> 0行: 将常量10压入操作数栈中  
+> 2行: 将栈顶 int 类型的值保存到槽位为1的局部变量中，也就是把常量10赋值给变量 x  
+> 3行: 将常量50压入操作数栈中  
+> 5行: 将栈顶 int 类型的值保存到槽位为2的局部变量中，也就是把常量10赋值给变量 y 
 
 
 
