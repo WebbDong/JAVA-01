@@ -7,6 +7,30 @@ package lesson01.bytecode;
  */
 public class HelloByteCode {
 
+    // 如果实例方法没有被调用使用，编译器将会直接去除它，在编译后的字节码文件中不会有这个方法
+    public double myPublicMethod(int x, double d, String str) {
+        System.out.println("myPublicMethod, x = " + x + ", d = " + d + ", str = " + str);
+        return x + d;
+    }
+
+    public static void myPublicStaticMethod() {
+        System.out.println("myPublicStaticMethod");
+    }
+
+    public static String myPublicStaticMethod2(int a, double b) {
+        return "Hello";
+    }
+
+    // 私有方法编译器可能会将其进行内联
+    private int myPrivateMethod(int x, int b) {
+        System.out.println("myPrivateMethod, x = " + x + ", b = " + b);
+        return x;
+    }
+
+    private static void myPrivateStaticMethod() {
+        System.out.println("myPrivateStaticMethod");
+    }
+
     public static void main(String[] args) {
         int x = 10;
         int y = 50;
@@ -37,6 +61,9 @@ public class HelloByteCode {
                 System.out.println("y = 50");
             default:
         }
+
+        HelloByteCode helloByteCode = new HelloByteCode();
+        helloByteCode.myPublicMethod(80, 90, "Hello");
     }
 
 }
