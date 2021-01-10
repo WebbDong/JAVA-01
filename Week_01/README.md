@@ -8,7 +8,7 @@
 # 作业
   - 第一题: [请查看字节码文件分析](#byteCodeFileAnalysis)
   - 第二题: <https://github.com/WebbDong/JAVA-01/blob/main/Week_01/lesson01/classloader/HelloClassLoader.java>
-  - 第三题: 
+  - 第三题: [请查看启动参数与 JVM 内存结构](#JVMMemoryStructureAndJMM)
   - 第四题: 
   
 # 笔记目录
@@ -378,7 +378,7 @@ Constant pool:
 
 # 2、类加载器
 
-# 3、JVM 内存结构和 Java 内存模型
+# 3、<span id="JVMMemoryStructureAndJMM">JVM 内存结构和 Java 内存模型</span>
 > ![alt 图片](./lesson01/img/JVM%20内存结构&堆内存&栈内存.png "JVM 内存结构&堆内存&栈内存")
 
 # 4、JVM 启动参数
