@@ -49,6 +49,7 @@ public class HelloByteCode {
         System.out.printf("b = %d, l = %d, f = %f, d = %f, bool = %b%n", b, l, f, d , bool);
 
         int[] iArr = {1, 7, 220, 50, 1000};
+        int elementValue = iArr[0];
 
         if (x == 10) {
             System.out.println("x = 10");
