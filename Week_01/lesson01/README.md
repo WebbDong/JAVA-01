@@ -367,8 +367,9 @@ Constant pool:
           176     155    14  iArr   [I
           317      14    15 helloByteCode   Llesson01/bytecode/HelloByteCode;
 ```
-> 145号: 将 int 类型5压入栈顶
+> 145号: 将 int 类型5压入栈顶  
 > 146号: 先从栈弹出获取栈顶的值，获取到5，然后创建5个 int 类型元素的数组对象，并把该数组对象的引用值压入栈顶
+> 148号: 
 >
 > ### (7) 流程控制指令
 > #### if else 语句: 
