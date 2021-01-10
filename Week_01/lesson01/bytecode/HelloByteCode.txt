@@ -1,158 +1,322 @@
+Classfile /D:/lesson01/bytecode/Test2.class
+  Last modified Jan 9, 2021; size 819 bytes
+  MD5 checksum 5066bef2e62a895dbcb55d0aea4e293e
+  Compiled from "Test2.java"
+public class lesson01.bytecode.Test2
+  minor version: 0
+  major version: 52
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+   #1 = Methodref          #8.#33         // java/lang/Object."<init>":()V
+   #2 = Double             2.0d
+   #4 = Fieldref           #34.#35        // java/lang/System.out:Ljava/io/PrintStream;
+   #5 = String             #36            // b/a>0
+   #6 = Methodref          #37.#38        // java/io/PrintStream.println:(Ljava/lang/String;)V
+   #7 = Class              #39            // lesson01/bytecode/Test2
+   #8 = Class              #40            // java/lang/Object
+   #9 = Utf8               <init>
+  #10 = Utf8               ()V
+  #11 = Utf8               Code
+  #12 = Utf8               LineNumberTable
+  #13 = Utf8               LocalVariableTable
+  #14 = Utf8               this
+  #15 = Utf8               Llesson01/bytecode/Test2;
+  #16 = Utf8               main
+  #17 = Utf8               ([Ljava/lang/String;)V
+  #18 = Utf8               i
+  #19 = Utf8               I
+  #20 = Utf8               args
+  #21 = Utf8               [Ljava/lang/String;
+  #22 = Utf8               a
+  #23 = Utf8               b
+  #24 = Utf8               D
+  #25 = Utf8               sum
+  #26 = Utf8               sub
+  #27 = Utf8               mul
+  #28 = Utf8               div
+  #29 = Utf8               StackMapTable
+  #30 = Class              #21            // "[Ljava/lang/String;"
+  #31 = Utf8               SourceFile
+  #32 = Utf8               Test2.java
+  #33 = NameAndType        #9:#10         // "<init>":()V
+  #34 = Class              #41            // java/lang/System
+  #35 = NameAndType        #42:#43        // out:Ljava/io/PrintStream;
+  #36 = Utf8               b/a>0
+  #37 = Class              #44            // java/io/PrintStream
+  #38 = NameAndType        #45:#46        // println:(Ljava/lang/String;)V
+  #39 = Utf8               lesson01/bytecode/Test2
+  #40 = Utf8               java/lang/Object
+  #41 = Utf8               java/lang/System
+  #42 = Utf8               out
+  #43 = Utf8               Ljava/io/PrintStream;
+  #44 = Utf8               java/io/PrintStream
+  #45 = Utf8               println
+  #46 = Utf8               (Ljava/lang/String;)V
+{
+  public lesson01.bytecode.Test2();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+      LineNumberTable:
+        line 3: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Llesson01/bytecode/Test2;
+
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=4, locals=13, args_size=1
+         0: iconst_1
+         1: istore_1
+         2: ldc2_w        #2                  // double 2.0d
+         5: dstore_2
+         6: iload_1
+         7: i2d
+         8: dload_2
+         9: dadd
+        10: dstore        4
+        12: dload_2
+        13: iload_1
+        14: i2d
+        15: dsub
+        16: dstore        6
+        18: iload_1
+        19: i2d
+        20: dload_2
+        21: dmul
+        22: dstore        8
+        24: dload_2
+        25: iload_1
+        26: i2d
+        27: ddiv
+        28: dstore        10
+        30: dload_2
+        31: iload_1
+        32: i2d
+        33: ddiv
+        34: dconst_0
+        35: dcmpl
+        36: ifle          47
+        39: getstatic     #4                  // Field java/lang/System.out:Ljava/io/PrintStream;
+        42: ldc           #5                  // String b/a>0
+        44: invokevirtual #6                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+        47: iconst_0
+        48: istore        12
+        50: iload         12
+        52: bipush        10
+        54: if_icmpge     66
+        57: iinc          1, 1
+        60: iinc          12, 1
+        63: goto          50
+        66: return
+      LineNumberTable:
+        line 6: 0
+        line 7: 2
+        line 9: 6
+        line 10: 12
+        line 11: 18
+        line 12: 24
+        line 14: 30
+        line 15: 39
+        line 18: 47
+        line 19: 57
+        line 18: 60
+        line 21: 66
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+           50      16    12     i   I
+            0      67     0  args   [Ljava/lang/String;
+            2      65     1     a   I
+            6      61     2     b   D
+           12      55     4   sum   D
+           18      49     6   sub   D
+           24      43     8   mul   D
+           30      37    10   div   D
+      StackMapTable: number_of_entries = 3
+        frame_type = 255 /* full_frame */
+          offset_delta = 47
+          locals = [ class "[Ljava/lang/String;", int, double, double, double, double, double ]
+          stack = []
+        frame_type = 252 /* append */
+          offset_delta = 2
+          locals = [ int ]
+        frame_type = 250 /* chop */
+          offset_delta = 15
+}
+SourceFile: "Test2.java"
+
+D:\lesson01\bytecode>javac -encoding utf-8 -g HelloByteCode.java
+
+D:\lesson01\bytecode>javap -c -verbose HelloByteCode.class
 Classfile /D:/lesson01/bytecode/HelloByteCode.class
-  Last modified Jan 9, 2021; size 2771 bytes
-  MD5 checksum 547d10a4f45dd5e6db4539380b0dbad8
+  Last modified Jan 10, 2021; size 2940 bytes
+  MD5 checksum cfe36fbb045fa86322a2eebed7be3fde
   Compiled from "HelloByteCode.java"
 public class lesson01.bytecode.HelloByteCode
   minor version: 0
   major version: 52
   flags: ACC_PUBLIC, ACC_SUPER
 Constant pool:
-    #1 = Methodref          #19.#86       // java/lang/Object."<init>":()V
-    #2 = Fieldref           #87.#88       // java/lang/System.out:Ljava/io/PrintStream;
-    #3 = Class              #89           // java/lang/StringBuilder
-    #4 = Methodref          #3.#86        // java/lang/StringBuilder."<init>":()V
-    #5 = String             #90           // myPublicMethod, x =
-    #6 = Methodref          #3.#91        // java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
-    #7 = Methodref          #3.#92        // java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
-    #8 = String             #93           // , d =
-    #9 = Methodref          #3.#94        // java/lang/StringBuilder.append:(D)Ljava/lang/StringBuilder;
-   #10 = String             #95           // , str =
-   #11 = Methodref          #3.#96        // java/lang/StringBuilder.toString:()Ljava/lang/String;
-   #12 = Methodref          #97.#98       // java/io/PrintStream.println:(Ljava/lang/String;)V
-   #13 = String             #56           // myPublicStaticMethod
-   #14 = String             #99           // Hello
-   #15 = String             #100          // myPrivateMethod, x =
-   #16 = String             #101          // , b =
-   #17 = String             #63           // myPrivateStaticMethod
-   #18 = String             #102          // sum = %d, division = %d, multiplication = %d, sub = %d%n
-   #19 = Class              #103          // java/lang/Object
-   #20 = Methodref          #104.#105     // java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
-   #21 = Methodref          #97.#106      // java/io/PrintStream.printf:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;
+    #1 = Methodref          #19.#92       // java/lang/Object."<init>":()V
+    #2 = Fieldref           #93.#94       // java/lang/System.out:Ljava/io/PrintStream;
+    #3 = Class              #95           // java/lang/StringBuilder
+    #4 = Methodref          #3.#92        // java/lang/StringBuilder."<init>":()V
+    #5 = String             #96           // myPublicMethod, x =
+    #6 = Methodref          #3.#97        // java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    #7 = Methodref          #3.#98        // java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+    #8 = String             #99           // , d =
+    #9 = Methodref          #3.#100       // java/lang/StringBuilder.append:(D)Ljava/lang/StringBuilder;
+   #10 = String             #101          // , str =
+   #11 = Methodref          #3.#102       // java/lang/StringBuilder.toString:()Ljava/lang/String;
+   #12 = Methodref          #103.#104     // java/io/PrintStream.println:(Ljava/lang/String;)V
+   #13 = String             #58           // myPublicStaticMethod
+   #14 = String             #105          // Hello
+   #15 = String             #106          // myPrivateMethod, x =
+   #16 = String             #107          // , b =
+   #17 = String             #65           // myPrivateStaticMethod
+   #18 = String             #108          // sum = %d, division = %d, multiplication = %d, sub = %d%n
+   #19 = Class              #109          // java/lang/Object
+   #20 = Methodref          #110.#111     // java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+   #21 = Methodref          #103.#112     // java/io/PrintStream.printf:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;
    #22 = Long               6000000l
    #24 = Float              3.14f
    #25 = Double             4125.5647d
-   #27 = String             #107          // b = %d, l = %d, f = %f, d = %f, bool = %b%n
-   #28 = Methodref          #108.#109     // java/lang/Byte.valueOf:(B)Ljava/lang/Byte;
-   #29 = Methodref          #110.#111     // java/lang/Long.valueOf:(J)Ljava/lang/Long;
-   #30 = Methodref          #112.#113     // java/lang/Float.valueOf:(F)Ljava/lang/Float;
-   #31 = Methodref          #114.#115     // java/lang/Double.valueOf:(D)Ljava/lang/Double;
-   #32 = Methodref          #116.#117     // java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
-   #33 = String             #118          // x = 10
-   #34 = String             #119          // y = 10
-   #35 = String             #120          // y = 50
-   #36 = Class              #121          // lesson01/bytecode/HelloByteCode
-   #37 = Methodref          #36.#86       // lesson01/bytecode/HelloByteCode."<init>":()V
-   #38 = Double             90.0d
-   #40 = Methodref          #36.#122      // lesson01/bytecode/HelloByteCode.myPublicMethod:(IDLjava/lang/String;)D
-   #41 = Utf8               <init>
-   #42 = Utf8               ()V
-   #43 = Utf8               Code
-   #44 = Utf8               LineNumberTable
-   #45 = Utf8               LocalVariableTable
-   #46 = Utf8               this
-   #47 = Utf8               Llesson01/bytecode/HelloByteCode;
-   #48 = Utf8               myPublicMethod
-   #49 = Utf8               (IDLjava/lang/String;)D
-   #50 = Utf8               x
-   #51 = Utf8               I
-   #52 = Utf8               d
-   #53 = Utf8               D
-   #54 = Utf8               str
-   #55 = Utf8               Ljava/lang/String;
-   #56 = Utf8               myPublicStaticMethod
-   #57 = Utf8               myPublicStaticMethod2
-   #58 = Utf8               (ID)Ljava/lang/String;
-   #59 = Utf8               a
-   #60 = Utf8               b
-   #61 = Utf8               myPrivateMethod
-   #62 = Utf8               (II)I
-   #63 = Utf8               myPrivateStaticMethod
-   #64 = Utf8               main
-   #65 = Utf8               ([Ljava/lang/String;)V
-   #66 = Utf8               i
-   #67 = Utf8               args
-   #68 = Utf8               [Ljava/lang/String;
-   #69 = Utf8               y
-   #70 = Utf8               sum
-   #71 = Utf8               division
-   #72 = Utf8               multiplication
-   #73 = Utf8               sub
-   #74 = Utf8               B
-   #75 = Utf8               l
-   #76 = Utf8               J
-   #77 = Utf8               f
-   #78 = Utf8               F
-   #79 = Utf8               bool
-   #80 = Utf8               Z
-   #81 = Utf8               helloByteCode
-   #82 = Utf8               StackMapTable
-   #83 = Class              #68           // "[Ljava/lang/String;"
-   #84 = Utf8               SourceFile
-   #85 = Utf8               HelloByteCode.java
-   #86 = NameAndType        #41:#42       // "<init>":()V
-   #87 = Class              #123          // java/lang/System
-   #88 = NameAndType        #124:#125     // out:Ljava/io/PrintStream;
-   #89 = Utf8               java/lang/StringBuilder
-   #90 = Utf8               myPublicMethod, x =
-   #91 = NameAndType        #126:#127     // append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
-   #92 = NameAndType        #126:#128     // append:(I)Ljava/lang/StringBuilder;
-   #93 = Utf8               , d =
-   #94 = NameAndType        #126:#129     // append:(D)Ljava/lang/StringBuilder;
-   #95 = Utf8               , str =
-   #96 = NameAndType        #130:#131     // toString:()Ljava/lang/String;
-   #97 = Class              #132          // java/io/PrintStream
-   #98 = NameAndType        #133:#134     // println:(Ljava/lang/String;)V
-   #99 = Utf8               Hello
-  #100 = Utf8               myPrivateMethod, x =
-  #101 = Utf8               , b =
-  #102 = Utf8               sum = %d, division = %d, multiplication = %d, sub = %d%n
-  #103 = Utf8               java/lang/Object
-  #104 = Class              #135          // java/lang/Integer
-  #105 = NameAndType        #136:#137     // valueOf:(I)Ljava/lang/Integer;
-  #106 = NameAndType        #138:#139     // printf:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;
-  #107 = Utf8               b = %d, l = %d, f = %f, d = %f, bool = %b%n
-  #108 = Class              #140          // java/lang/Byte
-  #109 = NameAndType        #136:#141     // valueOf:(B)Ljava/lang/Byte;
-  #110 = Class              #142          // java/lang/Long
-  #111 = NameAndType        #136:#143     // valueOf:(J)Ljava/lang/Long;
-  #112 = Class              #144          // java/lang/Float
-  #113 = NameAndType        #136:#145     // valueOf:(F)Ljava/lang/Float;
-  #114 = Class              #146          // java/lang/Double
-  #115 = NameAndType        #136:#147     // valueOf:(D)Ljava/lang/Double;
-  #116 = Class              #148          // java/lang/Boolean
-  #117 = NameAndType        #136:#149     // valueOf:(Z)Ljava/lang/Boolean;
-  #118 = Utf8               x = 10
-  #119 = Utf8               y = 10
-  #120 = Utf8               y = 50
-  #121 = Utf8               lesson01/bytecode/HelloByteCode
-  #122 = NameAndType        #48:#49       // myPublicMethod:(IDLjava/lang/String;)D
-  #123 = Utf8               java/lang/System
-  #124 = Utf8               out
-  #125 = Utf8               Ljava/io/PrintStream;
-  #126 = Utf8               append
-  #127 = Utf8               (Ljava/lang/String;)Ljava/lang/StringBuilder;
-  #128 = Utf8               (I)Ljava/lang/StringBuilder;
-  #129 = Utf8               (D)Ljava/lang/StringBuilder;
-  #130 = Utf8               toString
-  #131 = Utf8               ()Ljava/lang/String;
-  #132 = Utf8               java/io/PrintStream
-  #133 = Utf8               println
-  #134 = Utf8               (Ljava/lang/String;)V
-  #135 = Utf8               java/lang/Integer
-  #136 = Utf8               valueOf
-  #137 = Utf8               (I)Ljava/lang/Integer;
-  #138 = Utf8               printf
-  #139 = Utf8               (Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;
-  #140 = Utf8               java/lang/Byte
-  #141 = Utf8               (B)Ljava/lang/Byte;
-  #142 = Utf8               java/lang/Long
-  #143 = Utf8               (J)Ljava/lang/Long;
-  #144 = Utf8               java/lang/Float
-  #145 = Utf8               (F)Ljava/lang/Float;
-  #146 = Utf8               java/lang/Double
-  #147 = Utf8               (D)Ljava/lang/Double;
-  #148 = Utf8               java/lang/Boolean
-  #149 = Utf8               (Z)Ljava/lang/Boolean;
+   #27 = String             #113          // b = %d, l = %d, f = %f, d = %f, bool = %b%n
+   #28 = Methodref          #114.#115     // java/lang/Byte.valueOf:(B)Ljava/lang/Byte;
+   #29 = Methodref          #116.#117     // java/lang/Long.valueOf:(J)Ljava/lang/Long;
+   #30 = Methodref          #118.#119     // java/lang/Float.valueOf:(F)Ljava/lang/Float;
+   #31 = Methodref          #120.#121     // java/lang/Double.valueOf:(D)Ljava/lang/Double;
+   #32 = Methodref          #122.#123     // java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+   #33 = String             #124          // x = 10
+   #34 = String             #125          // x = 20
+   #35 = String             #126          // x =
+   #36 = String             #127          // y = 10
+   #37 = String             #128          // y = 50
+   #38 = Class              #129          // lesson01/bytecode/HelloByteCode
+   #39 = Methodref          #38.#92       // lesson01/bytecode/HelloByteCode."<init>":()V
+   #40 = Double             90.0d
+   #42 = Methodref          #38.#130      // lesson01/bytecode/HelloByteCode.myPublicMethod:(IDLjava/lang/String;)D
+   #43 = Utf8               <init>
+   #44 = Utf8               ()V
+   #45 = Utf8               Code
+   #46 = Utf8               LineNumberTable
+   #47 = Utf8               LocalVariableTable
+   #48 = Utf8               this
+   #49 = Utf8               Llesson01/bytecode/HelloByteCode;
+   #50 = Utf8               myPublicMethod
+   #51 = Utf8               (IDLjava/lang/String;)D
+   #52 = Utf8               x
+   #53 = Utf8               I
+   #54 = Utf8               d
+   #55 = Utf8               D
+   #56 = Utf8               str
+   #57 = Utf8               Ljava/lang/String;
+   #58 = Utf8               myPublicStaticMethod
+   #59 = Utf8               myPublicStaticMethod2
+   #60 = Utf8               (ID)Ljava/lang/String;
+   #61 = Utf8               a
+   #62 = Utf8               b
+   #63 = Utf8               myPrivateMethod
+   #64 = Utf8               (II)I
+   #65 = Utf8               myPrivateStaticMethod
+   #66 = Utf8               main
+   #67 = Utf8               ([Ljava/lang/String;)V
+   #68 = Utf8               i
+   #69 = Utf8               len
+   #70 = Utf8               args
+   #71 = Utf8               [Ljava/lang/String;
+   #72 = Utf8               y
+   #73 = Utf8               sum
+   #74 = Utf8               division
+   #75 = Utf8               multiplication
+   #76 = Utf8               sub
+   #77 = Utf8               B
+   #78 = Utf8               l
+   #79 = Utf8               J
+   #80 = Utf8               f
+   #81 = Utf8               F
+   #82 = Utf8               bool
+   #83 = Utf8               Z
+   #84 = Utf8               iArr
+   #85 = Utf8               [I
+   #86 = Utf8               helloByteCode
+   #87 = Utf8               StackMapTable
+   #88 = Class              #71           // "[Ljava/lang/String;"
+   #89 = Class              #85           // "[I"
+   #90 = Utf8               SourceFile
+   #91 = Utf8               HelloByteCode.java
+   #92 = NameAndType        #43:#44       // "<init>":()V
+   #93 = Class              #131          // java/lang/System
+   #94 = NameAndType        #132:#133     // out:Ljava/io/PrintStream;
+   #95 = Utf8               java/lang/StringBuilder
+   #96 = Utf8               myPublicMethod, x =
+   #97 = NameAndType        #134:#135     // append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+   #98 = NameAndType        #134:#136     // append:(I)Ljava/lang/StringBuilder;
+   #99 = Utf8               , d =
+  #100 = NameAndType        #134:#137     // append:(D)Ljava/lang/StringBuilder;
+  #101 = Utf8               , str =
+  #102 = NameAndType        #138:#139     // toString:()Ljava/lang/String;
+  #103 = Class              #140          // java/io/PrintStream
+  #104 = NameAndType        #141:#142     // println:(Ljava/lang/String;)V
+  #105 = Utf8               Hello
+  #106 = Utf8               myPrivateMethod, x =
+  #107 = Utf8               , b =
+  #108 = Utf8               sum = %d, division = %d, multiplication = %d, sub = %d%n
+  #109 = Utf8               java/lang/Object
+  #110 = Class              #143          // java/lang/Integer
+  #111 = NameAndType        #144:#145     // valueOf:(I)Ljava/lang/Integer;
+  #112 = NameAndType        #146:#147     // printf:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;
+  #113 = Utf8               b = %d, l = %d, f = %f, d = %f, bool = %b%n
+  #114 = Class              #148          // java/lang/Byte
+  #115 = NameAndType        #144:#149     // valueOf:(B)Ljava/lang/Byte;
+  #116 = Class              #150          // java/lang/Long
+  #117 = NameAndType        #144:#151     // valueOf:(J)Ljava/lang/Long;
+  #118 = Class              #152          // java/lang/Float
+  #119 = NameAndType        #144:#153     // valueOf:(F)Ljava/lang/Float;
+  #120 = Class              #154          // java/lang/Double
+  #121 = NameAndType        #144:#155     // valueOf:(D)Ljava/lang/Double;
+  #122 = Class              #156          // java/lang/Boolean
+  #123 = NameAndType        #144:#157     // valueOf:(Z)Ljava/lang/Boolean;
+  #124 = Utf8               x = 10
+  #125 = Utf8               x = 20
+  #126 = Utf8               x =
+  #127 = Utf8               y = 10
+  #128 = Utf8               y = 50
+  #129 = Utf8               lesson01/bytecode/HelloByteCode
+  #130 = NameAndType        #50:#51       // myPublicMethod:(IDLjava/lang/String;)D
+  #131 = Utf8               java/lang/System
+  #132 = Utf8               out
+  #133 = Utf8               Ljava/io/PrintStream;
+  #134 = Utf8               append
+  #135 = Utf8               (Ljava/lang/String;)Ljava/lang/StringBuilder;
+  #136 = Utf8               (I)Ljava/lang/StringBuilder;
+  #137 = Utf8               (D)Ljava/lang/StringBuilder;
+  #138 = Utf8               toString
+  #139 = Utf8               ()Ljava/lang/String;
+  #140 = Utf8               java/io/PrintStream
+  #141 = Utf8               println
+  #142 = Utf8               (Ljava/lang/String;)V
+  #143 = Utf8               java/lang/Integer
+  #144 = Utf8               valueOf
+  #145 = Utf8               (I)Ljava/lang/Integer;
+  #146 = Utf8               printf
+  #147 = Utf8               (Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;
+  #148 = Utf8               java/lang/Byte
+  #149 = Utf8               (B)Ljava/lang/Byte;
+  #150 = Utf8               java/lang/Long
+  #151 = Utf8               (J)Ljava/lang/Long;
+  #152 = Utf8               java/lang/Float
+  #153 = Utf8               (F)Ljava/lang/Float;
+  #154 = Utf8               java/lang/Double
+  #155 = Utf8               (D)Ljava/lang/Double;
+  #156 = Utf8               java/lang/Boolean
+  #157 = Utf8               (Z)Ljava/lang/Boolean;
 {
   public lesson01.bytecode.HelloByteCode();
     descriptor: ()V
@@ -237,7 +401,7 @@ Constant pool:
     descriptor: ([Ljava/lang/String;)V
     flags: ACC_PUBLIC, ACC_STATIC
     Code:
-      stack=7, locals=15, args_size=1
+      stack=7, locals=17, args_size=1
          0: bipush        10
          2: istore_1
          3: bipush        50
@@ -327,46 +491,92 @@ Constant pool:
        140: aastore
        141: invokevirtual #21                 // Method java/io/PrintStream.printf:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;
        144: pop
-       145: iload_1
-       146: bipush        10
-       148: if_icmpne     159
-       151: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
-       154: ldc           #33                 // String x = 10
-       156: invokevirtual #12                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
-       159: iconst_0
-       160: istore        14
-       162: iload         14
-       164: bipush        50
-       166: if_icmpge     180
-       169: iload_3
-       170: iload         14
-       172: iadd
-       173: istore_3
-       174: iinc          14, 1
-       177: goto          162
-       180: iload_2
-       181: lookupswitch  { // 2
-                      10: 208
-                      50: 216
-                 default: 224
+       145: iconst_5
+       146: newarray       int
+       148: dup
+       149: iconst_0
+       150: iconst_1
+       151: iastore
+       152: dup
+       153: iconst_1
+       154: bipush        7
+       156: iastore
+       157: dup
+       158: iconst_2
+       159: sipush        220
+       162: iastore
+       163: dup
+       164: iconst_3
+       165: bipush        50
+       167: iastore
+       168: dup
+       169: iconst_4
+       170: sipush        1000
+       173: iastore
+       174: astore        14
+       176: iload_1
+       177: bipush        10
+       179: if_icmpne     193
+       182: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       185: ldc           #33                 // String x = 10
+       187: invokevirtual #12                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       190: goto          235
+       193: iload_1
+       194: bipush        20
+       196: if_icmpne     210
+       199: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       202: ldc           #34                 // String x = 20
+       204: invokevirtual #12                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       207: goto          235
+       210: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       213: new           #3                  // class java/lang/StringBuilder
+       216: dup
+       217: invokespecial #4                  // Method java/lang/StringBuilder."<init>":()V
+       220: ldc           #35                 // String x =
+       222: invokevirtual #6                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       225: iload_1
+       226: invokevirtual #7                  // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+       229: invokevirtual #11                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+       232: invokevirtual #12                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       235: iconst_0
+       236: istore        15
+       238: aload         14
+       240: arraylength
+       241: istore        16
+       243: iload         15
+       245: iload         16
+       247: if_icmpge     264
+       250: iload_3
+       251: aload         14
+       253: iload         15
+       255: iaload
+       256: iadd
+       257: istore_3
+       258: iinc          15, 1
+       261: goto          243
+       264: iload_2
+       265: lookupswitch  { // 2
+                      10: 292
+                      50: 300
+                 default: 308
             }
-       208: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
-       211: ldc           #34                 // String y = 10
-       213: invokevirtual #12                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
-       216: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
-       219: ldc           #35                 // String y = 50
-       221: invokevirtual #12                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
-       224: new           #36                 // class lesson01/bytecode/HelloByteCode
-       227: dup
-       228: invokespecial #37                 // Method "<init>":()V
-       231: astore        14
-       233: aload         14
-       235: bipush        80
-       237: ldc2_w        #38                 // double 90.0d
-       240: ldc           #14                 // String Hello
-       242: invokevirtual #40                 // Method myPublicMethod:(IDLjava/lang/String;)D
-       245: pop2
-       246: return
+       292: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       295: ldc           #36                 // String y = 10
+       297: invokevirtual #12                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       300: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       303: ldc           #37                 // String y = 50
+       305: invokevirtual #12                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       308: new           #38                 // class lesson01/bytecode/HelloByteCode
+       311: dup
+       312: invokespecial #39                 // Method "<init>":()V
+       315: astore        15
+       317: aload         15
+       319: bipush        80
+       321: ldc2_w        #40                 // double 90.0d
+       324: ldc           #14                 // String Hello
+       326: invokevirtual #42                 // Method myPublicMethod:(IDLjava/lang/String;)D
+       329: pop2
+       330: return
       LineNumberTable:
         line 35: 0
         line 36: 3
@@ -384,42 +594,50 @@ Constant pool:
         line 48: 89
         line 49: 92
         line 51: 145
-        line 52: 151
-        line 54: 159
-        line 55: 169
-        line 54: 174
-        line 57: 180
-        line 59: 208
-        line 61: 216
-        line 65: 224
-        line 66: 233
-        line 67: 246
+        line 53: 176
+        line 54: 182
+        line 55: 193
+        line 56: 199
+        line 58: 210
+        line 61: 235
+        line 62: 250
+        line 61: 258
+        line 65: 264
+        line 67: 292
+        line 69: 300
+        line 73: 308
+        line 74: 317
+        line 75: 330
       LocalVariableTable:
         Start  Length  Slot  Name   Signature
-          162      18    14     i   I
-            0     247     0  args   [Ljava/lang/String;
-            3     244     1     x   I
-            6     241     2     y   I
-           13     234     3   sum   I
-           18     229     4 division   I
-           23     224     5 multiplication   I
-           28     219     6   sub   I
-           75     172     7     b   B
-           80     167     8     l   J
-           84     163    10     f   F
-           89     158    11     d   D
-           92     155    13  bool   Z
-          233      14    14 helloByteCode   Llesson01/bytecode/HelloByteCode;
-      StackMapTable: number_of_entries = 6
+          238      26    15     i   I
+          243      21    16   len   I
+            0     331     0  args   [Ljava/lang/String;
+            3     328     1     x   I
+            6     325     2     y   I
+           13     318     3   sum   I
+           18     313     4 division   I
+           23     308     5 multiplication   I
+           28     303     6   sub   I
+           75     256     7     b   B
+           80     251     8     l   J
+           84     247    10     f   F
+           89     242    11     d   D
+           92     239    13  bool   Z
+          176     155    14  iArr   [I
+          317      14    15 helloByteCode   Llesson01/bytecode/HelloByteCode;
+      StackMapTable: number_of_entries = 8
         frame_type = 255 /* full_frame */
-          offset_delta = 159
-          locals = [ class "[Ljava/lang/String;", int, int, int, int, int, int, int, long, float, double, int ]
+          offset_delta = 193
+          locals = [ class "[Ljava/lang/String;", int, int, int, int, int, int, int, long, float, double, int, class "[I" ]
           stack = []
-        frame_type = 252 /* append */
-          offset_delta = 2
-          locals = [ int ]
-        frame_type = 250 /* chop */
-          offset_delta = 17
+        frame_type = 16 /* same */
+        frame_type = 24 /* same */
+        frame_type = 253 /* append */
+          offset_delta = 7
+          locals = [ int, int ]
+        frame_type = 249 /* chop */
+          offset_delta = 20
         frame_type = 27 /* same */
         frame_type = 7 /* same */
         frame_type = 7 /* same */
