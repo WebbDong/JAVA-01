@@ -53,8 +53,12 @@ public class HelloByteCode {
 
         if (x == 10) {
             System.out.println("x = 10");
-        } else if (x == 20) {
-            System.out.println("x = 20");
+        } else if (x > 20) {
+            System.out.println("x > 20");
+        } else if (x < 50) {
+            System.out.println("x < 50");
+        } else if (x >= 60) {
+            System.out.println("x >= 60");
         } else {
             System.out.println("x = " + x);
         }

@@ -385,7 +385,117 @@ Constant pool:
 > ### (7) 流程控制指令
 > #### if else 语句: 
 ```
+Constant pool:
+    #2 = Fieldref           #94.#95       // java/lang/System.out:Ljava/io/PrintStream;
+    #3 = Class              #96           // java/lang/StringBuilder
+    #4 = Methodref          #3.#93        // java/lang/StringBuilder."<init>":()V
+    #6 = Methodref          #3.#98        // java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    #7 = Methodref          #3.#99        // java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+   #11 = Methodref          #3.#103       // java/lang/StringBuilder.toString:()Ljava/lang/String;
+   #12 = Methodref          #104.#105     // java/io/PrintStream.println:(Ljava/lang/String;)V
+   #33 = String             #125          // x = 10
+   #34 = String             #126          // x = 20
+   #35 = String             #127          // x =
+   #43 = Utf8               <init>
+   #44 = Utf8               ()V
+   #93 = NameAndType        #43:#44       // "<init>":()V
+   #94 = Class              #132          // java/lang/System
+   #95 = NameAndType        #133:#134     // out:Ljava/io/PrintStream;
+   #96 = Utf8               java/lang/StringBuilder
+   #98 = NameAndType        #135:#136     // append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+   #99 = NameAndType        #135:#137     // append:(I)Ljava/lang/StringBuilder;
+  #103 = NameAndType        #139:#140     // toString:()Ljava/lang/String;
+  #104 = Class              #141          // java/io/PrintStream
+  #105 = NameAndType        #142:#143     // println:(Ljava/lang/String;)V
+  #125 = Utf8               x = 10
+  #126 = Utf8               x = 20
+  #127 = Utf8               x =
+  #132 = Utf8               java/lang/System
+  #133 = Utf8               out
+  #134 = Utf8               Ljava/io/PrintStream;
+  #135 = Utf8               append
+  #136 = Utf8               (Ljava/lang/String;)Ljava/lang/StringBuilder;
+  #137 = Utf8               (I)Ljava/lang/StringBuilder;
+  #138 = Utf8               (D)Ljava/lang/StringBuilder;
+  #139 = Utf8               toString
+  #140 = Utf8               ()Ljava/lang/String;
+  #141 = Utf8               java/io/PrintStream
+  #142 = Utf8               println
+  #143 = Utf8               (Ljava/lang/String;)V
+
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=7, locals=15, args_size=1
+
+         .... 其他省略
+
+       182: iload_1
+       183: bipush        10
+       185: if_icmpne     199
+       188: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       191: ldc           #33                 // String x = 10
+       193: invokevirtual #12                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       196: goto          275
+       199: iload_1
+       200: bipush        20
+       202: if_icmple     216
+       205: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       208: ldc           #34                 // String x > 20
+       210: invokevirtual #12                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       213: goto          275
+       216: iload_1
+       217: bipush        50
+       219: if_icmpge     233
+       222: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       225: ldc           #35                 // String x < 50
+       227: invokevirtual #12                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       230: goto          275
+       233: iload_1
+       234: bipush        60
+       236: if_icmplt     250
+       239: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       242: ldc           #36                 // String x >= 60
+       244: invokevirtual #12                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       247: goto          275
+       250: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       253: new           #3                  // class java/lang/StringBuilder
+       256: dup
+       257: invokespecial #4                  // Method java/lang/StringBuilder."<init>":()V
+       260: ldc           #37                 // String x =
+       262: invokevirtual #6                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       265: iload_1
+       266: invokevirtual #7                  // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+       269: invokevirtual #11                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+       272: invokevirtual #12                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+
+        .... 其他省略
+
+       246: return
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+          278      26    16     i   I
+          283      21    17   len   I
+            0     371     0  args   [Ljava/lang/String;
+            3     368     1     x   I
+            6     365     2     y   I
+           13     358     3   sum   I
+           18     353     4 division   I
+           23     348     5 multiplication   I
+           28     343     6   sub   I
+           75     296     7     b   B
+           80     291     8     l   J
+           84     287    10     f   F
+           89     282    11     d   D
+           92     279    13  bool   Z
+          176     195    14  iArr   [I
+          182     189    15 elementValue   I
+          357      14    16 helloByteCode   Llesson01/bytecode/HelloByteCode;
 ```
+> 182行: 将槽位为1的局部变量值压入栈顶  
+> 183行: 将常量值10压入栈顶  
+> 185行: 从栈顶弹出2个 int 类型值，然后比较如果结果不等于0（相等），就跳转到第199行  
 > 
 
 > ### (8) 方法调用指令和参数传递
