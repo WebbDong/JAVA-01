@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
  * @description: JVM 内存实验
  * @date 2021-01-12 15:35
  */
-public class JvmMemoryTest {
+public class JVMMemoryTest {
 
     public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
         // 启动参数配置 -XX:MaxDirectMemorySize=1023k 直接内存最大 1023k
