@@ -313,7 +313,7 @@ Constant pool:
     descriptor: ([Ljava/lang/String;)V
     flags: ACC_PUBLIC, ACC_STATIC
     Code:
-      stack=7, locals=15, args_size=1
+      stack=7, locals=18, args_size=1
 
          .... 其他省略
 
@@ -427,7 +427,7 @@ Constant pool:
     descriptor: ([Ljava/lang/String;)V
     flags: ACC_PUBLIC, ACC_STATIC
     Code:
-      stack=7, locals=15, args_size=1
+      stack=7, locals=18, args_size=1
 
          .... 其他省略
 
@@ -495,15 +495,220 @@ Constant pool:
 ```
 > 182行: 将槽位为1的局部变量值压入栈顶  
 > 183行: 将常量值10压入栈顶  
-> 185行: 从栈顶弹出2个 int 类型值然后比较，如果结果不相等，就跳转到第199行  
+> 185行: 从栈顶弹出2个 int 类型值然后比较，如果结果不相等，就跳转到第199行，否则就继续往下执行  
 > 188行: 获取 System 的静态字段 out 并将其值加入栈顶中  
 > 191行: 把字符串常量 x = 10 压入栈顶  
-> 193行: 从栈顶弹出2个值，第一个值是 x = 10 字符串常量，第二个值是 out 静态字段，然后调用 println 方法打印 x = 10
+> 193行: 从栈顶弹出2个值，第一个值是 x = 10 字符串常量，第二个值是 out 静态字段，然后调用 println 方法打印 x = 10  
+> 196行: 已经执行完 if else 代码块，所以跳转到275行，跳出 if else 代码块  
+> 199行 - 272行: 执行逻辑相同，只是 if 的判断指令有所不同。  
+> 250行 - 272行: 是使用 StringBuilder 进行字符串常量 "x = " 与 局部变量x进行拼接，然后调用 System 的静态字段 out 的 println 方法打印拼接后的字符串 
+>
+> #### for 语句:
+```
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=7, locals=18, args_size=1
 
+         .... 其他省略
+
+       275: iconst_0
+       276: istore        16
+       278: aload         14
+       280: arraylength
+       281: istore        17
+       283: iload         16
+       285: iload         17
+       287: if_icmpge     304
+       290: iload_3
+       291: aload         14
+       293: iload         16
+       295: iaload
+       296: iadd
+       297: istore_3
+       298: iinc          16, 1
+       301: goto          283
+
+        .... 其他省略
+
+       246: return
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+          278      26    16     i   I
+          283      21    17   len   I
+            0     371     0  args   [Ljava/lang/String;
+            3     368     1     x   I
+            6     365     2     y   I
+           13     358     3   sum   I
+           18     353     4 division   I
+           23     348     5 multiplication   I
+           28     343     6   sub   I
+           75     296     7     b   B
+           80     291     8     l   J
+           84     287    10     f   F
+           89     282    11     d   D
+           92     279    13  bool   Z
+          176     195    14  iArr   [I
+          182     189    15 elementValue   I
+          357      14    16 helloByteCode   Llesson01/bytecode/HelloByteCode;
+```
+> 275行: 将 int 类型0压入栈顶  
+> 276行: 将栈顶值保存到槽位为16的局部变量中，此时槽位为16的局部变量是 i   
+> 278行: 将槽位为14的引用变量值压入栈顶，就是 iArr 数组对象   
+> 280行: 首先弹出栈顶的数组对象引用值，获取该数组的长度值并压入栈顶   
+> 281行: 将栈顶值保存到槽位为17的局部变量中，就是把数组长度保存到局部变量 len  
+> 283行: 将槽位为16的局部变量值压入栈顶，局部变量 i 的值  
+> 285行: 将槽位为17的局部变量值压入栈顶，局部变量 len 的值 
+> 287行: 先从栈中弹出两个操作数，局部变量 len 的值和局部变量 i 的值，比较 len 和 i，当 len >= i 时则跳转到304行，跳出循环   
+> 290行 - 301行: 为 for 循环体相关字节码   
+> 290行: 将槽位为3的局部变量值压入栈顶，局部变量 sum 的值   
+> 291行: 将槽位为14的局部变量引用值压入栈顶，也就是 iArr 数组对象引用值   
+> 293行: 将槽位为16的局部变量 int 类型值压入栈顶，也就是局部变量 i 的值   
+> 295行: 先从栈顶弹出两个值，第一个是局部变量 i 的值，第二个是 iArr 数组对象引用值，将 i 的值作为数组下标，取出对应的元素值并压入栈顶   
+> 296行: 先从栈顶弹出两个值，第一个是 iArr[i] 的值，第二个是局部变量 sum 的值，并将它们相加，然后把相加后的值压入栈顶  
+> 297行: 将栈顶的 int 类型值保存到槽位为3的局部变量中，局部变量 sum 中   
+> 298行: 将槽位为16的局部变量值自增1，也就是 i++  
+> 301行: 跳转到283行，重新判断循环条件，满足就继续执行循环体，否则跳出循环
+>
+> #### switch 语句: 
+```
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=7, locals=18, args_size=1
+
+         .... 其他省略
+
+       304: iload_2
+       305: lookupswitch  { // 2
+                      10: 332
+                      50: 340
+                 default: 348
+            }
+       332: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       335: ldc           #38                 // String y = 10
+       337: invokevirtual #12                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       340: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       343: ldc           #39                 // String y = 50
+       345: invokevirtual #12                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       348: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       351: ldc           #40                 // String default
+       353: invokevirtual #12                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+
+        .... 其他省略
+
+       246: return
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+          278      26    16     i   I
+          283      21    17   len   I
+            0     379     0  args   [Ljava/lang/String;
+            3     376     1     x   I
+            6     373     2     y   I
+           13     366     3   sum   I
+           18     361     4 division   I
+           23     356     5 multiplication   I
+           28     351     6   sub   I
+           75     304     7     b   B
+           80     299     8     l   J
+           84     295    10     f   F
+           89     290    11     d   D
+           92     287    13  bool   Z
+          176     203    14  iArr   [I
+          182     197    15 elementValue   I
+          365      14    16 helloByteCode   Llesson01/bytecode/HelloByteCode;
+```
+> 304行: 将槽位为2的局部变量值压入栈顶，局部变量 y 的值压入栈顶  
+> 305行: 从栈顶弹出获取到局部变量 y 的值，并进行值的匹配，y 的值为10时跳转到332行，y 的值为50时跳转到340行，如果都不匹配执行 default 分支跳转到348行   
+> 332行 - 353行: 都是调用不同匹配值的分支，调用 println 打印不同的字符串
+>
 > ### (8) 方法调用指令和参数传递
 ```
-```
+Constant pool:
+   #14 = String             #109          // Hello
+   #41 = Class              #136          // lesson01/bytecode/HelloByteCode
+   #42 = Methodref          #41.#96       // lesson01/bytecode/HelloByteCode."<init>":()V
+   #43 = Double             90.0d
+   #45 = Methodref          #41.#137      // lesson01/bytecode/HelloByteCode.myPublicMethod:(IDLjava/lang/String;)D
+   #46 = Utf8               <init>
+   #47 = Utf8               ()V
+   #53 = Utf8               myPublicMethod
+   #54 = Utf8               (IDLjava/lang/String;)D
+   #96 = NameAndType        #46:#47       // "<init>":()V
+  #109 = Utf8               Hello
+  #136 = Utf8               lesson01/bytecode/HelloByteCode
+  #137 = NameAndType        #53:#54       // myPublicMethod:(IDLjava/lang/String;)D
 
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=7, locals=18, args_size=1
+
+         .... 其他省略
+
+       356: new           #41                 // class lesson01/bytecode/HelloByteCode
+       359: dup
+       360: invokespecial #42                 // Method "<init>":()V
+       363: astore        16
+       365: aload         16
+       367: bipush        80
+       369: ldc2_w        #43                 // double 90.0d
+       372: ldc           #14                 // String Hello
+       374: invokevirtual #45                 // Method myPublicMethod:(IDLjava/lang/String;)D
+       377: pop2
+       378: return
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+          278      26    16     i   I
+          283      21    17   len   I
+            0     379     0  args   [Ljava/lang/String;
+            3     376     1     x   I
+            6     373     2     y   I
+           13     366     3   sum   I
+           18     361     4 division   I
+           23     356     5 multiplication   I
+           28     351     6   sub   I
+           75     304     7     b   B
+           80     299     8     l   J
+           84     295    10     f   F
+           89     290    11     d   D
+           92     287    13  bool   Z
+          176     203    14  iArr   [I
+          182     197    15 elementValue   I
+          365      14    16 helloByteCode   Llesson01/bytecode/HelloByteCode;
+```
+> 356行: 创建 HelloByteCode 对象，并将对象引用值压入栈顶   
+> 359行: 复制栈顶的对象引用值并压入栈顶  
+> 360行: 调用 HelloByteCode 的无参构造函数  
+> 363行: 将栈顶的 HelloByteCode 对象引用值保存到槽位为16的局部变量中，此时的局部变量已经是 helloByteCode ，之前同样槽位为16的局部变量 i 超过了作用域，复用了同一个槽位  
+> 365行: 将槽位为16的 helloByteCode 局部变量引用值压入栈顶  
+> 367行: 将常量值80压入栈顶  
+> 369行: 将常量编号为43的浮点型常量值90.0压入栈顶  
+> 372行: 将字符串常量值 Hello 压入栈顶  
+> 374行: 弹出栈中所有数据调用 HelloByteCode 的 myPublicMethod 方法并将参数传入，执行完后将返回值压入栈顶  
+> 377行: 从栈顶将返回值弹出  
+> 378行: 方法返回
+> 
+> 上述的情况是 myPublicMethod 方法有返回值，但是没有局部变量去接收的情况。
+>
+> myPublicMethod 方法没有返回值的字节码情况: 
+```
+       374: invokevirtual #45                 // Method myPublicMethod:(IDLjava/lang/String;)V
+       377: return
+```
+> 没有返回值会直接 return
+>
+> myPublicMethod 方法有返回值并且也有局部变量接收的字节码情况: 
+```
+       374: invokevirtual #45                 // Method myPublicMethod:(IDLjava/lang/String;)D
+       377: dstore        17
+       379: return
+```
+> 有返回值且有局部变量接收，会使用指令将在栈顶的返回值保存到对应的局部变量
+>
 ## 1.4 字节码相关 JDK 命令行工具
 > ### javac 编译工具  
 > 常用参数:

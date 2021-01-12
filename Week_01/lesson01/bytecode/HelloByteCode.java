@@ -73,10 +73,12 @@ public class HelloByteCode {
             case 50:
                 System.out.println("y = 50");
             default:
+                System.out.println("default");
         }
 
         HelloByteCode helloByteCode = new HelloByteCode();
         helloByteCode.myPublicMethod(80, 90, "Hello");
+//        double result = helloByteCode.myPublicMethod(80, 90, "Hello");
     }
 
 }

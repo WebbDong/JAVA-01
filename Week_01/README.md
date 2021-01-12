@@ -2,6 +2,7 @@
 - lesson01: 第一周第一课
   - bytecode: JVM 字节码
   - classloader: 类加载器
+  - jvmmemory: JVM 内存相关
   - util: 工具类
   - img: 图片
   
