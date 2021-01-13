@@ -718,13 +718,37 @@ Constant pool:
 >   * -encoding 指定编码
 >   * -verbose 冗长输出。它包括了每个所加载的类和每个所编译的源文件的有关信息。
 >
+>   示例: javac -encoding utf-8 -g HelloByteCode.java
+>
 > ### javap 查看字节码工具 
 > 常用参数: 
 >   * -c 输出分解后的代码，例如，类中每一个方法内，包含 java 字节码的指令
 >   * -verbose 输出栈大小，方法参数的个数、局部变量表等
+>
+>   示例: javap -c -verbose HelloByteCode.class
 
 # 2、类加载器
 > ## 2.1 类的生命周期和加载过程
+> ![alt 图片](./img/类的生命周期.png "类的生命周期")
+> 
+> 一个类在 JVM 中的生命周期分为七个阶段，分别是加载(Loading)、校验(Verification)、
+> 准备(Preparation)、解析(Resolution)、初始化(Initialization)、使用(Using)、卸载(Unloading)  
+> 第一步到第五步统称为类加载阶段，第二步到第四步称为链接阶段。  
+> 
+> ### 1)、加载
+> 此阶段的主要操作是读取文件系统中、jar包中或存在于任何地方的 class 字节码文件，如果找不到二进制 class 字节码文件，
+> 就会抛出 NoClassDefFoundError。加载过程中不会校验 class 字节码文件的格式。类加载的整个过程由 JVM 和 Java 的类加载器系统共同完成。
+>
+> ### 2)、校验
+> 校验过程是确保 class 字节码文件的格式（包括校验魔数、版本号信息、常量池中的符号、类型检查）都符合当前的 JVM。
+> 此过程如果校验不合法可能会抛出 VerifyError、ClassFormatError、UnsupportedClassVersionError  
+> 
+>
+> ### 3)、准备
+> ### 4)、解析
+> ### 5)、初始化
+> ### 6)、使用
+> ### 7)、卸载
 
 # 3、<span id="JVMMemoryStructureAndJMM">JVM 内存结构和 Java 内存模型</span>
 > ## JVM 内存结构
