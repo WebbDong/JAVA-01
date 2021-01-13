@@ -5,7 +5,7 @@ package lesson01.error;
  * @description: 模拟因类循环引用导致的 StackOverflowError 的情况
  * @date 2021-01-13 11:12
  */
-public class ClassCircularityCauseStackOverflowErrorCase {
+public class CircularReferenceCauseStackOverflowErrorCase {
 
     private static class Student {
 
