@@ -11,7 +11,10 @@ import java.net.URLClassLoader;
  */
 public class URLClassLoaderTest {
 
-    private static final String BYTE_CODE_FILE_PATH = "file:/D:/";
+    /**
+     * 外部字节码文件目录，注意不能包含包名的文件夹名，并且末尾的 / 不能漏掉，否则将会加载不到类
+     */
+    private static final String BYTE_CODE_FILE_DIR_PATH = "file:/D:/study/e-book/MyCode/";
 
     private static final String JAR_URL = "http://192.168.238.150:36000/lesson01.jar";
 
@@ -23,7 +26,7 @@ public class URLClassLoaderTest {
         URLClassLoader urlClassLoader = (URLClassLoader) HelloURLClassLoader.class.getClassLoader();
         Method addURLMethod = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
         addURLMethod.setAccessible(true);
-        URL url = new URL(BYTE_CODE_FILE_PATH);
+        URL url = new URL(BYTE_CODE_FILE_DIR_PATH);
         addURLMethod.invoke(urlClassLoader, url);
         Class<?> clazz = Class.forName("lesson01.bytecode.Test1");
         clazz.getDeclaredMethod("hello").invoke(clazz.newInstance());
@@ -34,7 +37,7 @@ public class URLClassLoaderTest {
      * @throws Exception
      */
     private static void test2() throws Exception {
-        URLClassLoader urlClassLoader = new URLClassLoader(new URL[] {new URL(BYTE_CODE_FILE_PATH)});
+        URLClassLoader urlClassLoader = new URLClassLoader(new URL[] {new URL(BYTE_CODE_FILE_DIR_PATH)});
         Class<?> clazz = urlClassLoader.loadClass("lesson01.bytecode.Test1");
         clazz.getDeclaredMethod("hello").invoke(clazz.newInstance());
     }
