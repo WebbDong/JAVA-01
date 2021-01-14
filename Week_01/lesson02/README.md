@@ -51,8 +51,8 @@ where <option> is one of:
 >> jstat 语法: jstat \[-命令选项] \[JVM 进程 ID] \[间隔时间/毫秒] \[查询次数]  
 >>
 >> jstat 常用参数: 
->>> ##### 1. 类加载器信息统计
->>> 命令: jstat -class VMID
+>>> #### 1. 类加载器信息统计
+>>> 命令: jstat -class pid
 >>> 
 >>> 结果: 
 ```
@@ -67,8 +67,8 @@ Loaded  Bytes   Unloaded    Bytes      Time
 >>>   - Bytes: 卸载类的字节数
 >>>   - Time: 加载和卸载类所花费的时间
 >>>
->>> ##### 2. 编译信息统计
->>> 命令: jstat -compiler VMID
+>>> #### 2. 编译信息统计
+>>> 命令: jstat -compiler pid
 >>>
 >>> 结果: 
 ```
@@ -84,8 +84,8 @@ Compiled Failed Invalid   Time   FailedType FailedMethod
 >>>   - FailedType: 最后一个编译失败任务的类型
 >>>   - FailedMethod: 最后一个编译失败任务所在的类及方法
 >>>
->>> ##### 3. 堆内存与垃圾回收统计
->>> 命令: jstat -gc VMID
+>>> #### 3. 堆内存与垃圾回收统计
+>>> 命令: jstat -gc pid
 >>>
 >>> 结果:
 ```
@@ -112,8 +112,8 @@ d:\>jstat -gc 17844
 >>>   - FGCT: 从应用程序启动到采样时老年代(全gc、Full GC)gc所用时间(s)
 >>>   - GCT: 从应用程序启动到采样时gc用的总时间(s)
 >>>
->>> ##### 4. 堆内存容量统计
->>> 命令: jstat -gccapacity VMID
+>>> #### 4. 堆内存容量统计
+>>> 命令: jstat -gccapacity pid
 >>>
 >>> 结果: 
 ```
@@ -141,8 +141,8 @@ d:\>jstat -gccapacity 6820
 >>>   - YGC: 从应用程序启动到采样时年轻代中gc次数
 >>>   - FGC: 从应用程序启动到采样时old代(全gc)gc次数
 >>>
->>> ##### 5. 年轻代（新生代）区域统计
->>> 命令: jstat -gcnew VMID
+>>> #### 5. 年轻代（新生代）区域统计
+>>> 命令: jstat -gcnew pid
 >>> 
 >>> 结果: 
 ```
@@ -162,8 +162,8 @@ d:\>jstat -gccapacity 6820
 >>>   - YGC: 从应用程序启动到采样时年轻代中gc次数
 >>>   - YGCT: 从应用程序启动到采样时年轻代中gc所用时间(s)
 >>>
->>> ##### 6. 年轻代（新生代）容量统计
->>> 命令: jstat -gcnewcapacity VMID
+>>> #### 6. 年轻代（新生代）容量统计
+>>> 命令: jstat -gcnewcapacity pid
 >>>
 >>> 结果:
 ```
@@ -183,8 +183,8 @@ d:\>jstat -gccapacity 6820
 >>>   - YGC: 从应用程序启动到采样时年轻代中gc次数
 >>>   - FGC: 从应用程序启动到采样时old代(全gc)gc次数
 >>>
->>> ##### 7. 老年代区域统计
->>> 命令: jstat -gcold VMID
+>>> #### 7. 老年代区域统计
+>>> 命令: jstat -gcold pid
 >>> 
 >>> 结果:
 ```
@@ -203,8 +203,8 @@ d:\>jstat -gccapacity 6820
 >>>   - FGCT: 从应用程序启动到采样时old代(全gc)gc所用时间(s)
 >>>   - GCT: 从应用程序启动到采样时gc用的总时间(s)
 >>>
->>> ##### 8. 老年代容量统计
->>> 命令: jstat -gcoldcapacity VMID
+>>> #### 8. 老年代容量统计
+>>> 命令: jstat -gcoldcapacity pid
 >>>
 >>> 结果:
 ```
@@ -221,8 +221,8 @@ d:\>jstat -gccapacity 6820
 >>>   - FGCT: 从应用程序启动到采样时old代(全gc)gc所用时间(s)
 >>>   - GCT: 从应用程序启动到采样时gc用的总时间(s)
 >>>
->>> ##### 9. 统计 gc 信息
->>> 命令: jstat -gcutil VMID
+>>> #### 9. 统计 gc 信息
+>>> 命令: jstat -gcutil pid
 >>>
 >>> 结果:
 ```
@@ -276,9 +276,254 @@ where <option> is one of:
     -h | -help           to print this help message
     -J<flag>             to pass <flag> directly to the runtime system
 ```
->> 常用参数:
->> 
->>
+>> jmap 常用参数:
+>>> #### 1. 不加 option 参数:
+>>> 命令: jmap pid
+>>>
+>>> 结果:
+```
+Attaching to process ID 2919, please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 25.271-b09
+0x00005649da78c000      8K      /home/jdk/jdk1.8.0_271/bin/java
+0x00007fc6058c4000      91K     /home/jdk/jdk1.8.0_271/jre/lib/amd64/libnio.so
+0x00007fc606bab000      110K    /home/jdk/jdk1.8.0_271/jre/lib/amd64/libnet.so
+0x00007fc606f8f000      50K     /home/jdk/jdk1.8.0_271/jre/lib/amd64/libmanagement.so
+0x00007fc6200f8000      124K    /home/jdk/jdk1.8.0_271/jre/lib/amd64/libzip.so
+0x00007fc620314000      89K     /usr/lib64/libnss_files-2.28.so
+0x00007fc620d2b000      61K     /usr/lib64/libnss_sss.so.2
+0x00007fc620f34000      226K    /home/jdk/jdk1.8.0_271/jre/lib/amd64/libjava.so
+0x00007fc621163000      64K     /home/jdk/jdk1.8.0_271/jre/lib/amd64/libverify.so
+0x00007fc621372000      96K     /usr/lib64/librt-2.28.so
+0x00007fc62157b000      2651K   /usr/lib64/libm-2.28.so
+0x00007fc6218fd000      16707K  /home/jdk/jdk1.8.0_271/jre/lib/amd64/server/libjvm.so
+0x00007fc6228f4000      4078K   /usr/lib64/libc-2.28.so
+0x00007fc622cb6000      35K     /usr/lib64/libdl-2.28.so
+0x00007fc622eba000      106K    /home/jdk/jdk1.8.0_271/lib/amd64/jli/libjli.so
+0x00007fc6230d2000      459K    /usr/lib64/libpthread-2.28.so
+0x00007fc6232f2000      295K    /usr/lib64/ld-2.28.so
+```
+>>> 解释:
+>>>   - 打印目标虚拟机中加载的每个共享对象的起始地址、映射大小以及共享对象文件的路径全称。
+>>>
+>>> #### 2. 查看堆内存详情
+>>> 命令: jmap -heap pid
+>>>
+>>> 结果:
+```
+Attaching to process ID 2919, please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 25.271-b09
+
+using thread-local object allocation.
+Mark Sweep Compact GC
+
+Heap Configuration:
+   MinHeapFreeRatio         = 40
+   MaxHeapFreeRatio         = 70
+   MaxHeapSize              = 209715200 (200.0MB)
+   NewSize                  = 4849664 (4.625MB)
+   MaxNewSize               = 69861376 (66.625MB)
+   OldSize                  = 9830400 (9.375MB)
+   NewRatio                 = 2
+   SurvivorRatio            = 8
+   MetaspaceSize            = 21807104 (20.796875MB)
+   CompressedClassSpaceSize = 1073741824 (1024.0MB)
+   MaxMetaspaceSize         = 17592186044415 MB
+   G1HeapRegionSize         = 0 (0.0MB)
+
+Heap Usage:
+New Generation (Eden + 1 Survivor Space):
+   capacity = 14090240 (13.4375MB)
+   used     = 13199384 (12.587913513183594MB)
+   free     = 890856 (0.8495864868164062MB)
+   93.67749591206395% used
+Eden Space:
+   capacity = 12582912 (12.0MB)
+   used     = 12218576 (11.652542114257812MB)
+   free     = 364336 (0.3474578857421875MB)
+   97.10451761881511% used
+From Space:
+   capacity = 1507328 (1.4375MB)
+   used     = 980808 (0.9353713989257812MB)
+   free     = 526520 (0.5021286010742188MB)
+   65.06931470788044% used
+To Space:
+   capacity = 1507328 (1.4375MB)
+   used     = 0 (0.0MB)
+   free     = 1507328 (1.4375MB)
+   0.0% used
+tenured generation:
+   capacity = 31072256 (29.6328125MB)
+   used     = 19234976 (18.343902587890625MB)
+   free     = 11837280 (11.288909912109375MB)
+   61.90402138808331% used
+
+15213 interned Strings occupying 2069168 bytes.
+```
+>>> 详解:
+>>>   - Heap Configuration: 堆内存配置信息
+>>>     - MinHeapFreeRatio: 空闲堆空间的最小百分比，值为 0 到 100 之间，默认值为 40  
+>>>                         空闲堆空间百分比（HeapFreeRatio）= (CurrentFreeHeapSize / CurrentTotalHeapSize) * 100  
+>>>                         当 HeapFreeRatio < MinHeapFreeRatio 时，则会进行堆扩容，扩容的时机应该在每次垃圾回收之后。
+>>>     - MaxHeapFreeRatio: 空闲堆空间的最大百分比，值为 0 到 100 之间，默认值为 70
+>>>                         当 HeapFreeRatio > MaxHeapFreeRatio 时，则会进行堆缩容，缩容的时机应该在每次垃圾回收之后。
+>>>     - MaxHeapSize: 最大堆内存
+>>>     - NewSize: 新生代内存大小
+>>>     - MaxNewSize: 新生代最大内存大小
+>>>     - OldSize: 老年代内存大小
+>>>     - NewRatio: 新生代（2个 Survivor 区和 Eden 区）与老年代（只是 old 区，不包含 Metaspace）的堆空间比值，
+>>>                 表示 新生代 : 老年代 = 1 : 2 或 老年代内存大小 / 新生代内存大小 约等于 2。
+>>>     - SurvivorRatio: 2个 Survivor 区和 Eden 区的堆空间比，8 代表 S0 : S1 : Eden = 1 : 1 : 8
+>>>     - MetaspaceSize: MetaspaceSize 空间的大小
+>>>     - CompressedClassSpaceSize: 压缩类空间的大小
+>>>     - MaxMetaspaceSize: MetaspaceSize 空间的最大大小
+>>>     - G1HeapRegionSize: 使用 G1 GC 时 每个 Region 的空间大小，如果使用的 GC 不是 G1 ，那么就是 0
+>>>   - Heap Usage: 堆内存使用信息
+>>>     - New Generation (Eden + 1 Survivor Space): 新生代 (Eden 区 + 1个 Survivor) 的信息
+>>>       - capacity: 此区域容量
+>>>       - used: 此区域已使用大小
+>>>       - free: 此区域未使用大小
+>>>     - Eden Space: Eden 区的信息
+>>>     - From Space: Survivor0 的信息
+>>>     - To Space: Survivor1 的信息
+>>>     - tenured generation(PS Old Generation): 老年代信息
+>>>   - 15213 interned Strings occupying 2069168 bytes: 有 15213 个字符串常量占用了 2069168 个字节（1.973 MB）
+>>>
+>>> #### 3. 查看堆中对象的统计信息
+>>> 命令: jmap -histo:live pid | jmap -histo pid
+>>> 
+>>> 结果:
+```
+ num     #instances         #bytes  class name
+----------------------------------------------
+   1:         37553        6488288  [C
+   2:          8369        1785272  [I
+   3:         36533         876792  java.lang.String
+   4:          7017         779160  java.lang.Class
+   5:         19728         631296  java.util.concurrent.ConcurrentHashMap$Node
+   6:          1321         459024  [B
+   7:          7045         370600  [Ljava.lang.Object;
+   8:          3933         346104  java.lang.reflect.Method
+   9:          8459         270688  java.util.HashMap$Node
+  10:         14750         236000  java.lang.Object
+  11:          2893         232104  [Ljava.util.HashMap$Node;
+  12:          5583         223320  java.util.LinkedHashMap$Entry
+  13:            99         172528  [Ljava.util.concurrent.ConcurrentHashMap$Node;
+  14:          2705         151480  java.util.LinkedHashMap
+  15:          2059          82360  java.lang.ref.SoftReference
+  16:          1478          78680  [Ljava.lang.String;
+  17:          3133          69016  [Ljava.lang.Class;
+  18:          2829          67896  java.util.ArrayList
+  19:           601          57696  org.springframework.beans.GenericTypeAwarePropertyDescriptor
+  20:          1796          57472  java.lang.ref.WeakReference
+  21:          1094          52512  java.util.HashMap
+  22:           890          49840  java.lang.invoke.MemberName
+  23:          1199          47960  java.util.TreeMap$Entry
+  24:           594          47520  java.lang.reflect.Constructor
+  25:           906          43488  org.apache.tomcat.util.modeler.AttributeInfo
+  26:          1638          39312  java.beans.MethodRef
+  27:          1597          38328  sun.reflect.generics.tree.SimpleClassTypeSignature
+  28:          1444          34656  java.util.LinkedList$Node
+  29:           864          34560  java.lang.invoke.MethodType
+
+  其他省略 ...
+```
+>>> 详解:
+>>>   - 如果指定了live子选项，则只计算活动的对象。
+>>>   - 打印的虚拟机内部的类名称将会带有一个’*’前缀。
+>>>   - \#instances: 实例对象的总数
+>>>   - \#bytes: 占用内存大小
+>>>   - class name: 全类名
+>>>
+>>> #### 4. 查看类加载器信息
+>>> 命令: jmap -clstats pid
+>>>
+>>> 结果:
+```
+Attaching to process ID 2919, please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 25.271-b09
+finding class loader instances ..done.
+computing per loader stat ..done.
+please wait.. computing liveness...................................................liveness analysis may be inaccurate ...
+class_loader    classes bytes   parent_loader   alive?  type
+
+<bootstrap>     2209    3776346   null          live    <internal>
+0x00000000f80986c8      1       1476    0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f8062fc0      1       1473    0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f80e0ac8      1       1474      null          dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f7b92370      3752    5718864 0x00000000f7b23e50      live    org/springframework/boot/loader/LaunchedURLClassLoader@0x0000000100060a10
+0x00000000f7e96a60      1       880     0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f7c53448      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f7c6a3c8      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f7e67be8      1       880     0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f8063088      1       1473    0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f80e0a00      1       1473    0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f86ae778      0       0       0x00000000f7b92370      live    org/springframework/boot/web/embedded/tomcat/TomcatEmbeddedWebappClassLoader@0x00000001003fb348
+0x00000000f7c6a490      1       1471    0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f7e67cb0      1       880     0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f80e0c58      1       1473    0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f7c092d8      0       0       0x00000000f7b23e50      live    java/util/ResourceBundle$RBClassLoader@0x00000001000c33a8
+0x00000000f8098790      1       1473    0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f7c6a558      1       1471    0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f8063218      1       1473    0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f80e0b90      1       1473    0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f8002420      1       1505      null          dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f7b23e50      38      61736   0x00000000f7b42dc0      live    sun/misc/Launcher$AppClassLoader@0x000000010000f958
+0x00000000f7eb2148      1       880     0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f80632e0      1       1473    0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f80e0de8      1       1473    0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f8774290      1       880     0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f80e0d20      1       1473    0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f8774358      1       880     0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f87bd988      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f7b42dc0      25      27654     null          live    sun/misc/Launcher$ExtClassLoader@0x000000010000fd00
+0x00000000f8063470      1       1473    0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f80e08b8      1       1476    0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f7eb2210      1       880     0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f8062ef8      1       1473    0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+0x00000000f8063538      1       1473    0x00000000f7b92370      dead    sun/reflect/DelegatingClassLoader@0x000000010000a0a0
+
+total = 35      6053    9621422     N/A         alive=6, dead=29            N/A
+```
+>>> 详解:
+>>>   - 连接到正在运行的进程，并打印有关Metaspace中加载的类的详细信息
+>>>   - class_loader: 类加载器对象的地址
+>>>   - classes: 加载的类的数量
+>>>   - bytes: 该类加载加载的所有类的元数据所占用的大概存储空间
+>>>   - parent_loader: 父类加载器的地址，如果没有显示 null
+>>>   - alive?: live 表示未来不会被 GC 回收，dead 表示未来会被 GC 回收
+>>>   - type: 该类加载器的名称
+>>>
+>>> #### 5. 查看 finalizer 信息
+>>> finalizer 指的就是重写了 Object 的 finalize 方法的类，这些类会放在 finalizer 队列中。
+>>> 此命令就是查看 finalizer 队列中的这些等待调用 finalize 方法的对象
+>>>
+>>> 命令: jmap -finalizerinfo pid
+>>>
+>>> 结果:
+```
+Attaching to process ID 2919, please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 25.271-b09
+Number of objects pending for finalization: 0
+```
+>>> 解释: Number of objects pending for finalization: 0 表示 finalizer 队列中没有对象
+>>>
+>>> #### 6. 生成堆转储快照 dump 文件
+>>> 命令: jmap -dump:format=b,file=heapdump.phrof pid
+>>> 
+>>> 参数详解:
+>>>   - -dump:<dump-options>
+>>>     - live: 只 dump 存活的对象
+>>>     - format=b: 指定二进制格式
+>>>     - file=<file>: 指定导出的文件路径
+>>>
 >> ## 1.5 jstack
 >>
 >> ## 1.6 jcmd
