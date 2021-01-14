@@ -51,7 +51,7 @@ where <option> is one of:
 >> jstat 语法: jstat \[-命令选项] \[JVM 进程 ID] \[间隔时间/毫秒] \[查询次数]  
 >>
 >> jstat 常用参数: 
->>> #### 1. 类加载器信息统计
+>>> ##### 1. 类加载器信息统计
 >>> 命令: jstat -class VMID
 >>> 
 >>> 结果: 
@@ -67,7 +67,7 @@ Loaded  Bytes   Unloaded    Bytes      Time
 >>>   - Bytes: 卸载类的字节数
 >>>   - Time: 加载和卸载类所花费的时间
 >>>
->>> #### 2. 编译信息统计
+>>> ##### 2. 编译信息统计
 >>> 命令: jstat -compiler VMID
 >>>
 >>> 结果: 
@@ -84,7 +84,7 @@ Compiled Failed Invalid   Time   FailedType FailedMethod
 >>>   - FailedType: 最后一个编译失败任务的类型
 >>>   - FailedMethod: 最后一个编译失败任务所在的类及方法
 >>>
->>> #### 3. 堆内存与垃圾回收统计
+>>> ##### 3. 堆内存与垃圾回收统计
 >>> 命令: jstat -gc VMID
 >>>
 >>> 结果:
@@ -112,7 +112,7 @@ d:\>jstat -gc 17844
 >>>   - FGCT: 从应用程序启动到采样时老年代(全gc、Full GC)gc所用时间(s)
 >>>   - GCT: 从应用程序启动到采样时gc用的总时间(s)
 >>>
->>> #### 4. 堆内存容量统计
+>>> ##### 4. 堆内存容量统计
 >>> 命令: jstat -gccapacity VMID
 >>>
 >>> 结果: 
@@ -141,7 +141,7 @@ d:\>jstat -gccapacity 6820
 >>>   - YGC: 从应用程序启动到采样时年轻代中gc次数
 >>>   - FGC: 从应用程序启动到采样时old代(全gc)gc次数
 >>>
->>> #### 5. 年轻代（新生代）区域统计
+>>> ##### 5. 年轻代（新生代）区域统计
 >>> 命令: jstat -gcnew VMID
 >>> 
 >>> 结果: 
@@ -162,7 +162,7 @@ d:\>jstat -gccapacity 6820
 >>>   - YGC: 从应用程序启动到采样时年轻代中gc次数
 >>>   - YGCT: 从应用程序启动到采样时年轻代中gc所用时间(s)
 >>>
->>> #### 6. 年轻代（新生代）容量统计
+>>> ##### 6. 年轻代（新生代）容量统计
 >>> 命令: jstat -gcnewcapacity VMID
 >>>
 >>> 结果:
@@ -183,7 +183,7 @@ d:\>jstat -gccapacity 6820
 >>>   - YGC: 从应用程序启动到采样时年轻代中gc次数
 >>>   - FGC: 从应用程序启动到采样时old代(全gc)gc次数
 >>>
->>> #### 7. 老年代区域统计
+>>> ##### 7. 老年代区域统计
 >>> 命令: jstat -gcold VMID
 >>> 
 >>> 结果:
@@ -203,7 +203,7 @@ d:\>jstat -gccapacity 6820
 >>>   - FGCT: 从应用程序启动到采样时old代(全gc)gc所用时间(s)
 >>>   - GCT: 从应用程序启动到采样时gc用的总时间(s)
 >>>
->>> #### 8. 老年代容量统计
+>>> ##### 8. 老年代容量统计
 >>> 命令: jstat -gcoldcapacity VMID
 >>>
 >>> 结果:
@@ -221,7 +221,7 @@ d:\>jstat -gccapacity 6820
 >>>   - FGCT: 从应用程序启动到采样时old代(全gc)gc所用时间(s)
 >>>   - GCT: 从应用程序启动到采样时gc用的总时间(s)
 >>>
->>> #### 9. 统计 gc 信息
+>>> ##### 9. 统计 gc 信息
 >>> 命令: jstat -gcutil VMID
 >>>
 >>> 结果:
@@ -243,6 +243,41 @@ d:\>jstat -gccapacity 6820
 >>>   - GCT: 从应用程序启动到采样时gc用的总时间(s)
 >>>
 >> ## 1.4 jmap
+>> 用于查看堆内存的统计信息、导出堆快照文件、查看 ClassLoader 的信息以及 finalizer 队列
+>>
+>> jmap 语法:
+```
+Usage:
+    jmap [option] <pid>
+        (to connect to running process)
+    jmap [option] <executable <core>
+        (to connect to a core file)
+    jmap [option] [server_id@]<remote server IP or hostname>
+        (to connect to remote debug server)
+
+where <option> is one of:
+    <none>               to print same info as Solaris pmap
+    -heap                to print java heap summary
+    -histo[:live]        to print histogram of java object heap; if the "live"
+                         suboption is specified, only count live objects
+    -clstats             to print class loader statistics
+    -finalizerinfo       to print information on objects awaiting finalization
+    -dump:<dump-options> to dump java heap in hprof binary format
+                         dump-options:
+                           live         dump only live objects; if not specified,
+                                        all objects in the heap are dumped.
+                           format=b     binary format
+                           file=<file>  dump heap to <file>
+                         Example: jmap -dump:live,format=b,file=heap.bin <pid>
+    -F                   force. Use with -dump:<dump-options> <pid> or -histo
+                         to force a heap dump or histogram when <pid> does not
+                         respond. The "live" suboption is not supported
+                         in this mode.
+    -h | -help           to print this help message
+    -J<flag>             to pass <flag> directly to the runtime system
+```
+>> 常用参数:
+>> 
 >>
 >> ## 1.5 jstack
 >>
