@@ -525,11 +525,46 @@ Number of objects pending for finalization: 0
 >>>     - file=<file>: 指定导出的文件路径
 >>>
 >> ## 1.5 jstack
+>> 用于查看线程栈信息，排查线程死锁
+>>
+>> jstack 语法:
+```
+Usage:
+    jstack [-l] <pid>
+        (to connect to running process)
+    jstack -F [-m] [-l] <pid>
+        (to connect to a hung process)
+    jstack [-m] [-l] <executable> <core>
+        (to connect to a core file)
+    jstack [-m] [-l] [server_id@]<remote server IP or hostname>
+        (to connect to a remote debug server)
+
+Options:
+    -F  to force a thread dump. Use when jstack <pid> does not respond (process is hung)
+    -m  to print both java and native frames (mixed mode)
+    -l  long listing. Prints additional information about locks
+    -h or -help to print this help message
+```
+>> 参数详解:
+>>   - -F: 强制 dump 线程栈信息，当查看的 JVM 进程无响应时可以使用
+>>   - -m: 打印 java 虚拟机栈 和 本地方法栈
+>>   - -l: 长监听，打印有关锁的其他信息
 >>
 >> ## 1.6 jcmd
+>> 将如 jmap、jstack 等一些进行整合
 >>
+>> 常用命令:
+>>   - jcmd pid VM.version: 查看 JVM 版本信息
+>>   - jcmd pid VM.flags: 与 jinfo -flags pid 等价，查看 JVM 参数
+>>   - jcmd pid VM.command_line: 查看 JVM 启动的命令行参数信息
+>>   - jcmd pid VM.system_properties: 查看 JVM 的属性信息
+>>   - jcmd pid Thread.print: 与 jstack 等价，查看线程栈的信息
+>>   - jcmd pid GC.class_histogram: 与 jmap -histo pid 等价，查看堆中对象的统计信息
+>>   - jcmd pid GC.heap_info: 查看堆内存信息
 >>
->
+>> ## 1.7 执行 JDK 工具命令连接查看远程服务器
+>>
+# 2、图形化工具
 >
 >
 >

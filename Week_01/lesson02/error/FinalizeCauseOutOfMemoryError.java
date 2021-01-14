@@ -9,6 +9,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class FinalizeCauseOutOfMemoryError {
 
+    /**
+     * 创建的对象数量计数器
+     */
     private static AtomicInteger aliveCount = new AtomicInteger(0);
 
     public FinalizeCauseOutOfMemoryError() {
