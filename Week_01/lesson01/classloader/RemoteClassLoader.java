@@ -1,6 +1,6 @@
 package lesson01.classloader;
 
-import lesson01.util.ClassCodeUtils;
+import lesson01.util.ByteCodeUtils;
 
 import java.io.IOException;
 
@@ -36,12 +36,12 @@ public class RemoteClassLoader extends BaseNoParentDelegationClassLoader {
 
         byte[] bytes;
         try {
-            bytes = ClassCodeUtils.getRemoteClassFileAsBytes(url);
+            bytes = ByteCodeUtils.getRemoteClassFileAsBytes(url);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        ClassCodeUtils.xlassDecode(bytes);
+        ByteCodeUtils.xlassDecode(bytes);
         return defineClass(name, bytes, 0, bytes.length);
     }
 

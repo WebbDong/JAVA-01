@@ -1,7 +1,7 @@
 package lesson01.classloader;
 
 import lesson01.util.Base64Utils;
-import lesson01.util.ClassCodeUtils;
+import lesson01.util.ByteCodeUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,7 +23,7 @@ public class HelloBase64ClassLoader extends BaseNoParentDelegationClassLoader {
                 "rVSP/+Tv////7/9f////n//v////7//v/0//f//v/2////2v/9//7////2Tf/97fxJ//tO/////v/1////9f/9" +
                 "////+//3//r//v/z/////f/y";
         byte[] plaintextBytes = Base64Utils.decode(base64.getBytes());
-        ClassCodeUtils.xlassDecode(plaintextBytes);
+        ByteCodeUtils.xlassDecode(plaintextBytes);
         return defineClass(name, plaintextBytes, 0, plaintextBytes.length);
     }
 
@@ -45,7 +45,7 @@ public class HelloBase64ClassLoader extends BaseNoParentDelegationClassLoader {
     private static void printBase64HelloClass() {
         byte[] bytes;
         try (InputStream in = ClassLoader.getSystemResourceAsStream("Hello.class")) {
-            bytes = ClassCodeUtils.readLocalClassAsBytes(in);
+            bytes = ByteCodeUtils.readLocalClassAsBytes(in);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -13,11 +13,11 @@ import java.util.stream.IntStream;
  * @description: 字节码工具类
  * @date 2021-01-07 16:12
  */
-public class ClassCodeUtils {
+public class ByteCodeUtils {
 
     private static final int BUFFER_SIZE = 1024;
 
-    private ClassCodeUtils() {}
+    private ByteCodeUtils() {}
 
     /**
      * 解码 xlass 的字节码，将字节码文件数据的每一个字节都用 255 减去当前的字节数值获取原字节码数据
