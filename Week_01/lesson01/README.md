@@ -6,7 +6,7 @@
   - 第四题: [jstat、jstack 和 jmap 使用示例](#jstatjstackjmapExample)
   
 # 笔记目录
-  - JVM 字节码
+  - Java 字节码
 -------------
 # 1、Java 字节码
 ## 1.1 Java 字节码简介
