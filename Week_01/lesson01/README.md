@@ -20,7 +20,7 @@
   - [4. 常用 JVM 启动参数](#JVMArgs)
   - [5. jstat、jstack 和 jmap 使用示例](#jstatjstackjmapExample)
 -------------
-# <span id="javaByteCode">1、Java 字节码</span>
+# <span id="javaByteCode">1. Java 字节码</span>
 ## <span id="javaByteCodeIntroduction">1.1 Java 字节码简介</span>
 > Java 字节码由单字节（byte）的指令组成，理论上最多支持 256 个操作码（opcode）。实际上 Java 只使用了200左右的操作码， 还有一些操作码则保留给调试操作。
 >
@@ -53,6 +53,7 @@
 > ![alt 图片](./img/Class文件结构组织示意图.jpg "Class文件结构组织示意图")
 
 ## <span id="byteCodeFileAnalysis">1.3 字节码文件分析</span>
+> 以下字节码分析都是基于工程中 [HelloByteCode](./bytecode/HelloByteCode.java) 使用 javap 反编译之后来展开。
 > ### (1) 类信息与常量池信息
 ```
 Classfile /D:/lesson01/bytecode/HelloByteCode.class
@@ -822,6 +823,26 @@ Constant pool:
 > -classpath 或者 -­cp 选项、java.class.path 系统参数指定的 jar 包和类路径。如果没有特别指定，则在没有使用自定义类加载器情况下，
 > 用户自定义的类都由此加载器加载。
 >
+> ### 2.4.4 类加载器的类层级关系
+> ![alt 图片](./img/类加载器的类层级关系.png "类加载器的类层级关系")
+>
+> ### 2.4.5 自定义类加载器
+> 如果用户自定义了类加载器，则自定义类加载器都以应用类加载器（AppClassLoader）作为父加载器。可以直接继承 ClassLoader 来自定义类加载器，
+> 也可以继承 SecureClassLoader 或 URLClassLoader 实现自定义类加载器。继承 SecureClassLoader 将会保留有关安全策略的检查逻辑。
+>
+> ### 2.4.6 类加载机制的特点
+> #### 1) 双亲委派机制
+>   当一个类加载器（除了 BootstrapClassLoader）加载一个类时，都会将该类委托给自己的父类加载器，父类加载器如果发现自己还存在父类加载器
+>   会继续往上层委托，直到最顶层的类加载器。只要顶层的类加载器加载到了类就会完成加载过程，如果顶层类加载器没有加载到类，就会一级一级往下
+>   让各级的子类加载器尝试加载，只要级层中某一个类加载器加载到了就完成加载过程，如果所有类加载器都没有加载到该类，就会抛出 ClassNotFountException
+>
+>   打破双亲委派的方法就是同时重写 ClassLoader 的 findClass 和 loadClass 这两个方法，只重写 findClass 不会打破。
+>
+> #### 2) 负责依赖
+>   如果一个类加载器在加载某个类的时候，发现这个类依赖于另外几个类或接口，也会去尝试加载这些依赖的类。
+>
+> #### 3) 缓存加载
+>   为了提升加载效率，消除重复加载，一旦某个类被一个类加载器加载，那么它会缓存这个加载结果，不会重复加载。
 >
 # <span id="JVMMemoryStructureAndJMM">3. JVM 内存结构和 Java 内存模型</span>
 > ## JVM 内存结构
@@ -830,7 +851,7 @@ Constant pool:
 > ## Java 内存模型(JMM)
 > ![alt 图片](./img/Java%20内存模型.png "Java 内存模型")
 >
-> JMM 规范明确定义了不同的线程之间，通过哪些方式，在什么时候可以看见其他线程保存到共享变量中的值；以及在必要时，
+> JMM 规范明确定义了不同的线程之间，通过哪些方式，在什么时候可以看见其他线程保存到共享变量中的值。以及在必要时，
 > 如何对共享变量的访问进行同步。这样的好处是屏蔽各种硬件平台和操作系统之间的内存访问差异，实现了 Java 并发程序真正的跨平台。
 >
 # <span id="JVMArgs">4. 常用 JVM 启动参数</span>

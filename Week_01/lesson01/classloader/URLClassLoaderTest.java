@@ -13,6 +13,7 @@ public class URLClassLoaderTest {
 
     /**
      * 外部字节码文件目录，注意不能包含包名的文件夹名，并且末尾的 / 不能漏掉，否则将会加载不到类
+     * URLClassLoader 将结尾为 / 的当作是目录，否则都将当作为一个 jar 文件的路径
      */
     private static final String BYTE_CODE_FILE_DIR_PATH = "file:/D:/study/e-book/MyCode/";
 
