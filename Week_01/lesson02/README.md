@@ -3,11 +3,20 @@
   - 第一题: 
   
 # 笔记目录
-
-# 1、JDK 自带命令行工具
+  - [1. JDK 自带命令行工具](#jdkCommandTools)
+    - [1.1 jps](#jpsCommand)
+    - [1.2 jinfo](#jinfoCommand)
+    - [1.3 jstat](#jstatCommand)
+    - [1.4 jmap](#jmapCommand)
+    - [1.5 jstack](#jstackCommand)
+    - [1.6 jcmd](#jcmdCommand)
+    - [1.7 执行 JDK 工具命令连接查看远程服务器](#jdkCommandConnectRemoteServer)
+  - [2. 图形化工具](#guiTools)
+---------------------
+# <span id="jdkCommandTools">1. JDK 自带命令行工具</span>
 > ![alt 图片](./img/常用%20JDK%20自带命令行工具.png "常用 JDK 自带命令行工具")
 >
->> ## 1.1 jps
+>> ## <span id="jpsCommand">1.1 jps</span>
 >> 用于查看 JVM 进程相关信息  
 >>
 >> jps 常用参数: 
@@ -17,7 +26,7 @@
 >>   - -v: 输出传递给 JVM 的参数，可以看到 JVM 启动参数
 >>   - 参数组合使用: -mlv，将 -m、-l、-v 组合使用
 >>
->> ## 1.2 jinfo
+>> ## <span id="jinfoCommand">1.2 jinfo</span>
 >> 用于打印和动态修改虚拟机参数，也可以打印 JVM 参数和系统参数。
 >> 
 >> jinfo 语法: 
@@ -47,7 +56,7 @@ where <option> is one of:
 >>   - -sysprops: 打印系统参数
 >>   - 不指定参数标签: 默认打印 JVM 参数和系统参数
 >>
->> ## 1.3 jstat
+>> ## <span id="jstatCommand">1.3 jstat</span>
 >> jstat 语法: jstat \[-命令选项] \[JVM 进程 ID] \[间隔时间/毫秒] \[查询次数]  
 >>
 >> jstat 常用参数: 
@@ -242,7 +251,7 @@ d:\>jstat -gccapacity 6820
 >>>   - FGCT: 从应用程序启动到采样时old代(全gc)gc所用时间(s)
 >>>   - GCT: 从应用程序启动到采样时gc用的总时间(s)
 >>>
->> ## 1.4 jmap
+>> ## <span id="jmapCommand">1.4 jmap</span>
 >> 用于查看堆内存的统计信息、导出堆快照文件、查看 ClassLoader 的信息以及 finalizer 队列
 >>
 >> jmap 语法:
@@ -524,7 +533,7 @@ Number of objects pending for finalization: 0
 >>>     - format=b: 指定二进制格式
 >>>     - file=<file>: 指定导出的文件路径
 >>>
->> ## 1.5 jstack
+>> ## <span id="jstackCommand">1.5 jstack</span>
 >> 用于查看线程栈信息，排查线程死锁
 >>
 >> jstack 语法:
@@ -550,7 +559,7 @@ Options:
 >>   - -m: 打印 java 虚拟机栈 和 本地方法栈
 >>   - -l: 长监听，打印有关锁的其他信息
 >>
->> ## 1.6 jcmd
+>> ## <span id="jcmdCommand">1.6 jcmd</span>
 >> 将如 jmap、jstack 等一些进行整合
 >>
 >> 常用命令:
@@ -562,9 +571,9 @@ Options:
 >>   - jcmd pid GC.class_histogram: 与 jmap -histo pid 等价，查看堆中对象的统计信息
 >>   - jcmd pid GC.heap_info: 查看堆内存信息
 >>
->> ## 1.7 执行 JDK 工具命令连接查看远程服务器
+>> ## <span id="jdkCommandConnectRemoteServer">1.7 执行 JDK 工具命令连接查看远程服务器</span>
 >>
-# 2、图形化工具
+# <span id="guiTools">2. 图形化工具</span>
 >
 >
 >

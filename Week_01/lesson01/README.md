@@ -6,10 +6,19 @@
   - 第四题: [jstat、jstack 和 jmap 使用示例](#jstatjstackjmapExample)
   
 # 笔记目录
-  - Java 字节码
+  - [1. Java 字节码](#javaByteCode)
+    - [1.1 Java 字节码简介](#javaByteCodeIntroduction)
+    - [1.2 Java 字节码文件结构简述](#javaByteCodeStructure)
+    - [1.3 字节码文件分析](#byteCodeFileAnalysis)
+    - [1.4 字节码相关 JDK 命令行工具](#byteCodeJDKCommandTools)
+  - [2. 类加载器](#classLoader)
+    - [2.1 类的生命周期和加载过程](#classLifeCycleAndLoading)
+  - [3. JVM 内存结构和 Java 内存模型](#JVMMemoryStructureAndJMM)
+  - [4. 常用 JVM 启动参数](#JVMArgs)
+  - [5. jstat、jstack 和 jmap 使用示例](#jstatjstackjmapExample)
 -------------
-# 1、Java 字节码
-## 1.1 Java 字节码简介
+# <span id="javaByteCode">1、Java 字节码</span>
+## <span id="javaByteCodeIntroduction">1.1 Java 字节码简介</span>
 > Java 字节码由单字节（byte）的指令组成，理论上最多支持 256 个操作码（opcode）。实际上 Java 只使用了200左右的操作码， 还有一些操作码则保留给调试操作。
 >
 > 根据指令的性质，主要分为四个大类:
@@ -34,13 +43,13 @@
 > 操作码（指令）由类型前缀**类型前缀**和**操作名称**两部分组成，例如: iadd 操作码，i 代表 Integer 类型，add 代表加法操作，
 > 所以 iadd 就是整数类型数据的加法操作。
 >
-## 1.2 Java 字节码文件结构简述
+## <span id="javaByteCodeStructure">1.2 Java 字节码文件结构简述</span>
 > ### 字节码文件结构
 > ![alt 图片](./img/Java%20字节码结构.png "Java 字节码结构")
 > 
 > ![alt 图片](./img/Class文件结构组织示意图.jpg "Class文件结构组织示意图")
 
-## 1.3 <span id="byteCodeFileAnalysis">字节码文件分析</span>
+## <span id="byteCodeFileAnalysis">1.3 字节码文件分析</span>
 > ### (1) 类信息与常量池信息
 ```
 Classfile /D:/lesson01/bytecode/HelloByteCode.class
@@ -709,7 +718,7 @@ Constant pool:
 ```
 > 有返回值且有局部变量接收，会使用指令将在栈顶的返回值保存到对应的局部变量
 >
-## 1.4 字节码相关 JDK 命令行工具
+## <span id="byteCodeJDKCommandTools">1.4 字节码相关 JDK 命令行工具</span>
 > ### javac 编译工具  
 > 常用参数:
 >   * -g 在生成的class文件中包含所有调试信息（包括局部变量），缺省情况下只生成行号和源文件信息。
@@ -727,8 +736,8 @@ Constant pool:
 >
 >   示例: javap -c -verbose HelloByteCode.class
 
-# 2、类加载器
-> ## 2.1 类的生命周期和加载过程
+# <span id="classLoader">2. 类加载器</span>
+> ## <span id="classLifeCycleAndLoading">2.1 类的生命周期和加载过程</span>
 > ![alt 图片](./img/类的生命周期.png "类的生命周期")
 > 
 > 一个类在 JVM 中的生命周期分为七个阶段，分别是加载(Loading)、校验(Verification)、
@@ -764,7 +773,7 @@ Constant pool:
 > * 初始化过程包括执行: 类构造器、static 静态变量赋值语句、static 静态代码块。
 > * 如果是一个子类进行初始化，会先对其父类进行初始化。
 >
-# <span id="JVMMemoryStructureAndJMM">3、JVM 内存结构和 Java 内存模型</span>
+# <span id="JVMMemoryStructureAndJMM">3. JVM 内存结构和 Java 内存模型</span>
 > ## JVM 内存结构
 > ![alt 图片](./img/JVM%20内存结构&堆内存&栈内存.png "JVM 内存结构&堆内存&栈内存")
 > 
@@ -774,9 +783,9 @@ Constant pool:
 > JMM 规范明确定义了不同的线程之间，通过哪些方式，在什么时候可以看见其他线程保存到共享变量中的值；以及在必要时，
 > 如何对共享变量的访问进行同步。这样的好处是屏蔽各种硬件平台和操作系统之间的内存访问差异，实现了 Java 并发程序真正的跨平台。
 >
-# 4、常用 JVM 启动参数
+# <span id="JVMArgs">4. 常用 JVM 启动参数</span>
 
-# <span id="jstatjstackjmapExample">5、jstat、jstack 和 jmap 使用示例</span>
+# <span id="jstatjstackjmapExample">5. jstat、jstack 和 jmap 使用示例</span>
 > 检查一下自己维护的业务系统的 JVM 参数配置，用 jstat 和 jstack、jmap 查看一下详情，并且自己独立分析一下大概情况，思考有没有不合理的地方，如何改进。
 > ### jstat
 > ![alt 图片](./img/jstat示例.png "jstat示例")
