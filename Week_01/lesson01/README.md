@@ -13,6 +13,9 @@
     - [1.4 字节码相关 JDK 命令行工具](#byteCodeJDKCommandTools)
   - [2. 类加载器](#classLoader)
     - [2.1 类的生命周期和加载过程](#classLifeCycleAndLoading)
+    - [2.2 类加载时机](#classLoaderOpportunity)
+    - [2.3 不执行类初始化的情况](#noInitializationCondition)
+    - [2.4 类加载器机制](#classLoadingMechanism)
   - [3. JVM 内存结构和 Java 内存模型](#JVMMemoryStructureAndJMM)
   - [4. 常用 JVM 启动参数](#JVMArgs)
   - [5. jstat、jstack 和 jmap 使用示例](#jstatjstackjmapExample)
@@ -773,6 +776,53 @@ Constant pool:
 > * 初始化过程包括执行: 类构造器、static 静态变量赋值语句、static 静态代码块。
 > * 如果是一个子类进行初始化，会先对其父类进行初始化。
 >
+> ## <span id="classLoaderOpportunity">2.2 类加载时机</span>
+> 1. 当虚拟机启动时，初始化用户指定的主类，就是启动执行的 main 方法所在的类;
+> 2. 当 new 指令创建一个类的实例，也就是 new 一个类的对象时;
+> 3. 当遇到调用静态方法的指令时，初始化该静态方法所在的类;
+> 4. 当遇到访问静态字段的指令时，初始化该静态字段所在的类;
+> 5. 子类的初始化会触发父类的初始化;
+> 6. 如果一个接口定义了 default 方法，那么直接实现或者间接实现该接口的类的初始化，
+     会触发该接口的初始化;
+> 7. 使用反射 API 对某个类进行反射调用时，初始化这个类，其实跟前面一样，反射 调用要么是已经有实例了，要么是静态方法，都需要初始化;
+> 8. 当初次调用 MethodHandle 实例时，初始化该 MethodHandle 指向的方法所在的 类.
+>
+> ## <span id="noInitializationCondition">2.3 不执行类初始化的情况</span>
+> 1. 通过子类访问父类的静态字段，只会触发父类的初始化，而不会触发子类的初始化。
+> 2. 定义对象数组，不会触发该类的初始化。
+> 3. 常量在编译期间会存入调用类的常量池中，本质上并没有直接引用定义常量的类，不会触发定义常量所在的类。
+> 4. 通过类名获取 Class 对象，不会触发类的初始化，Hello.class 不会让 Hello 类初始化。
+> 5. 通过 Class.forName 加载指定类时，如果指定参数 initialize 为 false 时，也不会触发 类初始化，这个参数是告诉虚拟机，
+>    是否要对类进行初始化。 Class.forName("jvm.Hello") 默认会加载 Hello 类。
+> 6. 通过 ClassLoader 默认的 loadClass 方法，也不会触发初始化动作（加载了，但是 不初始化）。
+>
+> ## <span id="classLoadingMechanism">2.4 类加载器机制</span>
+> ![alt 图片](./img/系统自带的类加载器.png "系统自带的类加载器")
+>
+> 系统自带的类加载器分为三种: 
+>   - 启动类加载器（BootstrapClassLoader）
+>   - 扩展类加载器（ExtClassLoader）
+>   - 应用类加载器（AppClassLoader）
+>
+> 一般启动类加载器是由JVM内部实现的，由 C++ 编写，并不继承自 java.lang.ClassLoader 在 Java 的 API 里无法拿到，但是我们可以侧 面看到和影响它。
+> 后2种类加载器在 Oracle Hotspot JVM 里，都是在中 sun.misc.Launcher 定义的，扩展类加载器和应用类加载器一般都继承自 URLClassLoader 类，
+> 这个类也默认实现了从各种不同来源加载 class 字节码转换成 Class 的方法。
+>
+> ### 2.4.1 启动类加载器（BootstrapClassLoader）:
+> 它用来加载 Java 的核心类库，是用原生 C++ 来实现的，并不继承自 java.lang.ClassLoader，负责加载 JDK 中 jre/lib/rt.jar 里所有的 class，
+> 它可以看做是 JVM 自带的，我们再代码层面无法直 接获取到启动类加载器的引用，所以不允许直接操作它。比如 java.lang.String 是由启动类加载器加载的，
+> 所以 String.class.getClassLoader() 就会返回 null。
+>
+> ### 2.4.2 扩展类加载器（ExtClassLoader）:
+> ExtClassLoader 由 BootstrapClassLoader 加载，是 sun.misc.Launcher 中定义的一个内部类，它负责加载 jre 的扩展目录，
+> lib/ext 或者由 java.ext.dirs 系统参数指定的目录中的 jar 包中的类，代码里直接获取它的父类加载器为 null，因为无法拿到启动类加载器。
+>
+> ### 2.4.3 应用类加载器（AppClassLoader）:
+> AppClassLoader 由 ExtClassLoader 加载，是 sun.misc.Launcher 中定义的一个内部类，它负责在 JVM 启动时加载来自 java 命令的
+> -classpath 或者 -­cp 选项、java.class.path 系统参数指定的 jar 包和类路径。如果没有特别指定，则在没有使用自定义类加载器情况下，
+> 用户自定义的类都由此加载器加载。
+>
+>
 # <span id="JVMMemoryStructureAndJMM">3. JVM 内存结构和 Java 内存模型</span>
 > ## JVM 内存结构
 > ![alt 图片](./img/JVM%20内存结构&堆内存&栈内存.png "JVM 内存结构&堆内存&栈内存")
@@ -784,6 +834,7 @@ Constant pool:
 > 如何对共享变量的访问进行同步。这样的好处是屏蔽各种硬件平台和操作系统之间的内存访问差异，实现了 Java 并发程序真正的跨平台。
 >
 # <span id="JVMArgs">4. 常用 JVM 启动参数</span>
+ TODO
 
 # <span id="jstatjstackjmapExample">5. jstat、jstack 和 jmap 使用示例</span>
 > 检查一下自己维护的业务系统的 JVM 参数配置，用 jstat 和 jstack、jmap 查看一下详情，并且自己独立分析一下大概情况，思考有没有不合理的地方，如何改进。
