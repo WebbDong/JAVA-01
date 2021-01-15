@@ -584,6 +584,8 @@ Options:
 >>   - jstack -F server-id@server_address
 >>
 >> 使用注意事项: 
+>>   - jstack -m 不能用于远程服务器
+>>   - 客户端和服务端的 JVM 版本必须一致，否则不能使用
 >>
 # <span id="guiTools">2. 图形化工具</span>
 > ## <span id="jconsole">2.1 jconsole</span>
