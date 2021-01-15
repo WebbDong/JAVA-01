@@ -26,6 +26,11 @@ public class ByteCodeUtils {
     public static void xlassDecode(byte[] bytes) {
         IntStream.range(0, bytes.length).boxed()
                 .forEach(i -> bytes[i] = (byte) (255 - bytes[i]));
+
+        /*
+        IntStream.range(0, bytes.length).boxed()
+                .forEach(i -> bytes[i] = (byte) ~bytes[i]);
+         */
     }
 
     /**

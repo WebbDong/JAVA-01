@@ -14,6 +14,13 @@ import java.util.ArrayList;
  */
 public class JvmLoadedJarsPrinter {
 
+    /**
+     * JVM 启动参数 -Dsun.boot.class.path="D:\develop\java\jdk\jdk1.8.0_231\jre\lib\rt.jar" -Djava.ext.dirs
+     * -Dsun.boot.class.path 用来配置 BootstrapClassLoader 加载哪些 jar 包，如果将 -Djava.ext.dirs 配置为空，
+     * ExtClassLoader 将不回家在任何 jar 包
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
         // 启动类加载器
         URL[] urLs = Launcher.getBootstrapClassPath().getURLs();

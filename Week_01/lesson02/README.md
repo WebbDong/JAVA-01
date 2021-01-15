@@ -12,6 +12,7 @@
     - [1.6 jcmd](#jcmdCommand)
     - [1.7 执行 JDK 工具命令连接查看远程服务器](#jdkCommandConnectRemoteServer)
   - [2. 图形化工具](#guiTools)
+    - [2.1 jconsole](#jconsole)
 ---------------------
 # <span id="jdkCommandTools">1. JDK 自带命令行工具</span>
 > ![alt 图片](./img/常用%20JDK%20自带命令行工具.png "常用 JDK 自带命令行工具")
@@ -555,8 +556,8 @@ Options:
     -h or -help to print this help message
 ```
 >> 参数详解:
->>   - -F: 强制 dump 线程栈信息，当查看的 JVM 进程无响应时可以使用
->>   - -m: 打印 java 虚拟机栈 和 本地方法栈
+>>   - -F: 强制 dump 线程栈信息，当查看的 JVM 进程无响应时（线程死锁）可以使用
+>>   - -m: 打印 java 虚拟机栈 和 本地方法栈，这个参数不能用于远程服务器
 >>   - -l: 长监听，打印有关锁的其他信息
 >>
 >> ## <span id="jcmdCommand">1.6 jcmd</span>
@@ -571,12 +572,23 @@ Options:
 >>   - jcmd pid GC.class_histogram: 与 jmap -histo pid 等价，查看堆中对象的统计信息
 >>   - jcmd pid GC.heap_info: 查看堆内存信息
 >>
->> ## <span id="jdkCommandConnectRemoteServer">1.7 执行 JDK 工具命令连接查看远程服务器</span>
+>> ## <span id="jdkCommandConnectRemoteServer">1.7 jmap 和 jstack 连接查看远程服务器</span>
+>> jmap 和 jstack 支持连接远程服务器并执行命令查看远程服务器的信息
+>>
+>> 服务端:
+>>   - 启动服务器端的 java 应用，并查看进程的 pid
+>>   - 执行 jsadebugd pid server-id 命令，server-id 为启动的应用的一个名称，可以随便取名
+>>
+>> 客户端:
+>>   - jmap -heap server-id@server_address
+>>   - jstack -F server-id@server_address
+>>
+>> 使用注意事项: 
 >>
 # <span id="guiTools">2. 图形化工具</span>
+> ## <span id="jconsole">2.1 jconsole</span>
 >
->
->
+> 
 >
 >
 >
