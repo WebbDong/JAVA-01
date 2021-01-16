@@ -13,6 +13,9 @@
     - [1.7 执行 JDK 工具命令连接查看远程服务器](#jdkCommandConnectRemoteServer)
   - [2. 图形化工具](#guiTools)
     - [2.1 jconsole](#jconsole)
+    - [2.2 jvisualvm](#jvisualvm)
+    - [2.3 jmc](#jmc)
+  - [3. GC (Garbage Collection)](#gc)
 ---------------------
 # <span id="jdkCommandTools">1. JDK 自带命令行工具</span>
 > ![alt 图片](./img/常用%20JDK%20自带命令行工具.png "常用 JDK 自带命令行工具")
@@ -26,6 +29,15 @@
 >>   - -l: 输出应用程序 main class 的完整 package 名或者应用程序的 jar 文件完整名称
 >>   - -v: 输出传递给 JVM 的参数，可以看到 JVM 启动参数
 >>   - 参数组合使用: -mlv，将 -m、-l、-v 组合使用
+>>
+>> jps 常见问题:
+>>   1. 执行 jps 命令后不显示任何 JVM 进程  
+>>     当 java 程序运行时会开启对应的一个 JVM 进程，进程的信息写在了临时文件夹的 hsperfdata_currentUserName 目录中，如果是 Windows 
+>>     系统就是环境变量 %TEMP%\hsperfdata_currentUserName，如果是 Linux 系统就是 /tmp/hsperfdata_currentUserName 目录中。jps 是
+>>     通过读取该目录下的文件来显示当前运行的 JVM 进程。所以出现此问题的原因有三种:
+>>       - 该目录的没有磁盘读写权限
+>>       - 临时文件丢失，被删除或是定期清理
+>>       - JVM 进程信息文件存储地址被设置，不在/tmp目录下。-Djava.io.tmpdir 可以修改这个目录，但是 jps、jconsole 都只会从 /tmp(%TEMP%\) 目录中去读取
 >>
 >> ## <span id="jinfoCommand">1.2 jinfo</span>
 >> 用于打印和动态修改虚拟机参数，也可以打印 JVM 参数和系统参数。
@@ -589,8 +601,79 @@ Options:
 >>
 # <span id="guiTools">2. 图形化工具</span>
 > ## <span id="jconsole">2.1 jconsole</span>
->
+> jconsole 是 JDK 自带的图形化工具，可以监控 CPU 使用率、 内存、线程、类加载、GC信息、手动执行 GC、JVM 概述以及 MBeans
 > 
+> jconsole 连接远程服务器:
+>> jconsole 需要配置 JMX (Java Management Extensions、Java管理扩展) 才可以实现远程连接  
+>>
+>> 服务端配置:
+```
+java
+ -Djava.rmi.server.hostname=192.168.238.150           # 远程服务器 ip
+ -Dcom.sun.management.jmxremote                       # 允许 JMX 远程连接
+ -Dcom.sun.management.jmxremote.port=3214             # 自定义 JMX 端口
+ -Dcom.sun.management.jmxremote.ssl=false             # 是否需要 SSL 安全连接模式
+ -Dcom.sun.management.jmxremote.authenticate=false    # 是否需要密钥
+ -jar gateway-server-0.0.1-SNAPSHOT.jar
+``` 
+>>
+>> jconsole 客户端:
+>> ![alt 图片](./img/jconsole远程连接.png "jconsole远程连接")
+>
+> ## <span id="jvisualvm">2.2 jvisualvm</span>
+> jmap，jinfo，jstat 和 jstack 提供的大多数功能已集成到 jvisualvm 中。可以监控 CPU 、内存、线程、GC。并且 jvisualvm 支持插件，
+> 可以在 Tool - Plugins 中安装或卸载插件。GC 的详细信息需要手动安装 Visual GC 插件。idea 也有一个叫 Visual GC 的插件
+>
+> jvisualvm 也支持远程连接也是基于 JMX ，使用方式与 jconsole 相似，但是有些插件不支持远程服务器，会失效。
+> ![alt 图片](./img/jvisualvm远程连接.png "jvisualvm远程连接")
+>
+> ## <span id="jmc">2.3 jmc</span>
+> jmc 是源自 JRockit JVM 的一套监控和管理工具，功能最全。jmc 监控的是整个系统，而并非只是被选中的 JVM 进程。
+>
+# <span id="gc">3. GC (Garbage Collection)</span>
+> ## <span id="gc">3.1 垃圾回收算法</span>
+> ### 3.1.1 引用计数法
+>> #### 1) 原理
+>>> 当某个对象被引用的时候，该对象的引用计数器就加一，当该对象不被引用时引用计数器就减一，如果引用计数器为0时，就代表此对象
+>   可以被回收。需要注意：一般不是一个引用计数到 0 了就立即释放，出于效率考虑，系统总是会等一批仓库一起处理，这样更加高效。
+>
+>> #### 2) 弊端
+>>> 当存在循环引用依赖时，引用计数始终不为 0，就无法释放掉这些已经不使用的对象。
+>>>
+>>> ![alt 图片](./img/引用计数循环引用依赖.png "引用计数循环引用依赖")
+>>>
+>>> 引用计数法解决循环引用的方案:
+>>>   - 在知道存在循环引用的地方，在合适的位置主动断开环中的引用依赖
+>>>   - 使用弱引用来依赖
+>
+>> 第一代自动垃圾收集算法，使用的是引用计数 (reference counting)。针对每个对象，只需要记住被引用的次数，当引用计数变为0时，
+>> 这个对象就可以被安全地回收 (reclaimed) 了。
+>>
+>> 第二代的垃圾收集算法，被称为引用追踪 (reference tracing)，JVM 使用的各种垃圾收集算法都是基于引用追踪方式的算法。
+>
+> ### 3.1.2 标记清除算法 (Mark and Sweep)
+> 为了能够遍历所有的对象，JVM 定义了对象的可达性 (reachability)，有一种很明确很具体的对象，叫做垃圾收集根对象 (GC Roots)，包括:
+>   - 局部变量 (Local Variables) 包括方法的参数
+>   - 活动线程 (Active Threads)
+>   - 静态字段 (Static fields)
+>   - JNI引用 (JNI References)
+>
+> 标记清除算法分为两步:
+>   - Marking (标记): 遍历所有的可达对象 (reachable objects)，并在本地内存 (native memory) 中标记下。
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
 >
 >
 >
