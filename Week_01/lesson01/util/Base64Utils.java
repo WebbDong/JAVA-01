@@ -10,6 +10,8 @@ import java.util.Base64;
  */
 public class Base64Utils {
 
+    private Base64Utils() {}
+
     public static void main(String[] args) {
         String str = "996是一种福报？？？？？？？？";
         byte[] ciphertextBytes = encode(str.getBytes(Charset.forName("utf8")));
