@@ -21,6 +21,7 @@
     - [3.3 分代假设](#generationalHypothesis)
     - [3.4 堆内存池划分](#heapPartition)
       - [3.4.1 年轻代(新生代) (Young Generation、New Generation)](#youngGen)
+      - [3.4.2 老年代 (Old Generation、Tenured Generation)](#oldGen)
 ---------------------
 # <span id="jdkCommandTools">1. JDK 自带命令行工具</span>
 > ![alt 图片](./img/常用%20JDK%20自带命令行工具.png "常用 JDK 自带命令行工具")
@@ -772,7 +773,7 @@ if (CARD_TABLE [this address >> 9] != 0)
 >>>
 >>> 如果 Survivor 区的空间不够存放年轻代中的存活对象，那么提升到老年代也可能会提前进行。大对象也会直接在老年代分配，例如一个很大的数组。
 >>
->> #### 3) 老年代 (Old Generation、Tenured Generation)
+> ### <span id="oldGen">3.4.2 老年代 (Old Generation、Tenured Generation)</span>
 >>> 老年代的 GC 要复杂得多，老年代的内存空间通常也会更大，老年代的对象是垃圾的概率也会更小。老年代的 GC 发生频率要比年轻代的 GC 少很多。
 >>> 同时老年代中的对象大部分是存活的，并且老年代也没有划分成多个区，所以不适合使用标记-复制算法。通常使用标记-清除-整理算法。
 >
