@@ -23,6 +23,7 @@
       - [3.4.1 年轻代 (新生代、Young Generation、New Generation)](#youngGen)
       - [3.4.2 老年代 (Old Generation、Tenured Generation)](#oldGen)
     - [3.5 元数据区 (Metaspace)](#metaspace)
+    - [3.6 各 GC 算法的适用场景](#gcApplicableScene)
 ---------------------
 # <span id="jdkCommandTools">1. JDK 自带命令行工具</span>
 > ![alt 图片](./img/常用%20JDK%20自带命令行工具.png "常用 JDK 自带命令行工具")
@@ -690,18 +691,29 @@ java
 >
 > ### 3.1.3 标记-整理算法 (Mark-Compact)
 >> #### 1) 原理
->>> 此算法第一步也是标记可达对象，之后将存活的对象往前挪动对齐。整理阶段实际上是将存活的对象直接覆盖掉垃圾对象。
+>>> 此算法第一步也是标记可达对象，之后将存活的对象往前移动对齐，并且更新指向这些对象的引用。
 >
 >> #### 2) 优点
+>>>  - 可有效利用堆，没有空的堆
+>>>  - 不会有内存碎片
 >
 >> #### 3) 缺点
+>>>  - 整理操作会多花些时间成本
 >
 > ### 3.1.4 标记-复制算法 (Mark-Copy)
 >> #### 1) 原理
+>>> 首先将堆内存划分为多个区域，例如将堆内存划分为两部分，一部分是 from，另一部分是 to。
+>>> 每次 GC 时，将 from 存活的对象复制到 to 里，然后角色互换。其中一片区域始终是空的。
+>>> 在 HotSpot JVM 中把堆内存划分为3块，Eden 区和两个相同大小的 S0 和 S1。每次 Minor GC 
+>>> 都会将 Eden 和 S0 存活的的对象复制到 S1 中，然后 S0 和 S1 角色互换。
 >>
 >> #### 2) 优点
+>>>  - 不会产生内存碎片
+>>>  - 可实现高速分配，复制算法不需要维护空闲链表，分配内存很方便
+>>>  - 吞吐量好，只需搜索存活对象并复制，不需要扫描整个堆的对象
 >>
 >> #### 3) 缺点
+>>>  - 堆使用率低，因为有一块内存永远时空的，无法使用
 >
 > ## <span id="memoryDefragmentation">3.2 内存碎片整理</span>
 > 在每次执行清除 (Sweeping) 之后，JVM 都必须保证不可达对象所占用的内存空间能被回收重用，但这就导致了内存的不连续而产生内存碎片。从而引发两个问题:
@@ -798,13 +810,13 @@ if (CARD_TABLE [this address >> 9] != 0)
 >> 老年代的 GC 要复杂得多，老年代的内存空间通常也会更大，老年代的对象是垃圾的概率也会更小。老年代的 GC 发生频率要比年轻代的 GC 少很多。
 >> 同时老年代中的对象大部分是存活的，并且老年代也没有划分成多个区，所以不适合使用标记-复制算法。通常使用标记-清除-整理算法。
 >
-> ### <span id="metaspace">3.5 元数据区 (Metaspace)</span>
+> ## <span id="metaspace">3.5 元数据区 (Metaspace)</span>
 >> 从 Java 8 开始删除了永久代 (Permanent Generation)，取而代之的是 Metaspace 。Metaspace 直接位于本机内存 (Native Memory)，
 >> Metaspace 保存着运行时常量池、方法元信息、类元信息(klass)。Metaspace 默认的大小是最大可用的本机内存。
 >> 可以通过 -XX:MaxMetaspaceSize 参数来设置最大可用 Metaspace 大小，可以通过 -XX:MetaspaceSize 设置触发 Metaspace Full GC 的阈值。
 >> 当 Metaspace 空间达到了设置的值，就会触发 Full GC。
 >
->
+> ## <span id="gcApplicableScene">3.6 各 GC 算法的适用场景</span>
 >
 >
 >
