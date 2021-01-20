@@ -24,6 +24,11 @@
       - [3.4.2 老年代 (Old Generation、Tenured Generation)](#oldGen)
     - [3.5 元数据区 (Metaspace)](#metaspace)
     - [3.6 各 GC 算法的适用场景](#gcApplicableScene)
+  - [4. HotSpot JVM GC 的具体实现](#hotSpotGC)
+    - [4.1 串行GC (Serial GC)](#serialGC)
+    - [4.2 并行GC (Parallel GC)](#parallelGC)
+    - [4.3 ParNew GC](#parNewGC)
+    - [4.4 CMS GC](#cmsGC)
 ---------------------
 # <span id="jdkCommandTools">1. JDK 自带命令行工具</span>
 > ![alt 图片](./img/常用%20JDK%20自带命令行工具.png "常用 JDK 自带命令行工具")
@@ -674,7 +679,7 @@ java
 >>>   - Marking (标记): 遍历所有的可达对象 (reachable objects)，并标记为存活对象。标记所花费的时间是与“活动对象的总数”成正比的。
 >>>   - Sweeping (清除): 在清除阶段中，会遍历整个堆，回收不可达对象 (non-reachable objects) 所占的内存，使其可以再次重用。
 >>>     在遍历时被标记的对象是存活对象，不会回收，没有标记的垃圾对象所占的内存空间会用一个被称为“空闲链表”的单向链表记录着，
->>>     在之后进行分配时，只需要遍历这个空闲链表，就可以找到可用的内存块。
+>>>     所以清除阶段的时间开销与“整个堆的大小”成正比。在之后进行分配时，只需要遍历这个空闲链表，就可以找到可用的内存块。
 >>> 
 >>> JVM中包含了多种GC算法，如 Parallel Scavenge(并行清除)，Parallel Mark + Copy(并行标记+复制) 以及 CMS，他们在实现上略有不同，
 >>> 但理论上都采用了以上两个步骤。
@@ -691,7 +696,10 @@ java
 >
 > ### 3.1.3 标记-整理算法 (Mark-Compact)
 >> #### 1) 原理
->>> 此算法第一步也是标记可达对象，之后将存活的对象往前移动对齐，并且更新指向这些对象的引用。
+>>> 此算法第一步也是标记可达对象，之后将存活的对象往前移动对齐，并且更新指向这些对象的引用。第一步标记阶段的时间开销与“活动对象的总数”成正比的，
+>>> 整理压缩阶段的时间开销与“存活对象大小”成正比。
+>>>
+>>> 有些地方会把 标记-整理 (Mark-Compact) 叫做 标记-清除-整理 (mark-sweep-compact)，但都是一个算法。
 >
 >> #### 2) 优点
 >>>  - 可有效利用堆，没有空的堆
@@ -705,7 +713,7 @@ java
 >>> 首先将堆内存划分为多个区域，例如将堆内存划分为两部分，一部分是 from，另一部分是 to。
 >>> 每次 GC 时，将 from 存活的对象复制到 to 里，然后角色互换。其中一片区域始终是空的。
 >>> 在 HotSpot JVM 中把堆内存划分为3块，Eden 区和两个相同大小的 S0 和 S1。每次 Minor GC 
->>> 都会将 Eden 和 S0 存活的的对象复制到 S1 中，然后 S0 和 S1 角色互换。
+>>> 都会将 Eden 和 S0 存活的的对象复制到 S1 中，然后 S0 和 S1 角色互换。时间开销与“存活对象大小”成正比。
 >>
 >> #### 2) 优点
 >>>  - 不会产生内存碎片
@@ -817,6 +825,41 @@ if (CARD_TABLE [this address >> 9] != 0)
 >> 当 Metaspace 空间达到了设置的值，就会触发 Full GC。
 >
 > ## <span id="gcApplicableScene">3.6 各 GC 算法的适用场景</span>
+>>   - 标记-复制算法 (Mark-Copy): 通常用于年轻代 GC，因为年轻代划分了多个区域，并且根据弱分代假设，大部分对象都很早就不使用了
+>        所以很早就会被回收，年轻代中存活的对象通常比较少量，符合该算法的特点
+>>   - 标记-清除算法 (Mark-Sweep): 通常用于老年代 GC
+>>   - 标记-整理算法 (Mark-Compact): 通常用于老年代 GC
+>
+# <span id="hotSpotGC">4. HotSpot JVM GC 的具体实现</span>
+> ## <span id="serialGC">4.1 串行GC (Serial GC)</span>
+>> Serial GC 在年轻代使用 标记-复制算法 (Mark-Copy)，在老年代使用 标记-整理算法 (Mark-Compact)。两者使用的都是单线程的垃圾收集器，
+>> 所以都会触发 STW，暂停所有应用线程，而且 STW 的时间也会比较长。只适用于单核 CPU 的服务器上，无法利用多核 CPU，并且只合适几百MB堆内存的环境。
+>> 使用参数 -XX:+UseSerialGC 来开启，同时对年轻代和老年代生效。
+>
+> ## <span id="parallelGC">4.2 并行GC (Parallel GC)</span>
+>> Parallel GC 在年轻代使用 标记-复制算法 (Mark-Copy)，在老年代使用 标记-整理算法 (Mark-Compact)。年轻代 GC 和老年代 GC 也都会触发 
+>> STW ，暂停所有应用线程。在年轻代 GC 和老年代 GC 时都使用多线程来处理垃圾收集，通过并行处理来降低 STW 的时间。可以通过参数 
+>>  -XX:ParallelGCThreads=N 来设置 GC 的线程数，默认值是 CPU 的核心数。
+>>
+>> Parallel GC 适用于多核服务器，是以高吞吐量为目标的收集器。在 GC 期间，所有 CPU 内核资源都并行处理垃圾，所以总 STW 时间相对要短一些。  
+>> 在两次 GC 期间（也就是不进行垃圾处理时），没有 GC 线程在运行，所以不会在非 GC 期间抢占应用的系统资源。
+>>
+>> 可以通过以下参数开启年轻代和老年代的 Parallel GC，以下三种等价:
+```
+-XX:+UseParallelGC
+-XX:+UseParallelOldGC
+-XX:+UseParallelGC -XX:+UseParallelOldGC
+```
+>
+> ## <span id="parNewGC">4.3 ParNew GC</span>
+>> ParNew GC 是 Serial GC 的多线程并行改进版本，除了实现了并行处理的区别之外，其他的包括算法、参数都完全一样。
+>>
+>> 可以使用 -XX:+UseParNewGC 参数来开启。如果只配置了 -XX:+UseParNewGC 那么年轻代将使用 ParNew，老年代会使用 Serial Old。
+>> 通常情况 ParNew 会和 CMS 组合使用。ParNew GC 是除了 Serial GC 之外唯一一个可以和 CMS 配合使用的。
+>
+> ## <span id="cmsGC">4.4 CMS GC</span>
+>> CMS GC的官方名称为 “Mostly Concurrent Mark and Sweep Garbage Collector”（最大并发-标记-清除-垃圾收集器）。对年轻代使用
+>> 
 >
 >
 >
