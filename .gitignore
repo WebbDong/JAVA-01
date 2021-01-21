@@ -1,6 +1,8 @@
 # Compiled class file
 *.class
 
+*.jfr
+
 # Log file
 *.log
 
