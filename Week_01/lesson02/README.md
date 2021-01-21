@@ -29,6 +29,7 @@
     - [4.2 并行GC (Parallel GC)](#parallelGC)
     - [4.3 ParNew GC](#parNewGC)
     - [4.4 CMS GC](#cmsGC)
+    - [4.5 G1](#g1)
 ---------------------
 # <span id="jdkCommandTools">1. JDK 自带命令行工具</span>
 > ![alt 图片](./img/常用%20JDK%20自带命令行工具.png "常用 JDK 自带命令行工具")
@@ -853,13 +854,16 @@ if (CARD_TABLE [this address >> 9] != 0)
 >
 > ## <span id="parNewGC">4.3 ParNew GC</span>
 >> ParNew GC 是 Serial GC 的多线程并行改进版本，除了实现了并行处理的区别之外，其他的包括算法、参数都完全一样。
+>> 也可以通过 -XX:ParallelGCThreads 参数来控制 GC 的线程数。
 >>
->> 可以使用 -XX:+UseParNewGC 参数来开启。如果只配置了 -XX:+UseParNewGC 那么年轻代将使用 ParNew，老年代会使用 Serial Old。
->> 通常情况 ParNew 会和 CMS 组合使用。ParNew GC 是除了 Serial GC 之外唯一一个可以和 CMS 配合使用的。
+>> 可以使用 -XX:+UseParNewGC 参数来开启。如果只配置了 -XX:+UseParNewGC 那么年轻代将使用 ParNew，老年代会使用 Serial Old。Java 9 
+>> 之后这种组合将不支持。
+>> 通常情况 ParNew 用于年轻代和 CMS 组合使用。ParNew GC 是除了 Serial GC 之外唯一一个可以和 CMS 配合使用的。
 >
 > ## <span id="cmsGC">4.4 CMS GC</span>
 >> CMS GC的官方名称为 “Mostly Concurrent Mark and Sweep Garbage Collector”（最大并发-标记-清除-垃圾收集器）。
->> 在年轻代使用并行 STW 方式 标记-复制算法 (Mark-Copy)，在老年代使用并发 标记-清除算法 (Mark-Sweep)。CMS GC 是以低延迟为目标的收集器。
+>> 在年轻代使用并行 STW 方式 标记-复制算法 (Mark-Copy) 也就是 ParNew GC，在老年代使用并发 标记-清除算法 (Mark-Sweep)。
+>> CMS GC 是以低延迟为目标的收集器。
 >> 
 >> CMS GC 主要通过以下两种方式来实现低延迟：
 >>   - 不对老年代进行整理，使用空闲链表来管理回收的内存。
@@ -868,15 +872,44 @@ if (CARD_TABLE [this address >> 9] != 0)
 >> CMS GC 使用的并发线程数等于 CPU 内核数的 1 / 4。如果服务器是多核 CPU ，并且希望低停顿，那可以选择 CMS GC。
 >> 但是因为大多数情况有部分的 CPU 资源被 GC 线程使用，所以在 CPU 资源受限的情况下，CMS GC 的吞吐量会比并行 GC 的低一些，绝大多数情况差距不明显。
 >>
->> CMS GC 的六个阶段:
->>   1. 初始标记 (Initial Mark)
->>   2. 并发标记 (Concurrent Mark)
->>   3. 并发预清理 (Concurrent Preclean)
->>   4. 
+>> CMS GC 的七个阶段:
+>>   1. 初始标记 (Initial Mark)  
+>>     标记所有的 GC Root，以及 GC Root 直接引用的对象和被年轻代存活对象所引用的老年代对象。
+>>   2. 并发标记 (Concurrent Mark)  
+>>     遍历老年代存活对象并标记，但此阶段不会标记所有老年代中存活的对象，因为并发处理此过程中对象的引用关系可能还存在变化。
+>>   3. 并发预清理 (Concurrent Preclean)  
+>>     将在并发标记阶段出现的引用变化的对象，通过脏卡标记标注。然后对脏卡标记的对象重新分析，将引用关系改变后的存活对象标记，完成后
+>>     将卡表重置。
+>>   4. 可取消的并发预清理 (Concurrent Abortable Preclean)   
+>>     此阶段是在会 STW 的最终标记前，尽可能地多做一些处理，此阶段可能会显著影响到下一步 STW 的停顿时间。
+>>   5. 最终标记 (Final Remark)  
+>>     此阶段目标是最终标记一下老年代中所有的存活对象，由于上一步的预清理是并发执行的，可能 GC 线程跟不上应用线程修改的速度。
+>>     所以 STW 暂停一下确保没有问题。
+>>   6. 并发清除 (Concurrent Sweep)   
+>>     并发的回收死亡对象的内存。
+>>   7. 并发重置 (Concurrent Reset)   
+>>     并发的重置 CMS 相关的内部数据，为下一次 GC 做好准备。
+>>
+>> 以上七个阶段中，只有第一步和第五步是会短暂 STW，其他五步都是并发执行，不会 STW。
+>>
+>> CMS GC 缺点: 
+>>   - 对 CPU 资源敏感
+>>   - 无法处理浮动垃圾
+>>   - 使用标记-清除算法，容易产生内存碎片
+>>
+>> 使用参数 -XX:+UseConcMarkSweepGC 来使用 CMS GC。开启 CMS GC后，年轻代 GC 将自动使用 ParNew。如果加上参数 -XX:-UseParNewGC 
+>> 将会禁用 ParNew GC 而使用 Serial GC。但一般 ParNew 都会和 CMS 组合使用。
+>
+> ## <span id="g1">4.5 G1</span>
+>>
 >
 >
 >
 >
+>
+>
+
+
 >
 >
 >

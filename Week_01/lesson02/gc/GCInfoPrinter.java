@@ -2,6 +2,7 @@ package lesson02.gc;
 
 import java.lang.management.GarbageCollectorMXBean;
 import java.lang.management.ManagementFactory;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public class GCInfoPrinter {
         try {
             List<GarbageCollectorMXBean> gcMxBeans = ManagementFactory.getGarbageCollectorMXBeans();
             for (GarbageCollectorMXBean gcMxBean : gcMxBeans) {
-                System.out.println(gcMxBean.getName());
+                System.out.println("GC Name:" + gcMxBean.getName() + ", " + Arrays.toString(gcMxBean.getMemoryPoolNames()));
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
