@@ -17,10 +17,8 @@ public class GCInfoPrinter {
             for (GarbageCollectorMXBean gcMxBean : gcMxBeans) {
                 System.out.println(gcMxBean.getName());
             }
-        } catch (RuntimeException re) {
-            throw re;
-        } catch (Exception exp) {
-            throw new RuntimeException(exp);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

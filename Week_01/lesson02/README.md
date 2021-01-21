@@ -858,10 +858,21 @@ if (CARD_TABLE [this address >> 9] != 0)
 >> 通常情况 ParNew 会和 CMS 组合使用。ParNew GC 是除了 Serial GC 之外唯一一个可以和 CMS 配合使用的。
 >
 > ## <span id="cmsGC">4.4 CMS GC</span>
->> CMS GC的官方名称为 “Mostly Concurrent Mark and Sweep Garbage Collector”（最大并发-标记-清除-垃圾收集器）。对年轻代使用
+>> CMS GC的官方名称为 “Mostly Concurrent Mark and Sweep Garbage Collector”（最大并发-标记-清除-垃圾收集器）。
+>> 在年轻代使用并行 STW 方式 标记-复制算法 (Mark-Copy)，在老年代使用并发 标记-清除算法 (Mark-Sweep)。CMS GC 是以低延迟为目标的收集器。
 >> 
->
->
+>> CMS GC 主要通过以下两种方式来实现低延迟：
+>>   - 不对老年代进行整理，使用空闲链表来管理回收的内存。
+>>   - 在标记-清除时，大部分的工作阶段都是和应用线程并发执行的，大部分工作不会 STW 暂停应用线程。
+>>
+>> CMS GC 使用的并发线程数等于 CPU 内核数的 1 / 4。如果服务器是多核 CPU ，并且希望低停顿，那可以选择 CMS GC。
+>> 但是因为大多数情况有部分的 CPU 资源被 GC 线程使用，所以在 CPU 资源受限的情况下，CMS GC 的吞吐量会比并行 GC 的低一些，绝大多数情况差距不明显。
+>>
+>> CMS GC 的六个阶段:
+>>   1. 初始标记 (Initial Mark)
+>>   2. 并发标记 (Concurrent Mark)
+>>   3. 并发预清理 (Concurrent Preclean)
+>>   4. 
 >
 >
 >
