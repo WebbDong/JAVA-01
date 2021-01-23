@@ -9,7 +9,7 @@
 # 第二周作业
 ## 第三课: 
   - 第一题: [GCLogAnalysis.java GC 日志演练](https://github.com/WebbDong/JAVA-01/tree/main/Week_02/lesson03/gc/FirstQuestion.md)
-  - 第四题: [GCLogAnalysis.java GC 日志演练](https://github.com/WebbDong/JAVA-01/tree/main/Week_02/lesson03/gc/FourthQuestion.md)
+  - 第四题: [GC 与堆内存总结](https://github.com/WebbDong/JAVA-01/tree/main/Week_02/lesson03/gc/FourthQuestion.md)
 ## 第四课: 
   - 第一题:
     - [Java Socket](https://github.com/WebbDong/JAVA-01/tree/main/Week_02/lesson04/http)
