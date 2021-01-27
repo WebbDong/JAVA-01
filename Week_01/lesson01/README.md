@@ -128,7 +128,7 @@ Constant pool:
 > 1. descriptor: 方法描述
 >   - (IDLjava/lang/String;)D
 >     - 小括号内的为形参参数类型描述，小括号右边的是方法返回值类型描述。
->     - 下括号内 I 代表第一个参数为 int 类型，D 代表第二个参数为 double 类型。L 代表第三个参数是对象类型，java/lang/String 代表是 String 类型对象。
+>     - 小括号内 I 代表第一个参数为 int 类型，D 代表第二个参数为 double 类型。L 代表第三个参数是对象类型，java/lang/String 代表是 String 类型对象。
 >     - 小括号右边的 D 代表方法的返回值为 double 类型。
 > 2. flags: 访问权限修饰符，ACC_PUBLIC 代表 public 方法，ACC_STATIC 代表静态方法。
 > 3. Code: 源代码对应的 JVM 操作码和操作数区域。在进行字节码增强时重点操作的就是 Code 区这一部分。
