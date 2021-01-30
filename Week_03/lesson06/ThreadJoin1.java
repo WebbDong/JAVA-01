@@ -1,11 +1,11 @@
-package lesson05;
+package lesson06;
 
 /**
  * @author Webb Dong
  * @description: Join
- * @date 2021-01-30 23:21
+ * @date 2021-01-30 23:03
  */
-public class ThreadJoin2 {
+public class ThreadJoin1 {
 
     public static void main(String[] args) {
         Object oo = new Object();
@@ -15,18 +15,18 @@ public class ThreadJoin2 {
         thread1.setOo(oo);
         thread1.start();
 
-        // 锁是 thread1 对象
-        synchronized (thread1) {
+        // 锁是 oo 对象
+        synchronized (oo) {
             for (int i = 0; i < 100; i++) {
                 if (i == 20) {
                     try {
-                        // 两边用的锁对象不同，所以互不干扰，并发执行。当 main 打印到19后，由于 main 的 synchronized
-                        // 锁对象与调用 wait 方法的 oo 并不是同一个锁对象，所以此处会抛出 IllegalMonitorStateException
-                        // main 方法中止， 而 thread1 不会受到影响执行完后，结束 JVM 进程。
+                        // wait(0) 等于 wait() 。会一直阻塞下去，当 main 打印完19后，wait 方法会释放持有的锁。
+                        // thread1 会执行完。但是 main 线程无法被唤醒，导致 JVM 不会结束进程。
 //                        oo.wait(0);
 
-                        // 一开始并行执行，当 main 打印到19后，join 方法让出了 CPU 执行时间片，thread1 执行完后，main 会继续执行，
-                        // main 执行完毕后，结束 JVM 进程。
+                        // join 方法是使用 wait 方法来实现，所以释放的锁对象是调用 join 方法的对象
+                        // 此处也就是 thread1。但是 main 和 MyThread 的使用的锁都是 oo 对象。
+                        // 所以依然死锁状态。
                         thread1.join();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -54,7 +54,7 @@ public class ThreadJoin2 {
         @Override
         public void run() {
             System.out.println("Thread1.run");
-            // 锁是 oo 对象
+            // 锁也是 oo 对象，和 main 方法的是同一把锁
             synchronized (oo) {
                 for (int i = 0; i < 100; i++) {
                     System.out.println(name + i);
