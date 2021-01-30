@@ -22,6 +22,7 @@ public class HttpSocket02 {
         try (ServerSocket serverSocket = new ServerSocket(8081)) {
             while (true) {
                 final Socket socket = serverSocket.accept();
+                System.out.println("new request");
                 new Thread(() -> {
                     try {
                         service(socket);
