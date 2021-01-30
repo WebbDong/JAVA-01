@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class HttpSocket03 {
 
     private static ExecutorService executorService = new ThreadPoolExecutor(
-            80, 200, 5, TimeUnit.SECONDS,
+            80, 100, 5, TimeUnit.SECONDS,
             new ArrayBlockingQueue<>(20), new ThreadPoolExecutor.AbortPolicy());
 
     /**
@@ -29,6 +29,7 @@ public class HttpSocket03 {
         try (ServerSocket serverSocket = new ServerSocket(8082)) {
             while (true) {
                 final Socket socket = serverSocket.accept();
+                System.out.println("new request");
                 executorService.execute(() -> service(socket));
             }
         }
