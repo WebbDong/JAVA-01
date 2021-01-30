@@ -1,4 +1,4 @@
-package lesson05;
+package lesson06;
 
 /**
  * @author Webb Dong
