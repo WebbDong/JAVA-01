@@ -49,7 +49,7 @@ public class TwoThreadsPrint12121212 {
         }).start();
     }
 
-    private static boolean flag = true;
+    private static volatile boolean flag = true;
 
     /**
      * 方法二、使用 volatile 变量实现
