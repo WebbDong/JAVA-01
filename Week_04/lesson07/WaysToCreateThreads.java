@@ -19,6 +19,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.LockSupport;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.IntStream;
 
@@ -31,6 +32,14 @@ public class WaysToCreateThreads {
 
     private static int sum() {
         return IntStream.range(1, 20).sum();
+    }
+
+    private static void sleep(long timeout) {
+        try {
+            TimeUnit.MILLISECONDS.sleep(timeout);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // ------------------ 方法一 -------------------
@@ -87,6 +96,8 @@ public class WaysToCreateThreads {
     private static void method5() throws InterruptedException {
         final Object lockObj = new Object();
         new Thread(() -> {
+            // sleep 一下，确保 main 线程先拿到锁后阻塞，Thread 线程先拿到锁后存在 main 线程无法被唤醒而永久阻塞的可能性
+            sleep(20);
             synchronized (lockObj) {
                 res4 = sum();
                 lockObj.notifyAll();
@@ -108,6 +119,8 @@ public class WaysToCreateThreads {
         final Condition c = lock.newCondition();
         new Thread(() -> {
             try {
+                // sleep 一下，确保 main 线程先拿到锁后阻塞，Thread 线程先拿到锁后存在 main 线程无法被唤醒而永久阻塞的可能性
+                sleep(20);
                 lock.lock();
                 res5 = sum();
                 c.signalAll();
@@ -154,6 +167,8 @@ public class WaysToCreateThreads {
                 1, 5, 5, TimeUnit.SECONDS,
                 new ArrayBlockingQueue<>(5), new ThreadPoolExecutor.AbortPolicy());
         executor.execute(() -> {
+            // sleep 一下，确保 main 线程先拿到锁后阻塞，Thread 线程先拿到锁后存在 main 线程无法被唤醒而永久阻塞的可能性
+            sleep(20);
             synchronized (lockObj) {
                 res6 = sum();
                 lockObj.notifyAll();
@@ -180,6 +195,8 @@ public class WaysToCreateThreads {
                 new ArrayBlockingQueue<>(5), new ThreadPoolExecutor.AbortPolicy());
         executor.execute(() -> {
             try {
+                // sleep 一下，确保 main 线程先拿到锁后阻塞，Thread 线程先拿到锁后存在 main 线程无法被唤醒而永久阻塞的可能性
+                sleep(20);
                 lock.lock();
                 res7 = sum();
                 c.signalAll();
@@ -322,6 +339,52 @@ public class WaysToCreateThreads {
         }).start();
     }
 
+    // ------------------ 方法十八 -------------------
+
+    private static volatile int res11;
+
+    private static void method18() throws InterruptedException {
+        new Thread(() -> {
+            res11 = sum();
+        }).start();
+        TimeUnit.MILLISECONDS.sleep(200);
+        System.out.println("res = " + res11);
+    }
+
+    // ------------------ 方法十九 -------------------
+
+    private static volatile int res12;
+
+    private static void method19() throws InterruptedException {
+        final Object lockObj = new Object();
+        new Thread(() -> res12 = sum()).start();
+
+        synchronized (lockObj) {
+            lockObj.wait(500);
+            System.out.println("res = " + res12);
+        }
+    }
+
+    // ------------------ 方法二十 -------------------
+
+    private static volatile int res13;
+
+    private static void method20() throws InterruptedException {
+        new Thread(() -> res13 = sum()).start();
+        LockSupport.parkNanos(200L * 1000L * 1000L);
+        System.out.println("res = " + res13);
+    }
+
+    // ------------------ 方法二十一 -------------------
+
+    private static volatile int res14;
+
+    private static void method21() throws InterruptedException {
+        new Thread(() -> res14 = sum()).start();
+        LockSupport.parkUntil(System.currentTimeMillis() + 200);
+        System.out.println("res = " + res14);
+    }
+
     public static void main(String[] args) throws Exception {
 //        method1();
 //        method2();
@@ -339,7 +402,11 @@ public class WaysToCreateThreads {
 //        method14();
 //        method15();
 //        method16();
-        method17();
+//        method17();
+//        method18();
+//        method19();
+//        method20();
+        method21();
     }
 
 }
