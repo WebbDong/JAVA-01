@@ -2,9 +2,11 @@ package lesson07;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionService;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.Exchanger;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorCompletionService;
@@ -303,6 +305,23 @@ public class WaysToCreateThreads {
         System.out.println("res = " + res);
     }
 
+    // ------------------ 方法十七 -------------------
+
+    private static volatile int res10;
+
+    private static void method17() {
+        final CyclicBarrier cb = new CyclicBarrier(1, () -> System.out.println("res = " + res10));
+
+        new Thread(() -> {
+            res10 = sum();
+            try {
+                cb.await();
+            } catch (InterruptedException | BrokenBarrierException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
     public static void main(String[] args) throws Exception {
 //        method1();
 //        method2();
@@ -319,7 +338,8 @@ public class WaysToCreateThreads {
 //        method13();
 //        method14();
 //        method15();
-        method16();
+//        method16();
+        method17();
     }
 
 }
