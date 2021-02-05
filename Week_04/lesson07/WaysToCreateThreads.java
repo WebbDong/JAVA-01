@@ -385,6 +385,37 @@ public class WaysToCreateThreads {
         System.out.println("res = " + res14);
     }
 
+    // ------------------ 方法二十二 -------------------
+
+    private static volatile int res15;
+
+    private static void method22() {
+        Thread t1 = new Thread(() -> res15 = sum());
+        t1.start();
+
+        while (t1.isAlive())
+            ;
+
+        System.out.println("res = " + res15);
+    }
+
+    // ------------------ 方法二十三 -------------------
+
+    private static volatile int res16;
+
+    private static void method23() {
+        final Thread mainThread = Thread.currentThread();
+        new Thread(() -> {
+            // sleep 一下，确保 main 线程先拿到锁后阻塞，Thread 线程先拿到锁后存在 main 线程无法被唤醒而永久阻塞的可能性
+            sleep(50);
+            res16 = sum();
+            LockSupport.unpark(mainThread);
+        }).start();
+
+        LockSupport.park();
+        System.out.println("res = " + res16);
+    }
+
     public static void main(String[] args) throws Exception {
 //        method1();
 //        method2();
@@ -406,7 +437,9 @@ public class WaysToCreateThreads {
 //        method18();
 //        method19();
 //        method20();
-        method21();
+//        method21();
+//        method22();
+        method23();
     }
 
 }
