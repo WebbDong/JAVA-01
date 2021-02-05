@@ -28,6 +28,8 @@ public class ThreadJoin2 {
                         // 一开始并行执行，当 main 打印到19后，join 方法让出了 CPU 执行时间片，thread1 执行完后，main 会继续执行，
                         // main 执行完毕后，结束 JVM 进程。
                         thread1.join();
+
+//                        thread1.wait(0);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
