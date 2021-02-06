@@ -7,7 +7,7 @@
 ## 第六课:
 - [Java并发演练](https://github.com/WebbDong/JAVA-01/tree/main/Week_03/lesson06)
 
-# 第二周课程内容
+# 第三周课程内容
 ## 第五课
 > 什么是高性能、高性能的指标、Netty、API网关
 ## 第六课
