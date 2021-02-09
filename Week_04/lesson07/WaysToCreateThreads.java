@@ -270,23 +270,14 @@ public class WaysToCreateThreads {
     private static volatile int res8;
 
     private static void method14() throws InterruptedException {
-        final Semaphore s = new Semaphore(1);
+        final Semaphore s = new Semaphore(0);
         new Thread(() -> {
-            try {
-                s.acquire();
-                res8 = sum();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            } finally {
-                s.release();
-            }
+            res8 = sum();
+            s.release();
         }).start();
 
-        // main 线程 sleep 一下，确保子线程先拿到信号
-        TimeUnit.MILLISECONDS.sleep(20);
         s.acquire();
         System.out.println("res = " + res8);
-        s.release();
     }
 
     // ------------------ 方法十五 -------------------
