@@ -407,6 +407,25 @@ public class WaysToCreateThreads {
         System.out.println("res = " + res16);
     }
 
+    // ------------------ 方法二十四 -------------------
+
+    private static volatile int res17;
+
+    private static void method24() throws Exception {
+        final CyclicBarrier cb = new CyclicBarrier(2);
+        new Thread(() -> {
+            res17 = sum();
+            try {
+                cb.await();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+        cb.await();
+        System.out.println("res = " + res17);
+    }
+
     public static void main(String[] args) throws Exception {
 //        method1();
 //        method2();
@@ -430,7 +449,8 @@ public class WaysToCreateThreads {
 //        method20();
 //        method21();
 //        method22();
-        method23();
+//        method23();
+        method24();
     }
 
 }
