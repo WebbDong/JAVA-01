@@ -2,17 +2,17 @@ package lesson09.aop;
 
 /**
  * @author Webb Dong
- * @description: Student AOP
- * @date 2021-02-14 16:49
+ * @description: Car AOP
+ * @date 2021-02-15 14:16
  */
-public class StudentAOP implements AOP {
+public class CarAOP implements AOP {
 
     /**
      * 前置通知
      */
     @Override
     public void beforeAdvice() {
-        System.out.println("StudentAOP.beforeAdvice()");
+        System.out.println("CarAOP.beforeAdvice()");
     }
 
     /**
@@ -20,7 +20,7 @@ public class StudentAOP implements AOP {
      */
     @Override
     public void afterAdvice() {
-        System.out.println("StudentAOP.afterAdvice()");
+        System.out.println("CarAOP.afterAdvice()");
     }
 
     /**
@@ -28,7 +28,7 @@ public class StudentAOP implements AOP {
      */
     @Override
     public void afterReturning() {
-        System.out.println("StudentAOP.afterReturning()");
+        System.out.println("CarAOP.afterReturning()");
     }
 
     /**
@@ -36,7 +36,7 @@ public class StudentAOP implements AOP {
      */
     @Override
     public void afterThrowing() {
-        System.out.println("StudentAOP.afterThrowing()");
+        System.out.println("CarAOP.afterThrowing()");
     }
 
     /**
@@ -44,10 +44,10 @@ public class StudentAOP implements AOP {
      */
     @Override
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
-        System.out.println("StudentAOP.around() start");
+        System.out.println("CarAOP.around() start");
         // 调用目标方法
         Object proceed = joinPoint.proceed();
-        System.out.println("StudentAOP.around() end");
+        System.out.println("CarAOP.around() end");
         return proceed;
     }
 

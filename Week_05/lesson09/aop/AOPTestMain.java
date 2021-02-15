@@ -1,5 +1,7 @@
 package lesson09.aop;
 
+import net.sf.cglib.proxy.Enhancer;
+
 import java.lang.reflect.Proxy;
 
 /**
@@ -9,11 +11,31 @@ import java.lang.reflect.Proxy;
  */
 public class AOPTestMain {
 
-    public static void main(String[] args) {
+    /**
+     * JDK 动态代理方式实现简单 AOP
+     */
+    private static void aopWithJavaDynamicProxy() {
         Student target = new Student();
         Person p = (Person) Proxy.newProxyInstance(AOPTestMain.class.getClassLoader(),
                 new Class[]{Person.class}, new AOPInvocationHandler(target, new StudentAOP()));
         p.sayHello();
+    }
+
+    /**
+     * cglib 动态代理方式实现简单 AOP
+     */
+    private static void aopWithCglibDynamicProxy() {
+        Car target = new Car();
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(Car.class);
+        enhancer.setCallback(new AOPMethodInterceptor(target, new CarAOP()));
+        Car c = (Car) enhancer.create();
+        c.drive();
+    }
+
+    public static void main(String[] args) {
+//        aopWithJavaDynamicProxy();
+        aopWithCglibDynamicProxy();
     }
 
 }
