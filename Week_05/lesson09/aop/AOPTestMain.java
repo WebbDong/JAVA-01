@@ -41,7 +41,8 @@ public class AOPTestMain {
     }
 
     public static void main(String[] args) {
-//        aopWithJavaDynamicProxy();
+        aopWithJavaDynamicProxy();
+        System.out.println("--------------------------");
         aopWithCglibDynamicProxy();
     }
 
