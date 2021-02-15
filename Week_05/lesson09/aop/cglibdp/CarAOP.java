@@ -1,4 +1,7 @@
-package lesson09.aop;
+package lesson09.aop.cglibdp;
+
+import lesson09.aop.AOP;
+import lesson09.aop.ProceedingJoinPoint;
 
 /**
  * @author Webb Dong
