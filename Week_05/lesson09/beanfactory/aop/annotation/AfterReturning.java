@@ -1,4 +1,4 @@
-package lesson09.beanfactory.annotation.aop;
+package lesson09.beanfactory.aop.annotation;
 
 /**
  * @author Webb Dong
