@@ -1,5 +1,12 @@
 package lesson09.aop;
 
+import lesson09.aop.cglibdp.AOPMethodInterceptor;
+import lesson09.aop.cglibdp.Car;
+import lesson09.aop.cglibdp.CarAOP;
+import lesson09.aop.jdkdp.AOPInvocationHandler;
+import lesson09.aop.jdkdp.Person;
+import lesson09.aop.jdkdp.Student;
+import lesson09.aop.jdkdp.StudentAOP;
 import net.sf.cglib.proxy.Enhancer;
 
 import java.lang.reflect.Proxy;
