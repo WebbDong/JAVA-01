@@ -1,4 +1,4 @@
-package lesson09.aop;
+package lesson09.aop.jdkdp;
 
 import lombok.Data;
 
