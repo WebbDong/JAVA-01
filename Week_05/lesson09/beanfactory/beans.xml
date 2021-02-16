@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xmlbeforeAdvice version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.webbdong.beanfactory.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -7,12 +7,28 @@
                            http://www.webbdong.beanfactory.org/schema/beans/beanfactory-beans.xsd
                            http://www.webbdong.beanfactory.org/schema/aop
                            http://www.webbdong.beanfactory.org/schema/aop/beanfactory-aop.xsd">
+    
     <bean id="school" class="lesson09.beanfactory.bean.School">
-        <constructor-arg index="0" value="哈佛大学" />
+        <constructor-arg index="0" value="哈佛大学"/>
     </bean>
 
     <bean id="student" class="lesson09.beanfactory.bean.Student">
-        <property name="name" value="比尔盖茨" />
+        <property name="name" value="比尔盖茨"/>
         <property name="age" value="66" />
     </bean>
+
+    <bean id="schoolAOP" class="lesson09.beanfactory.aop.SchoolAOP">
+    </bean>
+
+    <aop:config>
+        <aop:pointcut id="schoolAOPPointCut" class="lesson09.beanfactory.bean.Student"/>
+        <aop:aspect ref="schoolAOP">
+            <aop:before method="beforeAdvice" pointcut-ref="schoolAOPPointCut"/>
+            <aop:after method="afterAdvice" pointcut-ref="schoolAOPPointCut"/>
+            <aop:after-returning method="afterReturning" pointcut-ref="schoolAOPPointCut"/>
+            <aop:after-throwing method="afterThrowing" pointcut-ref="schoolAOPPointCut"/>
+            <aop:around method="around" pointcut-ref="schoolAOPPointCut"/>
+        </aop:aspect>
+    </aop:config>
+    
 </beans>
