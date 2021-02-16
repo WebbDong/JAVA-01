@@ -102,14 +102,14 @@
 					]]></xsd:documentation>
                 </xsd:annotation>
             </xsd:element>
-            <xsd:element name="after-returning" type="xsd:string">
+            <xsd:element name="after-returning" type="basicAdviceType">
                 <xsd:annotation>
                     <xsd:documentation><![CDATA[
                     后置返回通知
 					]]></xsd:documentation>
                 </xsd:annotation>
             </xsd:element>
-            <xsd:element name="after-throwing" type="xsd:string">
+            <xsd:element name="after-throwing" type="basicAdviceType">
                 <xsd:annotation>
                     <xsd:documentation><![CDATA[
                     后置异常通知
