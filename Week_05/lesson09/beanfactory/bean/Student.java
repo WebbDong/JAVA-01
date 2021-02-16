@@ -14,4 +14,8 @@ public class Student {
 
     private Integer age;
 
+    public void study() {
+        System.out.println(name + " 正在努力学习...");
+    }
+
 }
