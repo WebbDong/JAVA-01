@@ -69,10 +69,10 @@
 				]]></xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
-        <xsd:attribute name="class" use="required" type="xsd:string">
+        <xsd:attribute name="ref" use="required" type="xsd:string">
             <xsd:annotation>
                 <xsd:documentation><![CDATA[
-                指定最终需要被代理的全类名
+                指定最终需要被代理的 bean id
 				]]></xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
