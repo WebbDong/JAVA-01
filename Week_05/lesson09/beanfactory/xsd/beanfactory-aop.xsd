@@ -53,7 +53,7 @@
             <xsd:attribute name="proxy-target-class" type="xsd:boolean" default="false">
                 <xsd:annotation>
                     <xsd:documentation><![CDATA[
-                    值为 true 时使用使用 CGLIB 织入,值为 false 时使用 JDK 动态代理织入
+                    整个 AOP 配置集的代理模式，值为 true 时使用使用 CGLIB 织入,值为 false 时使用 JDK 动态代理织入
 					]]></xsd:documentation>
                 </xsd:annotation>
             </xsd:attribute>
@@ -69,7 +69,7 @@
 				]]></xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
-        <xsd:attribute name="ref" use="required" type="xsd:string">
+        <xsd:attribute name="ref" type="xsd:string" use="required">
             <xsd:annotation>
                 <xsd:documentation><![CDATA[
                 指定最终需要被代理的 bean id
@@ -127,14 +127,21 @@
         <xsd:attribute name="id" type="xsd:string">
             <xsd:annotation>
                 <xsd:documentation><![CDATA[
-	The unique identifier for an aspect.
+                切面 id
 				]]></xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
-        <xsd:attribute name="ref" type="xsd:string">
+        <xsd:attribute name="ref" type="xsd:string" use="required">
             <xsd:annotation>
                 <xsd:documentation><![CDATA[
-	The name of the (backing) bean that encapsulates the aspect.
+                aop 切面 bean id
+				]]></xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="pointcut-ref" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                某个切点的引用 id
 				]]></xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
@@ -146,13 +153,6 @@
             <xsd:annotation>
                 <xsd:documentation><![CDATA[
                 切点
-				]]></xsd:documentation>
-            </xsd:annotation>
-        </xsd:attribute>
-        <xsd:attribute name="pointcut-ref" type="xsd:string">
-            <xsd:annotation>
-                <xsd:documentation><![CDATA[
-                某个切点的引用 id
 				]]></xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
