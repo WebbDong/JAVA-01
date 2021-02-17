@@ -12,9 +12,8 @@ import lesson09.beanfactory.context.ClassPathXmlApplicationContext;
 public class BeanFactoryTestMain {
 
     public static void main(String[] args) {
-//        ApplicationContext ac = new ClassPathXmlApplicationContext("lesson09/beanfactory/beans.xml");
-//        School school = (School) ac.getBeans("school");
-        System.out.println(Boolean.valueOf(null));
+        ApplicationContext ac = new ClassPathXmlApplicationContext("lesson09/beanfactory/beans.xml");
+        School school = (School) ac.getBeans("school");
     }
 
 }
