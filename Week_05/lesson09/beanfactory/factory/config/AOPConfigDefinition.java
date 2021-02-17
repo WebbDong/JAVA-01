@@ -22,10 +22,12 @@ public class AOPConfigDefinition {
 
     public static final String POINTCUT_ELEMENT_NAME = "pointcut";
 
+    public static final String ASPECT_ELEMENT_NAME = "aspect";
+
     private boolean proxyTargetClass;
 
-    private List<AOPPointcutDefinition> pointcutDefList;
+//    private List<AOPPointcutDefinition> pointcutDefList;
 
-    private List<AOPAspectDefinition> aspectDefList;
+//    private List<AOPAspectDefinition> aspectDefList;
 
 }

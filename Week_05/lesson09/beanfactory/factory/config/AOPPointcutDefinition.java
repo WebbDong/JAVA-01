@@ -18,6 +18,6 @@ public class AOPPointcutDefinition {
 
     private String id;
 
-    private String className;
+    private String ref;
 
 }

@@ -18,6 +18,8 @@ import java.util.Set;
 @Builder
 public class AOPAspectDefinition {
 
+    public static final String REF_ATTRIBUTE_NAME = "ref";
+
     private String id;
 
     private String ref;

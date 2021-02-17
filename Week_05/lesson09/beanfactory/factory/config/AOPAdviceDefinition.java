@@ -17,6 +17,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AOPAdviceDefinition {
 
+    public static final String METHOD_ATTRIBUTE_NAME = "method";
+
+    public static final String POINTCUT_REF_ATTRIBUTE_NAME = "pointcut-ref";
+
     /**
      * 通知类型
      */
