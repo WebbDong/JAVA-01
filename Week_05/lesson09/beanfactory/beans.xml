@@ -9,6 +9,7 @@
                            http://www.webbdong.beanfactory.org/schema/aop/beanfactory-aop.xsd">
     
     <bean id="school" class="lesson09.beanfactory.bean.School">
+        <constructor-arg index="1" value="1636"/>
         <constructor-arg index="0" value="哈佛大学"/>
     </bean>
 
@@ -22,13 +23,13 @@
 
     <aop:config>
         <aop:pointcut id="schoolAOPPointCut" ref="student"/>
-        <aop:aspect ref="schoolAOP">
-            <aop:before method="beforeAdvice" pointcut-ref="schoolAOPPointCut"/>
-            <aop:after method="afterAdvice" pointcut-ref="schoolAOPPointCut"/>
-            <aop:after-returning method="afterReturning" pointcut-ref="schoolAOPPointCut"/>
-            <aop:after-throwing method="afterThrowing" pointcut-ref="schoolAOPPointCut"/>
-            <aop:around method="around" pointcut-ref="schoolAOPPointCut"/>
+        <aop:aspect ref="schoolAOP" pointcut-ref="schoolAOPPointCut">
+            <aop:before method="beforeAdvice"/>
+            <aop:after method="afterAdvice"/>
+            <aop:after-returning method="afterReturning"/>
+            <aop:after-throwing method="afterThrowing"/>
+            <aop:around method="around"/>
         </aop:aspect>
     </aop:config>
-    
+
 </beans>
