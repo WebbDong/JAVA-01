@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AOPPointcutDefinition {
+public class AopPointcutDefinition {
 
     private String id;
 
