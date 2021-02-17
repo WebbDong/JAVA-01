@@ -1,6 +1,6 @@
 package lesson09.aop.cglibdp;
 
-import lesson09.aop.AOP;
+import lesson09.aop.Aspect;
 import lesson09.aop.ProceedingJoinPoint;
 import lesson09.aop.ProceedingJoinPointImpl;
 import lombok.AllArgsConstructor;
@@ -12,24 +12,24 @@ import java.lang.reflect.Method;
 
 /**
  * @author Webb Dong
- * @description: AOPMethodInterceptor
+ * @description: AopMethodInterceptor
  * @date 2021-02-15 14:14
  */
 @Data
 @AllArgsConstructor
-public class AOPMethodInterceptor implements MethodInterceptor {
+public class AopMethodInterceptor implements MethodInterceptor {
 
     /**
      * 目标对象
      */
     private Object target;
 
-    private AOP aop;
+    private Aspect aspect;
 
     @Override
     public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
-        ProceedingJoinPoint joinPoint = new ProceedingJoinPointImpl(args, target, method, aop);
-        Object ret = aop.around(joinPoint);
+        ProceedingJoinPoint joinPoint = new ProceedingJoinPointImpl(args, target, method, aspect);
+        Object ret = aspect.around(joinPoint);
         return ret;
     }
 

@@ -1,14 +1,14 @@
 package lesson09.aop.jdkdp;
 
-import lesson09.aop.AOP;
+import lesson09.aop.Aspect;
 import lesson09.aop.ProceedingJoinPoint;
 
 /**
  * @author Webb Dong
- * @description: Student AOP
+ * @description: Student Aspect
  * @date 2021-02-14 16:49
  */
-public class StudentAOP implements AOP {
+public class StudentAspect implements Aspect {
 
     /**
      * 前置通知

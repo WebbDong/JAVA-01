@@ -1,14 +1,14 @@
 package lesson09.aop.cglibdp;
 
-import lesson09.aop.AOP;
+import lesson09.aop.Aspect;
 import lesson09.aop.ProceedingJoinPoint;
 
 /**
  * @author Webb Dong
- * @description: Car AOP
+ * @description: Car Aspect
  * @date 2021-02-15 14:16
  */
-public class CarAOP implements AOP {
+public class CarAspect implements Aspect {
 
     /**
      * 前置通知

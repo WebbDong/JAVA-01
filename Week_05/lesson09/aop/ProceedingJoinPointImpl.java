@@ -22,7 +22,7 @@ public class ProceedingJoinPointImpl implements ProceedingJoinPoint {
 
     private Method method;
 
-    private AOP aop;
+    private Aspect aspect;
 
     @Override
     public Object proceed() throws Throwable {
@@ -45,15 +45,15 @@ public class ProceedingJoinPointImpl implements ProceedingJoinPoint {
     }
 
     private Object proceed0(Object[] args) throws Throwable {
-        aop.beforeAdvice();
+        aspect.beforeAdvice();
         Object ret;
         try {
             ret = method.invoke(target, args);
-            aop.afterReturning();
-            aop.afterAdvice();
+            aspect.afterReturning();
+            aspect.afterAdvice();
         } catch (Throwable e) {
-            aop.afterThrowing();
-            aop.afterAdvice();
+            aspect.afterThrowing();
+            aspect.afterAdvice();
             throw e;
         }
         return ret;

@@ -2,10 +2,10 @@ package lesson09.aop;
 
 /**
  * @author Webb Dong
- * @description: AOP 接口
+ * @description: 切面接口
  * @date 2021-02-14 22:47
  */
-public interface AOP {
+public interface Aspect {
 
     /**
      * 前置通知
