@@ -1,5 +1,6 @@
 package lesson09.beanfactory.factory.config;
 
+import lesson09.beanfactory.factory.config.enums.BeanScopeTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,11 +27,15 @@ public class BeanDefinition {
 
     public static final String PROPERTY_ELEMENT_NAME = "property";
 
+    public static final String SCOPE_ATTRIBUTE_NAME = "scope";
+
     private String id;
 
     private String name;
 
     private String className;
+
+    private BeanScopeTypeEnum scopeType;
 
     private List<BeanConstructorArgDefinition> constructorArgDefList;
 
