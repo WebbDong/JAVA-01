@@ -1,6 +1,6 @@
 package lesson09.beanfactory.factory.config;
 
-import lesson09.beanfactory.factory.config.enums.AOPAdviceTypeEnum;
+import lesson09.beanfactory.factory.config.enums.AopAdviceTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,19 +15,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AOPAdviceDefinition {
+public class AopAdviceDefinition {
 
     public static final String METHOD_ATTRIBUTE_NAME = "method";
-
-    public static final String POINTCUT_REF_ATTRIBUTE_NAME = "pointcut-ref";
 
     /**
      * 通知类型
      */
-    private AOPAdviceTypeEnum adviceType;
+    private AopAdviceTypeEnum adviceType;
 
     private String method;
-
-    private String pointcutRef;
 
 }
