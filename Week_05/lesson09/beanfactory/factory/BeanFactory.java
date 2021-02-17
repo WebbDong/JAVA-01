@@ -1,11 +1,13 @@
 package lesson09.beanfactory.factory;
 
+import lesson09.beanfactory.factory.config.AOPAdviceDefinition;
 import lesson09.beanfactory.factory.config.AOPAspectDefinition;
 import lesson09.beanfactory.factory.config.AOPConfigDefinition;
 import lesson09.beanfactory.factory.config.AOPPointcutDefinition;
 import lesson09.beanfactory.factory.config.BeanConstructorArgDefinition;
 import lesson09.beanfactory.factory.config.BeanDefinition;
 import lesson09.beanfactory.factory.config.BeanPropertyDefinition;
+import lesson09.beanfactory.factory.config.enums.AOPAdviceTypeEnum;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -16,8 +18,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -34,12 +38,12 @@ public class BeanFactory {
     private static final String CLASS_ATTRIBUTE_NAME = "class";
 
     /**
-     * bean 的 map 容器
+     * bean 的 map
      */
     private final Map<String, Object> beanContainer = new HashMap<>();
 
     /**
-     * bean 定义的 map 容器
+     * bean 定义的 map
      */
     private final Map<String, Object> beanDefContainer = new HashMap<>();
 
@@ -48,6 +52,9 @@ public class BeanFactory {
      */
     private final List<AOPConfigDefinition> aopConfigDefContainer = new ArrayList<>();
 
+    /**
+     * aop 切面 map
+     */
     private final Map<String, AOPAspectDefinition> aspectDefMap = new HashMap<>();
 
     public BeanFactory(String configLocation) {
@@ -98,6 +105,7 @@ public class BeanFactory {
             System.out.println("runAfterBoth");
         });
         runAfterBoth.join();
+        System.out.println();
     }
 
     /**
@@ -189,11 +197,14 @@ public class BeanFactory {
             String attrValue = e.attributeValue(AOPConfigDefinition.PROXY_TARGET_CLASS_ATTR_NAME);
             AOPConfigDefinition aopConfig = new AOPConfigDefinition();
             aopConfig.setProxyTargetClass(Boolean.valueOf(attrValue));
-            aopConfig.setAspectDefList(initAspectDefinitions());
 
             List<Element> pointcutElementList = e.elements(AOPConfigDefinition.POINTCUT_ELEMENT_NAME);
             if (pointcutElementList != null) {
-                aopConfig.setPointcutDefList(initPointcutDefinitions(pointcutElementList));
+                initPointcutDefinitions(pointcutElementList);
+            }
+            List<Element> aspectElementList = e.elements(AOPConfigDefinition.ASPECT_ELEMENT_NAME);
+            if (aspectElementList != null) {
+                initAspectDefinitions(aspectElementList);
             }
 
             aopConfigDefContainer.add(aopConfig);
@@ -202,10 +213,42 @@ public class BeanFactory {
 
     /**
      * 初始化切面配置定义
+     * @param elementList
+     */
+    private void initAspectDefinitions(List<Element> elementList) {
+        for (int i = 0, size = elementList.size(); i < size; i++) {
+            Element e = elementList.get(i);
+            AOPAspectDefinition aspectDef = AOPAspectDefinition.builder()
+                    .id(e.attributeValue(ID_ATTRIBUTE_NAME))
+                    .ref(e.attributeValue(AOPAspectDefinition.REF_ATTRIBUTE_NAME))
+                    .build();
+
+            List<Element> adviceDefElementList = e.elements();
+            if (adviceDefElementList != null) {
+                aspectDef.setAdviceDefSet(initAdviceDefinitions(adviceDefElementList));
+            }
+
+            aspectDefMap.put(aspectDef.getRef(), aspectDef);
+        }
+    }
+
+    /**
+     * 初始化通知配置定义
+     * @param elementList
      * @return
      */
-    private List<AOPAspectDefinition> initAspectDefinitions() {
-        return null;
+    private Set<AOPAdviceDefinition> initAdviceDefinitions(List<Element> elementList) {
+        Set<AOPAdviceDefinition> adviceDefSet = new HashSet<>(elementList.size());
+        for (int i = 0, size = elementList.size(); i < size; i++) {
+            Element e = elementList.get(i);
+            AOPAdviceDefinition adviceDef = AOPAdviceDefinition.builder()
+                    .method(e.attributeValue(AOPAdviceDefinition.METHOD_ATTRIBUTE_NAME))
+                    .pointcutRef(e.attributeValue(AOPAdviceDefinition.POINTCUT_REF_ATTRIBUTE_NAME))
+                    .adviceType(AOPAdviceTypeEnum.getAdviceTypeEnumByName(e.getName()))
+                    .build();
+            adviceDefSet.add(adviceDef);
+        }
+        return adviceDefSet;
     }
 
     /**
@@ -214,7 +257,15 @@ public class BeanFactory {
      * @param elementList
      */
     private List<AOPPointcutDefinition> initPointcutDefinitions(List<Element> elementList) {
-        return null;
+        List<AOPPointcutDefinition> pointcutDefList = new ArrayList<>(elementList.size());
+        for (int i = 0, size = elementList.size(); i < size; i++) {
+            Element e = elementList.get(i);
+            pointcutDefList.add(AOPPointcutDefinition.builder()
+                    .id(e.attributeValue(ID_ATTRIBUTE_NAME))
+                    .ref(e.attributeValue(AOPAspectDefinition.REF_ATTRIBUTE_NAME))
+                    .build());
+        }
+        return pointcutDefList;
     }
 
 }
