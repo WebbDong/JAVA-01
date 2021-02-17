@@ -21,7 +21,7 @@
     </bean>
 
     <aop:config>
-        <aop:pointcut id="schoolAOPPointCut" class="lesson09.beanfactory.bean.Student"/>
+        <aop:pointcut id="schoolAOPPointCut" ref="student"/>
         <aop:aspect ref="schoolAOP">
             <aop:before method="beforeAdvice" pointcut-ref="schoolAOPPointCut"/>
             <aop:after method="afterAdvice" pointcut-ref="schoolAOPPointCut"/>
