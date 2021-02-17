@@ -79,7 +79,22 @@
 				]]></xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
+        <xsd:attribute name="scope" type="scopeType">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                scope 属性， "singleton": 单例模式、默认, "prototype": 每次获取 bean 都创建一个新的实例
+				]]></xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
     </xsd:attributeGroup>
+
+    <!-- scope 属性类型 -->
+    <xsd:simpleType name="scopeType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="singleton"/>
+            <xsd:enumeration value="prototype"/>
+        </xsd:restriction>
+    </xsd:simpleType>
 
     <!-- <constructor-arg> 标签配置 -->
     <xsd:element name="constructor-arg">
