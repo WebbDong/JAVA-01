@@ -1,13 +1,13 @@
-package lesson09.beanfactory.aop;
+package lesson09.xmlbeanfactory.aop;
 
 import lesson09.aop.ProceedingJoinPoint;
 
 /**
  * @author Webb Dong
- * @description: SchoolAOP
+ * @description: School 切面
  * @date 2021-02-16 15:46
  */
-public class SchoolAOP {
+public class SchoolAspect {
 
     /**
      * 前置通知
