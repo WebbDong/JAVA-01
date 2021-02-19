@@ -1,7 +1,7 @@
 package lesson09.xmlbeanfactory.util;
 
-import lesson09.xmlbeanfactory.aop.AopCglibMethodInterceptor;
-import lesson09.xmlbeanfactory.aop.AopInvocationHandler;
+import lesson09.xmlbeanfactory.aop.proxy.AopCglibMethodInterceptor;
+import lesson09.xmlbeanfactory.aop.proxy.AopInvocationHandler;
 import lesson09.xmlbeanfactory.factory.config.AopAdviceDefinition;
 import lesson09.xmlbeanfactory.factory.config.enums.AopAdviceTypeEnum;
 import net.sf.cglib.proxy.Enhancer;
