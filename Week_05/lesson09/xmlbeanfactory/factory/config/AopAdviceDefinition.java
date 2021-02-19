@@ -1,10 +1,11 @@
-package lesson09.beanfactory.factory.config;
+package lesson09.xmlbeanfactory.factory.config;
 
-import lesson09.beanfactory.factory.config.enums.AopAdviceTypeEnum;
+import lesson09.xmlbeanfactory.factory.config.enums.AopAdviceTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Webb Dong
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AopAdviceDefinition {
+public class AopAdviceDefinition implements Comparable<String> {
 
     public static final String METHOD_ATTRIBUTE_NAME = "method";
 
@@ -25,5 +26,10 @@ public class AopAdviceDefinition {
     private AopAdviceTypeEnum adviceType;
 
     private String method;
+
+    @Override
+    public int compareTo(@NotNull String o) {
+        return this.method.compareTo(o);
+    }
 
 }
