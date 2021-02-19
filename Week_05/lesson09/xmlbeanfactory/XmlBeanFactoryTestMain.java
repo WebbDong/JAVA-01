@@ -1,5 +1,6 @@
 package lesson09.xmlbeanfactory;
 
+import lesson09.xmlbeanfactory.bean.Klass;
 import lesson09.xmlbeanfactory.bean.School;
 import lesson09.xmlbeanfactory.bean.Student;
 import lesson09.xmlbeanfactory.context.ApplicationContext;
@@ -27,6 +28,11 @@ public class XmlBeanFactoryTestMain {
 //        student.study();
         ret = student.testMethod(50, 80, "Hello World");
         System.out.println("XmlBeanFactoryTestMain ret = " + ret);
+
+        System.out.println("----------------------------------------------");
+
+        Klass klass = (Klass) ac.getBeans("klass");
+        klass.testMethod();
     }
 
 }
