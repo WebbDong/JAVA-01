@@ -1,4 +1,4 @@
-package lesson09.beanfactory.bean;
+package lesson09.xmlbeanfactory.bean;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
