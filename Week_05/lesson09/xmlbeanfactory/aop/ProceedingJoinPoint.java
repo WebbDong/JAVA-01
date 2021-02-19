@@ -1,4 +1,4 @@
-package lesson09.beanfactory.aop;
+package lesson09.xmlbeanfactory.aop;
 
 /**
  * @author Webb Dong
@@ -9,29 +9,35 @@ public interface ProceedingJoinPoint {
 
     /**
      * 执行目标方法
-     * @return
-     * @throws Throwable
+     * @return 返回目标方法的返回值
+     * @throws Throwable 抛出异常
      */
     Object proceed() throws Throwable;
 
     /**
      * 执行目标方法并重新传递参数
-     * @param args
-     * @return
-     * @throws Throwable
+     * @param args 参数
+     * @return 返回目标方法的返回值
+     * @throws Throwable 抛出异常
      */
     Object proceed(Object[] args) throws Throwable;
 
     /**
      * 获取被代理的目标对象
-     * @return
+     * @return 返回目标对象
      */
     Object getTarget();
 
     /**
      * 获取参数
-     * @return
+     * @return 返回参数数组
      */
     Object[] getArgs();
+
+    /**
+     * 获取代理对象
+     * @return 返回代理对象
+     */
+    Object getThis();
 
 }
