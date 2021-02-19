@@ -1,9 +1,9 @@
-package lesson09.beanfactory.util;
+package lesson09.xmlbeanfactory.util;
 
-import lesson09.beanfactory.aop.AopCglibMethodInterceptor;
-import lesson09.beanfactory.aop.AopInvocationHandler;
-import lesson09.beanfactory.factory.config.AopAdviceDefinition;
-import lesson09.beanfactory.factory.config.enums.AopAdviceTypeEnum;
+import lesson09.xmlbeanfactory.aop.AopCglibMethodInterceptor;
+import lesson09.xmlbeanfactory.aop.AopInvocationHandler;
+import lesson09.xmlbeanfactory.factory.config.AopAdviceDefinition;
+import lesson09.xmlbeanfactory.factory.config.enums.AopAdviceTypeEnum;
 import net.sf.cglib.proxy.Enhancer;
 
 import java.lang.reflect.Proxy;
@@ -23,7 +23,7 @@ public class AopUtils {
      * @param aspect AOP 切面对象
      * @param interfaces 需要实现的接口数组
      * @param adviceDefMap 通知方法定义
-     * @return
+     * @return 返回代理对象
      */
     public static Object createAOPProxyWithJDK(Object target, Object aspect, Class<?>[] interfaces,
                                                Map<AopAdviceTypeEnum, List<AopAdviceDefinition>> adviceDefMap) {
@@ -37,7 +37,7 @@ public class AopUtils {
      * @param aspect AOP 切面对象
      * @param superClass 父类 class
      * @param adviceDefMap 通知方法定义
-     * @return
+     * @return 返回代理对象
      */
     public static Object createAOPProxyWithCglib(Object target, Object aspect, Class<?> superClass,
                                                  Map<AopAdviceTypeEnum, List<AopAdviceDefinition>> adviceDefMap) {
