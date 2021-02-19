@@ -44,7 +44,7 @@ public abstract class AbstractAopAdviceMethodHandler {
         this.adviceDefMap = adviceDefMap;
     }
 
-    protected Object invokeAdvice(Method method, Object[] args) throws Throwable {
+    protected Object invokeAdvice(Object proxy, Method method, Object[] args) throws Throwable {
 //        ProceedingJoinPoint joinPoint = new ProceedingJoinPointImpl(args, target, method, aspect);
         List<AopAdviceDefinition> aroundAdviceList = adviceDefMap.get(AopAdviceTypeEnum.AROUND);
         if (aroundAdviceList == null || aroundAdviceList.size() == 0) {

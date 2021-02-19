@@ -23,7 +23,7 @@ public class AopCglibMethodInterceptor extends AbstractAopAdviceMethodHandler im
 
     @Override
     public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
-        return invokeAdvice(method, args);
+        return invokeAdvice(obj, method, args);
     }
 
 }
