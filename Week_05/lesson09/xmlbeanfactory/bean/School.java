@@ -18,4 +18,15 @@ public class School {
 
     private Integer foundingYears;
 
+    public void introduce() {
+        System.out.println("invoke Target Method School.introduce()");
+//        int i = 1 / 0;
+        System.out.println(name + "，始建于" + foundingYears + "年");
+    }
+
+    public Double testMethod(double x, double y) {
+        System.out.println("invoke Target Method School.testMethod(double, double)");
+        return x + y;
+    }
+
 }
