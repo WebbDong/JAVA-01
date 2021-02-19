@@ -1,4 +1,4 @@
-package lesson09.beanfactory.factory.config.enums;
+package lesson09.xmlbeanfactory.factory.config.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,9 +22,9 @@ public enum BeanScopeTypeEnum {
      */
     PROTOTYPE(1, "prototype");
 
-    private int type;
+    private final int type;
 
-    private String name;
+    private final String name;
 
     public static BeanScopeTypeEnum valueOfByName(String name) {
         if (SINGLETON.name.equals(name)) {
