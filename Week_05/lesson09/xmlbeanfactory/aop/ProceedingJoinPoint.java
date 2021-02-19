@@ -15,12 +15,12 @@ public interface ProceedingJoinPoint {
     Object proceed() throws Throwable;
 
     /**
-     * 执行目标方法并重新传递参数
+     * 执行目标方法并重新传递新指定的参数
      * @param args 参数
      * @return 返回目标方法的返回值
      * @throws Throwable 抛出异常
      */
-    Object proceed(Object[] args) throws Throwable;
+    Object proceed(Object... args) throws Throwable;
 
     /**
      * 获取被代理的目标对象
