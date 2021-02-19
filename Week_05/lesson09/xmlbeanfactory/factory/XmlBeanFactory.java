@@ -99,8 +99,28 @@ public class XmlBeanFactory {
             return bean;
         } else {
             // 原型模式，每次获取都创建新对象
+            return newBean(name);
+        }
+    }
+
+    /**
+     * 创建新的 bean
+     * @param name bean 的 id
+     * @return 返回新的实例
+     */
+    private Object newBean(String name) {
+        BeanDefinition bd = beanDefCaching.get(name);
+        if (bd == null) {
             return null;
         }
+
+        Object bean = createAndInitBean(bd);
+        AopAspectDefinition aspectDef = aspectDefMap.get(name);
+        if (aspectDef == null) {
+            return bean;
+        }
+
+        return createAopProxyBean(aspectDef, bean, createAndInitBean(beanDefCaching.get(aspectDef.getRef())));
     }
 
     /**
@@ -133,8 +153,8 @@ public class XmlBeanFactory {
                 () -> initAopConfig(rootElement.elements(BeanDefinition.CONFIG_ELEMENT_NAME)));
         CompletableFuture<Void> runAfterBoth = initBeanDefinitionsFuture.runAfterBoth(initAopConfigFuture,
                 () -> {
-                    initBeans();
-                    initAopProxyBeans();
+                    initAllSingletonBeans();
+                    initAllSingletonBeansAopProxyBeans();
                 });
         runAfterBoth.join();
     }
@@ -144,48 +164,71 @@ public class XmlBeanFactory {
     /**
      * 初始化所有单例模式的 bean
      */
-    private void initBeans() {
+    private void initAllSingletonBeans() {
         beanDefCaching.values().stream()
                 .filter(b -> BeanScopeTypeEnum.SINGLETON == b.getScopeType())
                 .collect(Collectors.toList())
-                .forEach(this::initBean);
+                .forEach(b -> beanCaching.put(b.getId(), createAndInitBean(b)));
     }
 
     /**
-     * 初始化所有单例模式的 bean 对应的 AOP 代理
+     * 初始化所有单例模式的 bean 对应的 AOP 代理的 bean
      */
-    private void initAopProxyBeans() {
+    private void initAllSingletonBeansAopProxyBeans() {
         aspectDefMap.values()
                 .forEach((ad) -> {
-                    Object target = beanCaching.get(ad.getTargetRef());
-                    if (target == null) {
-                        throw new RuntimeException("target bean not found");
+                    BeanDefinition bd = beanDefCaching.get(ad.getTargetRef());
+                    if (bd == null || bd.getScopeType() != BeanScopeTypeEnum.SINGLETON) {
+                        return;
                     }
-                    Object aspect = beanCaching.get(ad.getRef());
-                    if (aspect == null) {
-                        throw new RuntimeException("aspect bean not found");
-                    }
-                    Object aopProxy;
-                    if (ad.isProxyTargetClass() || target.getClass().getInterfaces().length == 0) {
-                        System.out.println(target.getClass().getName());
-                        aopProxy = AopUtils.createAOPProxyWithCglib(target, aspect,
-                                target.getClass(),
-                                aspectDefMap.get(ad.getTargetRef()).getAdviceDefMap());
-                    } else {
-                        aopProxy = AopUtils.createAOPProxyWithJDK(target, aspect,
-                                target.getClass().getInterfaces(),
-                                aspectDefMap.get(ad.getTargetRef()).getAdviceDefMap());
-                    }
-                    aopProxyCaching.put(ad.getTargetRef(), aopProxy);
+                    aopProxyCaching.put(ad.getTargetRef(), createAndInitSingletonBeanAopProxyBean(ad));
                 });
     }
 
     /**
-     * 初始化 bean
+     * 创建初始化单例模式的 bean 对应的 AOP 代理的 bean
+     * @param ad 切面定义
+     * @return 返回 AOP 代理对象
+     */
+    private Object createAndInitSingletonBeanAopProxyBean(AopAspectDefinition ad) {
+        Object target = beanCaching.get(ad.getTargetRef());
+        if (target == null) {
+            throw new RuntimeException("target bean not found");
+        }
+        Object aspect = beanCaching.get(ad.getRef());
+        if (aspect == null) {
+            throw new RuntimeException("aspect bean not found");
+        }
+        return createAopProxyBean(ad, target, aspect);
+    }
+
+    /**
+     * 创建 AOP 代理对象
+     * @param ad 切面定义
+     * @param target 目标对象
+     * @param aspect 切面对象
+     * @return 返回 AOP 代理对象
+     */
+    private Object createAopProxyBean(AopAspectDefinition ad, Object target, Object aspect) {
+        Object aopProxy;
+        if (ad.isProxyTargetClass() || target.getClass().getInterfaces().length == 0) {
+            aopProxy = AopUtils.createAOPProxyWithCglib(target, aspect,
+                    target.getClass(),
+                    aspectDefMap.get(ad.getTargetRef()).getAdviceDefMap());
+        } else {
+            aopProxy = AopUtils.createAOPProxyWithJDK(target, aspect,
+                    target.getClass().getInterfaces(),
+                    aspectDefMap.get(ad.getTargetRef()).getAdviceDefMap());
+        }
+        return aopProxy;
+    }
+
+    /**
+     * 创建并初始化 bean
      * @param b bean 配置定义
      */
     @SneakyThrows
-    private void initBean(BeanDefinition b) {
+    private Object createAndInitBean(BeanDefinition b) {
         Class<?> clazz = Class.forName(b.getClassName());
         List<BeanConstructorArgDefinition> constructorArgDefList = b.getConstructorArgDefList();
         List<BeanPropertyDefinition> propertyDefList = b.getPropertyDefList();
@@ -197,7 +240,7 @@ public class XmlBeanFactory {
         } else {
             bean = clazz.newInstance();
         }
-        beanCaching.put(b.getId(), bean);
+        return bean;
     }
 
     /**
@@ -207,15 +250,24 @@ public class XmlBeanFactory {
      * @return 返回创建的实例
      */
     @SneakyThrows
-    private Object initBeanByProperty(Class<?> clazz, List<BeanPropertyDefinition> propertyDefList) {
+    private Object initBeanByProperty(final Class<?> clazz, List<BeanPropertyDefinition> propertyDefList) {
         Object bean = clazz.newInstance();
         propertyDefList.forEach(bpd -> {
-            try {
-                Field field = clazz.getDeclaredField(bpd.getName());
-                field.setAccessible(true);
-                field.set(bean, BeanInitUtils.getRealTypeValue(field.getType(), bpd.getValue()));
-            } catch (NoSuchFieldException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+            Class<?> beanClass = clazz;
+            while (true) {
+                try {
+                    Field field = beanClass.getDeclaredField(bpd.getName());
+                    field.setAccessible(true);
+                    field.set(bean, BeanInitUtils.getRealTypeValue(field.getType(), bpd.getValue()));
+                    break;
+                } catch (NoSuchFieldException e) {
+                    beanClass = beanClass.getSuperclass();
+                    if (beanClass == Object.class) {
+                        throw new RuntimeException(e);
+                    }
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         return bean;
