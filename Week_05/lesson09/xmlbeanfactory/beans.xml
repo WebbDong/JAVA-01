@@ -18,6 +18,10 @@
         <property name="age" value="66" />
     </bean>
 
+    <bean id="klass" class="lesson09.xmlbeanfactory.bean.Klass">
+        <property name="name" value="Hello Spring"/>
+    </bean>
+
     <bean id="studentAspect" class="lesson09.xmlbeanfactory.aspect.StudentAspect">
     </bean>
 
