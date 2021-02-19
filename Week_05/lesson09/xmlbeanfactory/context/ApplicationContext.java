@@ -1,4 +1,4 @@
-package lesson09.beanfactory.context;
+package lesson09.xmlbeanfactory.context;
 
 /**
  * @author Webb Dong
