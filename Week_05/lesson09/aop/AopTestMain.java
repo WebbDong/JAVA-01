@@ -40,10 +40,15 @@ public class AopTestMain {
         c.drive();
     }
 
+    private static void aopWithByteBuddy() {
+
+    }
+
     public static void main(String[] args) {
         aopWithJavaDynamicProxy();
         System.out.println("--------------------------");
         aopWithCglibDynamicProxy();
+        System.out.println("--------------------------");
     }
 
 }
