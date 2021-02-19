@@ -3,6 +3,7 @@ package lesson09.xmlbeanfactory;
 import lesson09.xmlbeanfactory.bean.Klass;
 import lesson09.xmlbeanfactory.bean.School;
 import lesson09.xmlbeanfactory.bean.Student;
+import lesson09.xmlbeanfactory.bean.Vehicle;
 import lesson09.xmlbeanfactory.context.ApplicationContext;
 import lesson09.xmlbeanfactory.context.ClassPathXmlApplicationContext;
 import lombok.SneakyThrows;
@@ -31,8 +32,23 @@ public class XmlBeanFactoryTestMain {
 
         System.out.println("----------------------------------------------");
 
-        Klass klass = (Klass) ac.getBeans("klass");
-        klass.testMethod();
+        Vehicle car = (Vehicle) ac.getBeans("car");
+        car.drive();
+
+        System.out.println("----------------------------------------------");
+
+        Klass klass1 = (Klass) ac.getBeans("klass");
+        klass1.testMethod();
+        Klass klass2 = (Klass) ac.getBeans("klass");
+        System.out.println(klass1 == klass2);
+
+        System.out.println("----------------------------------------------");
+
+        Vehicle truck1 = (Vehicle) ac.getBeans("truck");
+        truck1.drive();
+        Vehicle truck2 = (Vehicle) ac.getBeans("truck");
+        truck2.drive();
+        System.out.println("(truck1 == truck2) = " + (truck1 == truck2));
     }
 
 }
