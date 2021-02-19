@@ -1,4 +1,4 @@
-package lesson09.xmlbeanfactory.aop;
+package lesson09.xmlbeanfactory.aop.proxy;
 
 import lesson09.xmlbeanfactory.factory.config.AopAdviceDefinition;
 import lesson09.xmlbeanfactory.factory.config.enums.AopAdviceTypeEnum;
