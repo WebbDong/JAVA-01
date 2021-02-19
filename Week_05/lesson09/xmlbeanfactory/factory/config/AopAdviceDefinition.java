@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AopAdviceDefinition implements Comparable<String> {
+public class AopAdviceDefinition implements Comparable<AopAdviceDefinition> {
 
     public static final String METHOD_ATTRIBUTE_NAME = "method";
 
@@ -28,8 +28,8 @@ public class AopAdviceDefinition implements Comparable<String> {
     private String method;
 
     @Override
-    public int compareTo(@NotNull String o) {
-        return this.method.compareTo(o);
+    public int compareTo(@NotNull AopAdviceDefinition o) {
+        return this.method.compareTo(o.method);
     }
 
 }
