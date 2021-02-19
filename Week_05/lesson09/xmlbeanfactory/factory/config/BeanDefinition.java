@@ -1,6 +1,6 @@
-package lesson09.beanfactory.factory.config;
+package lesson09.xmlbeanfactory.factory.config;
 
-import lesson09.beanfactory.factory.config.enums.BeanScopeTypeEnum;
+import lesson09.xmlbeanfactory.factory.config.enums.BeanScopeTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
