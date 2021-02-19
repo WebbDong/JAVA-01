@@ -1,15 +1,16 @@
-package lesson09.beanfactory.factory;
+package lesson09.xmlbeanfactory.factory;
 
-import lesson09.beanfactory.factory.config.AopAdviceDefinition;
-import lesson09.beanfactory.factory.config.AopAspectDefinition;
-import lesson09.beanfactory.factory.config.AopPointcutDefinition;
-import lesson09.beanfactory.factory.config.BeanConstructorArgDefinition;
-import lesson09.beanfactory.factory.config.BeanDefinition;
-import lesson09.beanfactory.factory.config.BeanPropertyDefinition;
-import lesson09.beanfactory.factory.config.enums.AopAdviceTypeEnum;
-import lesson09.beanfactory.factory.config.enums.BeanScopeTypeEnum;
-import lesson09.beanfactory.util.AopUtils;
-import lesson09.beanfactory.util.BeanInitUtils;
+import lesson09.xmlbeanfactory.factory.config.AopAdviceDefinition;
+import lesson09.xmlbeanfactory.factory.config.AopAspectDefinition;
+import lesson09.xmlbeanfactory.factory.config.AopPointcutDefinition;
+import lesson09.xmlbeanfactory.factory.config.BeanConstructorArgDefinition;
+import lesson09.xmlbeanfactory.factory.config.BeanDefinition;
+import lesson09.xmlbeanfactory.factory.config.BeanPropertyDefinition;
+import lesson09.xmlbeanfactory.factory.config.enums.AopAdviceTypeEnum;
+import lesson09.xmlbeanfactory.factory.config.enums.BeanScopeTypeEnum;
+import lesson09.xmlbeanfactory.util.AopUtils;
+import lesson09.xmlbeanfactory.util.BeanInitUtils;
+import lesson09.xmlbeanfactory.util.ListUtils;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.dom4j.Document;
@@ -31,11 +32,11 @@ import java.util.stream.Collectors;
 
 /**
  * @author Webb Dong
- * @description: Bean 工厂
+ * @description: XML Bean 工厂
  * @date 2021-02-16 12:00
  */
 @Getter
-public class BeanFactory {
+public class XmlBeanFactory {
 
     public static final String PROXY_TARGET_CLASS_ATTR_NAME = "proxy-target-class";
 
@@ -65,7 +66,7 @@ public class BeanFactory {
      * bean 配置定义的 map
      * key: bean id, value: BeanDefinition
      */
-    private final Map<String, BeanDefinition> beanDefContainer = new HashMap<>();
+    private final Map<String, BeanDefinition> beanDefCaching = new HashMap<>();
 
     /**
      * 切点配置定义 map
@@ -79,25 +80,37 @@ public class BeanFactory {
      */
     private final Map<String, AopAspectDefinition> aspectDefMap = new HashMap<>();
 
-    public BeanFactory(String configLocation) {
+    public XmlBeanFactory(String configLocation) {
         loadXml(configLocation);
     }
 
     /**
      * 获取 bean
-     * @param name
-     * @return
+     * @param name bean 的 id
+     * @return 返回实例
      */
     public Object getBean(String name) {
-        return beanCaching.get(name);
+        BeanDefinition beanDef = beanDefCaching.get(name);
+        if (beanDef.getScopeType() == BeanScopeTypeEnum.SINGLETON) {
+            // 单例模式
+            Object bean = aopProxyCaching.get(name);
+            if (bean == null) {
+                bean = beanCaching.get(name);
+            }
+            return bean;
+        } else {
+            // 原型模式，每次获取都创建新对象
+            return null;
+        }
     }
 
     /**
      * 加载 xml
-     * @param configLocation
+     * @param configLocation xml 配置文件路径
      */
+    @SneakyThrows
     private void loadXml(String configLocation) {
-        try (InputStream in = BeanFactory.class.getClassLoader().getResourceAsStream(configLocation)) {
+        try (InputStream in = XmlBeanFactory.class.getClassLoader().getResourceAsStream(configLocation)) {
             SAXReader saxReader = new SAXReader();
             Document doc;
             try {
@@ -107,14 +120,12 @@ public class BeanFactory {
             }
             Element rootElement = doc.getRootElement();
             init(rootElement);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
     /**
      * 初始化
-     * @param rootElement
+     * @param rootElement xml 根元素
      */
     private void init(Element rootElement) {
         CompletableFuture<Void> initBeanDefinitionsFuture = CompletableFuture.runAsync(
@@ -135,17 +146,17 @@ public class BeanFactory {
      * 初始化所有单例模式的 bean
      */
     private void initBeans() {
-        beanDefContainer.values().stream()
+        beanDefCaching.values().stream()
                 .filter(b -> BeanScopeTypeEnum.SINGLETON == b.getScopeType())
                 .collect(Collectors.toList())
-                .forEach(b -> initBean(b));
+                .forEach(this::initBean);
     }
 
     /**
      * 初始化所有单例模式的 bean 对应的 AOP 代理
      */
     private void initAopProxyBeans() {
-        aspectDefMap.values().stream()
+        aspectDefMap.values()
                 .forEach((ad) -> {
                     Object target = beanCaching.get(ad.getTargetRef());
                     if (target == null) {
@@ -157,8 +168,9 @@ public class BeanFactory {
                     }
                     Object aopProxy;
                     if (ad.isProxyTargetClass() || target.getClass().getInterfaces().length == 0) {
+                        System.out.println(target.getClass().getName());
                         aopProxy = AopUtils.createAOPProxyWithCglib(target, aspect,
-                                target.getClass().getSuperclass(),
+                                target.getClass(),
                                 aspectDefMap.get(ad.getTargetRef()).getAdviceDefMap());
                     } else {
                         aopProxy = AopUtils.createAOPProxyWithJDK(target, aspect,
@@ -171,7 +183,7 @@ public class BeanFactory {
 
     /**
      * 初始化 bean
-     * @param b
+     * @param b bean 配置定义
      */
     @SneakyThrows
     private void initBean(BeanDefinition b) {
@@ -191,31 +203,35 @@ public class BeanFactory {
 
     /**
      * 根据属性初始化 bean
-     * @param clazz
-     * @param propertyDefList
-     * @return
+     * @param clazz 字节码 class 对象
+     * @param propertyDefList 属性定义集合
+     * @return 返回创建的实例
      */
     @SneakyThrows
     private Object initBeanByProperty(Class<?> clazz, List<BeanPropertyDefinition> propertyDefList) {
         Object bean = clazz.newInstance();
-        for (int i = 0, size = propertyDefList.size(); i < size; i++) {
-            BeanPropertyDefinition bpd = propertyDefList.get(i);
-            Field field = clazz.getDeclaredField(bpd.getName());
-            field.setAccessible(true);
-            field.set(bean, BeanInitUtils.getRealTypeValue(field.getType(), bpd.getValue()));
-        }
+        propertyDefList.forEach(bpd -> {
+            try {
+                Field field = clazz.getDeclaredField(bpd.getName());
+                field.setAccessible(true);
+                field.set(bean, BeanInitUtils.getRealTypeValue(field.getType(), bpd.getValue()));
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        });
         return bean;
     }
 
     /**
      * 根据构造函数初始化 bean
-     * @param clazz
-     * @param constructorArgDefList
+     * @param clazz 字节码 class 对象
+     * @param constructorArgDefList 构造器定义集合
+     * @return 返回初始化的实例
      */
     @SneakyThrows
     private Object initBeanByConstructor(Class<?> clazz, List<BeanConstructorArgDefinition> constructorArgDefList) {
         Constructor<?>[] constructors = clazz.getConstructors();
-        if (constructors == null || constructors.length == 0) {
+        if (constructors.length == 0) {
             throw new RuntimeException("no constructors");
         }
         Constructor<?> constructor = null;
@@ -224,9 +240,6 @@ public class BeanFactory {
             if (constructor.getParameterCount() == size) {
                 break;
             }
-        }
-        if (constructor == null) {
-            throw new RuntimeException("no constructor match");
         }
         final Class<?>[] paramTypes = constructor.getParameterTypes();
         Object[] args = constructorArgDefList.stream()
@@ -240,19 +253,18 @@ public class BeanFactory {
 
     /**
      * 初始化 bean 定义
-     * @param beanElementList
+     * @param beanElementList bean 标签集合
      */
     private void initBeanDefinitions(List<Element> beanElementList) {
         if (beanElementList == null) {
             return;
         }
-        for (int i = 0, size = beanElementList.size(); i < size; i++) {
-            Element beanElement = beanElementList.get(i);
+        beanElementList.forEach(e -> {
             BeanDefinition beanDefinition = new BeanDefinition();
-            String idVal = beanElement.attributeValue(ID_ATTRIBUTE_NAME);
-            String nameVal = beanElement.attributeValue(BeanPropertyDefinition.NAME_ATTRIBUTE_NAME);
-            String scopeVal = beanElement.attributeValue(BeanDefinition.SCOPE_ATTRIBUTE_NAME);
-            beanDefinition.setClassName(beanElement.attributeValue(CLASS_ATTRIBUTE_NAME));
+            String idVal = e.attributeValue(ID_ATTRIBUTE_NAME);
+            String nameVal = e.attributeValue(BeanPropertyDefinition.NAME_ATTRIBUTE_NAME);
+            String scopeVal = e.attributeValue(BeanDefinition.SCOPE_ATTRIBUTE_NAME);
+            beanDefinition.setClassName(e.attributeValue(CLASS_ATTRIBUTE_NAME));
 
             if (scopeVal != null) {
                 beanDefinition.setScopeType(BeanScopeTypeEnum.valueOfByName(scopeVal));
@@ -273,70 +285,65 @@ public class BeanFactory {
                 }
             }
 
-            List<Element> constructorArgElementList = beanElement.elements(BeanDefinition.CONSTRUCTOR_ARG_ELEMENT_NAME);
+            List<Element> constructorArgElementList = e.elements(BeanDefinition.CONSTRUCTOR_ARG_ELEMENT_NAME);
             if (constructorArgElementList != null && constructorArgElementList.size() != 0) {
                 initBeanConstructorArgElements(beanDefinition, constructorArgElementList);
             }
-            List<Element> propertyElementList = beanElement.elements(BeanDefinition.PROPERTY_ELEMENT_NAME);
+            List<Element> propertyElementList = e.elements(BeanDefinition.PROPERTY_ELEMENT_NAME);
             if (propertyElementList != null && propertyElementList.size() != 0) {
                 initBeanPropertyElements(beanDefinition, propertyElementList);
             }
 
-            beanDefContainer.put(beanDefinition.getId(), beanDefinition);
-        }
+            beanDefCaching.put(beanDefinition.getId(), beanDefinition);
+        });
     }
 
     /**
      * 初始化 bean 标签的 constructor-arg 子标签定义
-     * @param beanDefinition
-     * @param elementList
+     * @param beanDefinition bean 定义
+     * @param elementList constructor-arg 标签集合
      */
     private void initBeanConstructorArgElements(BeanDefinition beanDefinition, List<Element> elementList) {
-        List<BeanConstructorArgDefinition> definitionList = new ArrayList<>(elementList.size());
-        for (int i = 0, size = elementList.size(); i < size; i++) {
-            Element e = elementList.get(i);
+        beanDefinition.setConstructorArgDefList(elementList.stream().map(e -> {
             String indexAttrVal = e.attributeValue(BeanConstructorArgDefinition.INDEX_ATTRIBUTE_NAME);
             String valueAttrVal = e.attributeValue(VALUE_ATTRIBUTE_NAME);
-            definitionList.add(BeanConstructorArgDefinition.builder()
-                    .index(indexAttrVal != null ? Integer.parseInt(indexAttrVal) : null)
-                    .value(valueAttrVal)
-                    .build());
-        }
-        beanDefinition.setConstructorArgDefList(definitionList);
+            return BeanConstructorArgDefinition.builder()
+                        .index(indexAttrVal != null ? Integer.parseInt(indexAttrVal) : null)
+                        .value(valueAttrVal)
+                        .build();
+            })
+            .collect(Collectors.toList()));
     }
 
     /**
      * 初始化 bean 标签的 property 子标签定义
-     * @param beanDefinition
-     * @param elementList
+     * @param beanDefinition bean 定义
+     * @param elementList property 标签集合
      */
     private void initBeanPropertyElements(BeanDefinition beanDefinition, List<Element> elementList) {
-        List<BeanPropertyDefinition> definitionList = new ArrayList<>(elementList.size());
-        for (int i = 0, size = elementList.size(); i < size; i++) {
-            Element e = elementList.get(i);
+        beanDefinition.setPropertyDefList(elementList.stream().map(e -> {
             String nameAttrVal = e.attributeValue(BeanPropertyDefinition.NAME_ATTRIBUTE_NAME);
             String valueAttrVal = e.attributeValue(VALUE_ATTRIBUTE_NAME);
-            definitionList.add(BeanPropertyDefinition.builder()
+            return BeanPropertyDefinition.builder()
                     .name(nameAttrVal)
                     .value(valueAttrVal)
-                    .build());
-        }
-        beanDefinition.setPropertyDefList(definitionList);
+                    .build();
+        })
+        .collect(Collectors.toList()));
     }
 
     // ---------------------------- AOP 配置相关 -----------------------------
 
     /**
      * 初始化 AOP 配置
-     * @param aopConfigElementList
+     * @param aopConfigElementList aop config 标签集合
      */
     private void initAopConfig(List<Element> aopConfigElementList) {
         if (aopConfigElementList == null) {
             return;
         }
-        for (int i = 0, size = aopConfigElementList.size(); i < size; i++) {
-            Element e = aopConfigElementList.get(i);
-            boolean proxyTargetClass = Boolean.valueOf(e.attributeValue(PROXY_TARGET_CLASS_ATTR_NAME));
+        aopConfigElementList.forEach(e -> {
+            boolean proxyTargetClass = Boolean.parseBoolean(e.attributeValue(PROXY_TARGET_CLASS_ATTR_NAME));
             List<Element> pointcutElementList = e.elements(POINTCUT_ELEMENT_NAME);
             if (pointcutElementList != null && pointcutElementList.size() != 0) {
                 initPointcutDefinitions(pointcutElementList);
@@ -345,33 +352,30 @@ public class BeanFactory {
             if (aspectElementList != null && aspectElementList.size() != 0) {
                 initAspectDefinitions(proxyTargetClass, aspectElementList);
             }
-        }
+        });
     }
 
     /**
      * 初始化切点配置定义
-     * @return
-     * @param elementList
+     * @param elementList aop pointcut 标签集合
      */
     private void initPointcutDefinitions(List<Element> elementList) {
-        for (int i = 0, size = elementList.size(); i < size; i++) {
-            Element e = elementList.get(i);
+        elementList.forEach(e -> {
             String id = e.attributeValue(ID_ATTRIBUTE_NAME);
             pointcutDefMap.put(id, AopPointcutDefinition.builder()
                     .id(id)
                     .ref(e.attributeValue(AopAspectDefinition.REF_ATTRIBUTE_NAME))
                     .build());
-        }
+        });
     }
 
     /**
      * 初始化切面配置定义
-     * @param proxyTargetClass
-     * @param elementList
+     * @param proxyTargetClass proxyTargetClass 属性
+     * @param elementList aop aspect 标签集合
      */
     private void initAspectDefinitions(boolean proxyTargetClass, List<Element> elementList) {
-        for (int i = 0, size = elementList.size(); i < size; i++) {
-            Element e = elementList.get(i);
+        elementList.forEach(e -> {
             String pointcutRef = e.attributeValue(AopAspectDefinition.POINTCUT_REF_ATTRIBUTE_NAME);
             AopAspectDefinition aspectDef = AopAspectDefinition.builder()
                     .id(e.attributeValue(ID_ATTRIBUTE_NAME))
@@ -385,29 +389,26 @@ public class BeanFactory {
                 aspectDef.setAdviceDefMap(initAdviceDefinitions(adviceDefElementList));
             }
             aspectDefMap.put(aspectDef.getTargetRef(), aspectDef);
-        }
+        });
     }
 
     /**
      * 初始化通知配置定义
-     * @param elementList
-     * @return
+     * @param elementList 通知标签集合
+     * @return 返回 Map<AopAdviceTypeEnum, List<AopAdviceDefinition>> 实例
      */
     private Map<AopAdviceTypeEnum, List<AopAdviceDefinition>> initAdviceDefinitions(List<Element> elementList) {
         Map<AopAdviceTypeEnum, List<AopAdviceDefinition>> adviceDefMap = new HashMap<>();
-        for (int i = 0, size = elementList.size(); i < size; i++) {
-            Element e = elementList.get(i);
+        elementList.forEach(e -> {
             AopAdviceDefinition adviceDef = AopAdviceDefinition.builder()
                     .method(e.attributeValue(AopAdviceDefinition.METHOD_ATTRIBUTE_NAME))
                     .adviceType(AopAdviceTypeEnum.getAdviceTypeEnumByName(e.getName()))
                     .build();
-            List<AopAdviceDefinition> adviceDefList = adviceDefMap.get(adviceDef.getAdviceType());
-            if (adviceDefList == null) {
-                adviceDefList = new ArrayList<>(2);
-                adviceDefMap.put(adviceDef.getAdviceType(), adviceDefList);
-            }
-            adviceDefList.add(adviceDef);
-        }
+            List<AopAdviceDefinition> adviceDefList = adviceDefMap.computeIfAbsent(
+                    adviceDef.getAdviceType(), k -> new ArrayList<>(2));
+            ListUtils.orderedAdd(adviceDefList, adviceDef,
+                    AopAdviceTypeEnum.isAfterTypeAdvice(adviceDef.getAdviceType()));
+        });
         return adviceDefMap;
     }
 
