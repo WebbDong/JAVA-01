@@ -40,6 +40,10 @@ public class AopAspectDefinition {
 
     private boolean proxyTargetClass;
 
+    /**
+     * 通知方法 map
+     * key: 通知方法类型, value: 对应类型的通知方法定义集合
+     */
     private Map<AopAdviceTypeEnum, List<AopAdviceDefinition>> adviceDefMap;
 
 }
