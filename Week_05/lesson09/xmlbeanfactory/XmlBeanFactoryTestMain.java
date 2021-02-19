@@ -17,10 +17,16 @@ public class XmlBeanFactoryTestMain {
     public static void main(String[] args) {
         ApplicationContext ac = new ClassPathXmlApplicationContext("lesson09/xmlbeanfactory/beans.xml");
         School school = (School) ac.getBeans("school");
-        System.out.println(school);
+//        school.introduce();
+        Object ret = school.testMethod(3.45, 4.55);
+        System.out.println("XmlBeanFactoryTestMain ret = " + ret);
+
+        System.out.println("----------------------------------------------");
 
         Student student = (Student) ac.getBeans("student");
-        student.study();
+//        student.study();
+        ret = student.testMethod(50, 80, "Hello World");
+        System.out.println("XmlBeanFactoryTestMain ret = " + ret);
     }
 
 }
