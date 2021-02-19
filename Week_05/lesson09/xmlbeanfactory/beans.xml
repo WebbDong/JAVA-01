@@ -22,15 +22,35 @@
         <property name="name" value="Hello Spring"/>
     </bean>
 
+    <bean id="car" class="lesson09.xmlbeanfactory.bean.Car">
+        <property name="brand" value="Ferrari"/>
+        <property name="power" value="700"/>
+        <property name="torque" value="900"/>
+    </bean>
+
+    <bean id="truck" class="lesson09.xmlbeanfactory.bean.Truck" scope="prototype">
+        <property name="brand" value="BenZ"/>
+        <property name="power" value="625"/>
+        <property name="torque" value="900"/>
+    </bean>
+
     <bean id="studentAspect" class="lesson09.xmlbeanfactory.aspect.StudentAspect">
     </bean>
 
     <bean id="schoolAspect" class="lesson09.xmlbeanfactory.aspect.SchoolAspect">
     </bean>
 
+    <bean id="carAspect" class="lesson09.xmlbeanfactory.aspect.CarAspect">
+    </bean>
+
+    <bean id="truckAspect" class="lesson09.xmlbeanfactory.aspect.TruckAspect">
+    </bean>
+
     <aop:config>
         <aop:pointcut id="studentAOPPointCut" ref="student"/>
         <aop:pointcut id="schoolAOPPointCut" ref="school"/>
+        <aop:pointcut id="carAOPPointCut" ref="car"/>
+        <aop:pointcut id="truckAOPPointCut" ref="truck"/>
 
         <aop:aspect ref="studentAspect" pointcut-ref="studentAOPPointCut">
             <aop:before method="beforeAdvice1"/>
@@ -50,6 +70,15 @@
             <aop:after method="afterAdvice"/>
             <aop:after-returning method="afterReturning"/>
             <aop:after-throwing method="afterThrowing"/>
+            <aop:around method="around"/>
+        </aop:aspect>
+
+        <aop:aspect ref="carAspect" pointcut-ref="carAOPPointCut">
+            <aop:before method="beforeAdvice"/>
+            <aop:after-returning method="afterReturning"/>
+        </aop:aspect>
+
+        <aop:aspect ref="truckAspect" pointcut-ref="truckAOPPointCut">
             <aop:around method="around"/>
         </aop:aspect>
     </aop:config>
