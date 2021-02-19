@@ -1,6 +1,6 @@
-package lesson09.beanfactory.context;
+package lesson09.xmlbeanfactory.context;
 
-import lesson09.beanfactory.factory.BeanFactory;
+import lesson09.xmlbeanfactory.factory.XmlBeanFactory;
 
 /**
  * @author Webb Dong
@@ -9,10 +9,10 @@ import lesson09.beanfactory.factory.BeanFactory;
  */
 public class ClassPathXmlApplicationContext implements ApplicationContext {
 
-    private BeanFactory beanFactory;
+    private final XmlBeanFactory beanFactory;
 
     public ClassPathXmlApplicationContext(String configLocation) {
-        beanFactory = new BeanFactory(configLocation);
+        beanFactory = new XmlBeanFactory(configLocation);
     }
 
     @Override
