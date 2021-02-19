@@ -8,17 +8,17 @@
                            http://www.webbdong.beanfactory.org/schema/aop
                            http://www.webbdong.beanfactory.org/schema/aop/beanfactory-aop.xsd">
     
-    <bean id="school" class="lesson09.beanfactory.bean.School">
+    <bean id="school" class="lesson09.xmlbeanfactory.bean.School">
         <constructor-arg index="1" value="1636"/>
         <constructor-arg index="0" value="哈佛大学"/>
     </bean>
 
-    <bean id="student" class="lesson09.beanfactory.bean.Student">
+    <bean id="student" class="lesson09.xmlbeanfactory.bean.Student">
         <property name="name" value="比尔盖茨"/>
         <property name="age" value="66" />
     </bean>
 
-    <bean id="schoolAOP" class="lesson09.beanfactory.aop.SchoolAOP">
+    <bean id="schoolAOP" class="lesson09.xmlbeanfactory.aop.SchoolAspect">
     </bean>
 
     <aop:config>
