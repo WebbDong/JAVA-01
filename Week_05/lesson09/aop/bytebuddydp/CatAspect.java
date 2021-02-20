@@ -1,35 +1,57 @@
 package lesson09.aop.bytebuddydp;
 
-import net.bytebuddy.asm.Advice;
-
-import java.lang.reflect.Method;
-import java.util.Arrays;
+import lesson09.aop.Aspect;
+import lesson09.aop.ProceedingJoinPoint;
 
 /**
  * @author Webb Dong
  * @description:
  * @date 2021-02-20 02:22
  */
-public class CatAspect {
+public class CatAspect implements Aspect {
 
-    @Advice.OnMethodEnter
-    public static void onMethodEnter(@Advice.Origin Method method,
-                                     @Advice.AllArguments Object[] args) {
-        System.out.println("CatAspect.onMethodEnter start");
-        System.out.println(method.getName());
-        System.out.println(Arrays.toString(args));
-        System.out.println("CatAspect.onMethodEnter end");
+    /**
+     * 前置通知
+     */
+    @Override
+    public void beforeAdvice() {
+        System.out.println("CatAspect.beforeAdvice()");
     }
 
-    @Advice.OnMethodExit
-    public static void onMethodExit(@Advice.Origin Method method,
-                                    @Advice.AllArguments Object[] args,
-                                    @Advice.Return Object ret) {
-        System.out.println("CatAspect.onMethodExit start");
-        System.out.println(method.getName());
-        System.out.println(Arrays.toString(args));
-        System.out.println("ret = " + ret);
-        System.out.println("CatAspect.onMethodExit end");
+    /**
+     * 后置通知
+     */
+    @Override
+    public void afterAdvice() {
+        System.out.println("CatAspect.afterAdvice()");
+    }
+
+    /**
+     * 后置返回通知
+     */
+    @Override
+    public void afterReturning() {
+        System.out.println("CatAspect.afterReturning()");
+    }
+
+    /**
+     * 后置异常通知
+     */
+    @Override
+    public void afterThrowing() {
+        System.out.println("CatAspect.afterThrowing()");
+    }
+
+    /**
+     * 环绕通知
+     */
+    @Override
+    public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
+        System.out.println("CatAspect.around() start");
+        // 调用目标方法
+        Object proceed = joinPoint.proceed();
+        System.out.println("CatAspect.around() end");
+        return proceed;
     }
 
 }
