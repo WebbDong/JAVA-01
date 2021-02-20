@@ -15,7 +15,7 @@ public class CarAspect implements Aspect {
      */
     @Override
     public void beforeAdvice() {
-        System.out.println("CarAOP.beforeAdvice()");
+        System.out.println("CarAspect.beforeAdvice()");
     }
 
     /**
@@ -23,7 +23,7 @@ public class CarAspect implements Aspect {
      */
     @Override
     public void afterAdvice() {
-        System.out.println("CarAOP.afterAdvice()");
+        System.out.println("CarAspect.afterAdvice()");
     }
 
     /**
@@ -31,7 +31,7 @@ public class CarAspect implements Aspect {
      */
     @Override
     public void afterReturning() {
-        System.out.println("CarAOP.afterReturning()");
+        System.out.println("CarAspect.afterReturning()");
     }
 
     /**
@@ -39,7 +39,7 @@ public class CarAspect implements Aspect {
      */
     @Override
     public void afterThrowing() {
-        System.out.println("CarAOP.afterThrowing()");
+        System.out.println("CarAspect.afterThrowing()");
     }
 
     /**
@@ -47,10 +47,10 @@ public class CarAspect implements Aspect {
      */
     @Override
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
-        System.out.println("CarAOP.around() start");
+        System.out.println("CarAspect.around() start");
         // 调用目标方法
         Object proceed = joinPoint.proceed();
-        System.out.println("CarAOP.around() end");
+        System.out.println("CarAspect.around() end");
         return proceed;
     }
 
