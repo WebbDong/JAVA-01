@@ -1,6 +1,7 @@
 package lesson09.aop.bytebuddydp;
 
 import lesson09.aop.AbstractAopMethodInterceptor;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 import net.bytebuddy.implementation.bind.annotation.AllArguments;
 import net.bytebuddy.implementation.bind.annotation.Origin;
@@ -15,6 +16,7 @@ import java.lang.reflect.Method;
  * @date 2021-02-20 11:55
  */
 @SuperBuilder
+@EqualsAndHashCode(callSuper = true)
 public class AopByteBuddyMethodInterceptor extends AbstractAopMethodInterceptor implements ByteBuddyMethodInterceptor {
 
     @RuntimeType
