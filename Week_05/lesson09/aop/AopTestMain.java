@@ -1,5 +1,7 @@
 package lesson09.aop;
 
+import lesson09.aop.bytebuddydp.AopByteBuddyMethodInterceptor;
+import lesson09.aop.bytebuddydp.ByteBuddyProxy;
 import lesson09.aop.bytebuddydp.Cat;
 import lesson09.aop.bytebuddydp.CatAspect;
 import lesson09.aop.cglibdp.AopMethodInterceptor;
@@ -9,9 +11,6 @@ import lesson09.aop.jdkdp.AopInvocationHandler;
 import lesson09.aop.jdkdp.Person;
 import lesson09.aop.jdkdp.Student;
 import lesson09.aop.jdkdp.StudentAspect;
-import net.bytebuddy.ByteBuddy;
-import net.bytebuddy.asm.Advice;
-import net.bytebuddy.matcher.ElementMatchers;
 import net.sf.cglib.proxy.Enhancer;
 
 import java.lang.reflect.Proxy;
@@ -29,7 +28,11 @@ public class AopTestMain {
     private static void aopWithJavaDynamicProxy() {
         Student target = new Student();
         Person p = (Person) Proxy.newProxyInstance(AopTestMain.class.getClassLoader(),
-                new Class[]{Person.class}, new AopInvocationHandler(target, new StudentAspect()));
+                new Class[]{Person.class},
+                AopInvocationHandler.builder()
+                        .target(target)
+                        .aspect(new StudentAspect())
+                        .build());
         p.sayHello();
     }
 
@@ -40,7 +43,10 @@ public class AopTestMain {
         Car target = new Car();
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(Car.class);
-        enhancer.setCallback(new AopMethodInterceptor(target, new CarAspect()));
+        enhancer.setCallback(AopMethodInterceptor.builder()
+                .target(target)
+                .aspect(new CarAspect())
+                .build());
         Car c = (Car) enhancer.create();
         c.drive();
     }
@@ -48,24 +54,21 @@ public class AopTestMain {
     /**
      * Byte Buddy 方式实现简单 AOP
      */
-    private static void aopWithByteBuddy() throws Exception {
-        Cat proxy = new ByteBuddy()
-                .subclass(Cat.class)
-                .method(ElementMatchers.any())
-                .intercept(Advice.to(CatAspect.class))
-                .make()
-                .load(AopTestMain.class.getClassLoader())
-                .getLoaded()
-                .getConstructor()
-                .newInstance();
+    private static void aopWithByteBuddy() {
+        Cat target = new Cat();
+        Cat proxy = ByteBuddyProxy.newProxyInstance(Cat.class, AopByteBuddyMethodInterceptor.builder()
+                .target(target)
+                .aspect(new CatAspect())
+                .build());
         proxy.eat();
     }
 
     public static void main(String[] args) throws Exception {
+        System.out.println("------------- JDK 动态代理实现 AOP -------------");
         aopWithJavaDynamicProxy();
-        System.out.println("--------------------------");
+        System.out.println("------------ CGLIB 动态代理实现 AOP ------------");
         aopWithCglibDynamicProxy();
-        System.out.println("--------------------------");
+        System.out.println("------------ Byte Buddy 实现 AOP ------------");
         aopWithByteBuddy();
     }
 
