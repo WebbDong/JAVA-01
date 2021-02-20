@@ -15,7 +15,7 @@ public class StudentAspect implements Aspect {
      */
     @Override
     public void beforeAdvice() {
-        System.out.println("StudentAOP.beforeAdvice()");
+        System.out.println("StudentAspect.beforeAdvice()");
     }
 
     /**
@@ -23,7 +23,7 @@ public class StudentAspect implements Aspect {
      */
     @Override
     public void afterAdvice() {
-        System.out.println("StudentAOP.afterAdvice()");
+        System.out.println("StudentAspect.afterAdvice()");
     }
 
     /**
@@ -31,7 +31,7 @@ public class StudentAspect implements Aspect {
      */
     @Override
     public void afterReturning() {
-        System.out.println("StudentAOP.afterReturning()");
+        System.out.println("StudentAspect.afterReturning()");
     }
 
     /**
@@ -39,7 +39,7 @@ public class StudentAspect implements Aspect {
      */
     @Override
     public void afterThrowing() {
-        System.out.println("StudentAOP.afterThrowing()");
+        System.out.println("StudentAspect.afterThrowing()");
     }
 
     /**
@@ -47,10 +47,10 @@ public class StudentAspect implements Aspect {
      */
     @Override
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
-        System.out.println("StudentAOP.around() start");
+        System.out.println("StudentAspect.around() start");
         // 调用目标方法
         Object proceed = joinPoint.proceed();
-        System.out.println("StudentAOP.around() end");
+        System.out.println("StudentAspect.around() end");
         return proceed;
     }
 
