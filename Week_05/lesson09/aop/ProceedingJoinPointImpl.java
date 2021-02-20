@@ -1,7 +1,7 @@
 package lesson09.aop;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.lang.reflect.Method;
@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
  * @description: ProceedingJoinPointImpl
  * @date 2021-02-14 21:20
  */
-@Data
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProceedingJoinPointImpl implements ProceedingJoinPoint {
@@ -19,6 +19,8 @@ public class ProceedingJoinPointImpl implements ProceedingJoinPoint {
     private Object[] args;
 
     private Object target;
+
+    private Object proxy;
 
     private Method method;
 
@@ -32,16 +34,6 @@ public class ProceedingJoinPointImpl implements ProceedingJoinPoint {
     @Override
     public Object proceed(Object[] args) throws Throwable {
         return proceed0(args);
-    }
-
-    @Override
-    public Object getTarget() {
-        return target;
-    }
-
-    @Override
-    public Object[] getArgs() {
-        return args;
     }
 
     private Object proceed0(Object[] args) throws Throwable {
