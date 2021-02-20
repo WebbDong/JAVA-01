@@ -1,6 +1,7 @@
 package lesson09.aop.jdkdp;
 
 import lesson09.aop.AbstractAopMethodInterceptor;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 import java.lang.reflect.InvocationHandler;
@@ -12,6 +13,7 @@ import java.lang.reflect.Method;
  * @date 2021-02-14 21:43
  */
 @SuperBuilder
+@EqualsAndHashCode(callSuper = true)
 public class AopInvocationHandler extends AbstractAopMethodInterceptor implements InvocationHandler {
 
     @Override
