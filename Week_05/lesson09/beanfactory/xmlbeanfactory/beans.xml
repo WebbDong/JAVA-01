@@ -34,7 +34,7 @@
         <property name="torque" value="900"/>
     </bean>
 
-    <bean id="studentAspect" class="lesson09.beanfactory.xmlbeanfactory.aspect.StudentAspect">
+    <bean id="studentAspect" class="lesson09.beanfactory.xmlbeanfactory.aspect.StudentAspect" scope="prototype">
     </bean>
 
     <bean id="schoolAspect" class="lesson09.beanfactory.xmlbeanfactory.aspect.SchoolAspect">
