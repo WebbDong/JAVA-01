@@ -1,12 +1,12 @@
-package lesson09.beanfactory.xmlbeanfactory.aop.proxy;
+package lesson09.beanfactory.base.aop.proxy;
 
-import lesson09.beanfactory.xmlbeanfactory.aop.ProceedingJoinPointImpl;
-import lesson09.beanfactory.xmlbeanfactory.aop.methodinvocation.AroundAdviceMethodInvocation;
-import lesson09.beanfactory.xmlbeanfactory.aop.methodinvocation.MethodInvocation;
-import lesson09.beanfactory.xmlbeanfactory.aop.methodinvocation.NormalAdviceMethodInvocation;
-import lesson09.beanfactory.xmlbeanfactory.aop.methodinvocation.TargetMethodInvocation;
-import lesson09.beanfactory.xmlbeanfactory.factory.config.AopAdviceDefinition;
-import lesson09.beanfactory.xmlbeanfactory.factory.config.enums.AopAdviceTypeEnum;
+import lesson09.beanfactory.base.aop.ProceedingJoinPointImpl;
+import lesson09.beanfactory.base.aop.methodinvocation.AroundAdviceMethodInvocation;
+import lesson09.beanfactory.base.aop.methodinvocation.MethodInvocation;
+import lesson09.beanfactory.base.aop.methodinvocation.NormalAdviceMethodInvocation;
+import lesson09.beanfactory.base.aop.methodinvocation.TargetMethodInvocation;
+import lesson09.beanfactory.base.beanfactory.config.AopAdviceDefinition;
+import lesson09.beanfactory.base.beanfactory.config.enums.AopAdviceTypeEnum;
 import lombok.Data;
 
 import java.lang.reflect.Method;
