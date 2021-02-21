@@ -1,7 +1,7 @@
-package lesson09.beanfactory.xmlbeanfactory.aop.methodinvocation;
+package lesson09.beanfactory.base.aop.methodinvocation;
 
-import lesson09.beanfactory.xmlbeanfactory.aop.ProceedingJoinPoint;
-import lesson09.beanfactory.xmlbeanfactory.aop.ProceedingJoinPointImpl;
+import lesson09.beanfactory.base.aop.ProceedingJoinPoint;
+import lesson09.beanfactory.base.aop.ProceedingJoinPointImpl;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
