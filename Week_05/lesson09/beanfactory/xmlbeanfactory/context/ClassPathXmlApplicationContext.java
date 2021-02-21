@@ -1,5 +1,7 @@
 package lesson09.beanfactory.xmlbeanfactory.context;
 
+import lesson09.beanfactory.base.ApplicationContext;
+import lesson09.beanfactory.base.BeanFactory;
 import lesson09.beanfactory.xmlbeanfactory.factory.XmlBeanFactory;
 
 /**
@@ -9,14 +11,14 @@ import lesson09.beanfactory.xmlbeanfactory.factory.XmlBeanFactory;
  */
 public class ClassPathXmlApplicationContext implements ApplicationContext {
 
-    private final XmlBeanFactory beanFactory;
+    private final BeanFactory beanFactory;
 
     public ClassPathXmlApplicationContext(String configLocation) {
         beanFactory = new XmlBeanFactory(configLocation);
     }
 
     @Override
-    public Object getBeans(String name) {
+    public Object getBean(String name) {
         return beanFactory.getBean(name);
     }
 
