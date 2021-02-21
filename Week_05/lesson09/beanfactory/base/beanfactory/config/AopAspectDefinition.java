@@ -1,6 +1,6 @@
-package lesson09.beanfactory.xmlbeanfactory.factory.config;
+package lesson09.beanfactory.base.beanfactory.config;
 
-import lesson09.beanfactory.xmlbeanfactory.factory.config.enums.AopAdviceTypeEnum;
+import lesson09.beanfactory.base.beanfactory.config.enums.AopAdviceTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
