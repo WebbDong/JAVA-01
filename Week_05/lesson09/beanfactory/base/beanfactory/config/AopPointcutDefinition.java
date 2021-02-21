@@ -1,4 +1,4 @@
-package lesson09.beanfactory.xmlbeanfactory.factory.config;
+package lesson09.beanfactory.base.beanfactory.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
