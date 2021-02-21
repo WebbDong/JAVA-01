@@ -1,4 +1,4 @@
-package lesson09.beanfactory.xmlbeanfactory.aop.methodinvocation;
+package lesson09.beanfactory.base.aop.methodinvocation;
 
 /**
  * @author Webb Dong
