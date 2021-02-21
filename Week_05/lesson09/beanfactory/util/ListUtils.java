@@ -1,4 +1,4 @@
-package lesson09.beanfactory.xmlbeanfactory.util;
+package lesson09.beanfactory.util;
 
 import java.util.List;
 
