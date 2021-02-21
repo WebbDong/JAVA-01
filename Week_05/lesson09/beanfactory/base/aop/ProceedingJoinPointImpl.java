@@ -1,6 +1,6 @@
-package lesson09.beanfactory.xmlbeanfactory.aop;
+package lesson09.beanfactory.base.aop;
 
-import lesson09.beanfactory.xmlbeanfactory.aop.methodinvocation.MethodInvocation;
+import lesson09.beanfactory.base.aop.methodinvocation.MethodInvocation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
