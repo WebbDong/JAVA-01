@@ -1,4 +1,4 @@
-package lesson09.beanfactory.xmlbeanfactory.factory.config.enums;
+package lesson09.beanfactory.base.beanfactory.config.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
