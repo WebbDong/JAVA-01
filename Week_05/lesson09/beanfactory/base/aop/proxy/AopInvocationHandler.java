@@ -1,7 +1,7 @@
-package lesson09.beanfactory.xmlbeanfactory.aop.proxy;
+package lesson09.beanfactory.base.aop.proxy;
 
-import lesson09.beanfactory.xmlbeanfactory.factory.config.AopAdviceDefinition;
-import lesson09.beanfactory.xmlbeanfactory.factory.config.enums.AopAdviceTypeEnum;
+import lesson09.beanfactory.base.beanfactory.config.AopAdviceDefinition;
+import lesson09.beanfactory.base.beanfactory.config.enums.AopAdviceTypeEnum;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
