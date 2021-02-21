@@ -1,6 +1,6 @@
 package lesson09.beanfactory.xmlbeanfactory.aspect;
 
-import lesson09.beanfactory.xmlbeanfactory.aop.ProceedingJoinPoint;
+import lesson09.beanfactory.base.aop.ProceedingJoinPoint;
 
 import java.util.Arrays;
 
