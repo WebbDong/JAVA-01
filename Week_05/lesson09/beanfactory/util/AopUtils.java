@@ -1,9 +1,9 @@
-package lesson09.beanfactory.xmlbeanfactory.util;
+package lesson09.beanfactory.util;
 
-import lesson09.beanfactory.xmlbeanfactory.aop.proxy.AopCglibMethodInterceptor;
-import lesson09.beanfactory.xmlbeanfactory.aop.proxy.AopInvocationHandler;
-import lesson09.beanfactory.xmlbeanfactory.factory.config.AopAdviceDefinition;
-import lesson09.beanfactory.xmlbeanfactory.factory.config.enums.AopAdviceTypeEnum;
+import lesson09.beanfactory.base.aop.proxy.AopCglibMethodInterceptor;
+import lesson09.beanfactory.base.aop.proxy.AopInvocationHandler;
+import lesson09.beanfactory.base.beanfactory.config.AopAdviceDefinition;
+import lesson09.beanfactory.base.beanfactory.config.enums.AopAdviceTypeEnum;
 import net.sf.cglib.proxy.Enhancer;
 
 import java.lang.reflect.Proxy;
