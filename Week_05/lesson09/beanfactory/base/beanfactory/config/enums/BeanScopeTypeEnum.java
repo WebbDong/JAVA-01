@@ -32,7 +32,7 @@ public enum BeanScopeTypeEnum {
         } else if (PROTOTYPE.name.equals(name)) {
             return PROTOTYPE;
         } else {
-            throw new RuntimeException("Unknown scope type enum name");
+            throw new RuntimeException("Unknown scope type enum name : " + name);
         }
     }
 
