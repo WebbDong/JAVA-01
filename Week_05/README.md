@@ -1,1 +1,14 @@
-学习笔记
+# 目录介绍
+- lesson09: 第五周第九课
+  - aop: AOP 相关
+    - bytebuddydp: byte-buddy 实现简单 AOP
+    - cglibdp: cglib 实现简单 AOP
+    - jdkdp: jdk 动态代理实现简单 AOP
+  - beanfactory: 实现 Spring Bean 装配与 AOP 相关
+    - annotationbeanfactory: 注解方式实现 Spring Bean 的装配与简单的 AOP
+    - base: 公共类与抽象类
+    - util: 工具类
+    - xmlbeanfactory: XML 方式实现 Spring Bean 的装配与简单的 AOP
+  - bytebuddyagent: byte-buddy 的 java agent
+- lesson10: 第五周第十课
+  - singleton: 单例相关
