@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.sql.Timestamp;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -28,8 +29,43 @@ public class JdbcPrepareStatementTransaction {
     /**
      * 事务保存点
      */
-    private static void transactionalSavepoint() {
+    private static void transactionalSavepoint() throws SQLException {
+        try (Connection conn = DBUtils.getConnection()) {
+            conn.setAutoCommit(false);
 
+            String insertSql = "INSERT INTO `user`(`name`, `age`, `nick`, `create_time`, `update_time`) " +
+                "VALUES(?, ?, ?, ?, ?)";
+            try (PreparedStatement stmt = conn.prepareStatement(insertSql)) {
+                stmt.setString(1, "Bird");
+                stmt.setInt(2, 31);
+                stmt.setString(3, "Bird");
+                stmt.setTimestamp(4, Timestamp.valueOf("2021-02-26 18:45:15"));
+                stmt.setTimestamp(5, Timestamp.valueOf("2021-02-26 18:45:15"));
+                stmt.executeUpdate();
+            }
+            Savepoint birdInsertSavepoint = conn.setSavepoint("BirdInsert");
+
+            insertSql = "INSERT INTO `user`(`name`, `age`, `nick`, `create_time`, `update_time`, `id`) " +
+                    "VALUES(?, ?, ?, ?, ?, ?)";
+            try (PreparedStatement stmt = conn.prepareStatement(insertSql)) {
+                stmt.setString(1, "Chris");
+                stmt.setInt(2, 25);
+                stmt.setString(3, "Chris");
+                stmt.setTimestamp(4, Timestamp.valueOf("2021-02-26 19:45:15"));
+                stmt.setTimestamp(5, Timestamp.valueOf("2021-02-26 19:45:15"));
+                stmt.setLong(6, 1L);
+                stmt.executeUpdate();
+                conn.commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+                // 全部回滚
+//                conn.rollback();
+
+                // 回滚到保存点并提交事务，Bird 用户插入成功，Chris 用户回滚
+                conn.rollback(birdInsertSavepoint);
+                conn.commit();
+            }
+        }
     }
 
     /**
