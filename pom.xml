@@ -19,6 +19,7 @@
         <dom4j.version>2.1.3</dom4j.version>
         <byte-buddy.version>1.10.20</byte-buddy.version>
         <mysql-connector-java.version>8.0.23</mysql-connector-java.version>
+        <hikari-cp.version>2.13.0</hikari-cp.version>
     </properties>
 
     <dependencies>
@@ -57,7 +58,11 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connector-java.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>hikari-cp</groupId>
+            <artifactId>hikari-cp</artifactId>
+            <version>${hikari-cp.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
