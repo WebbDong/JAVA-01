@@ -8,6 +8,8 @@ import java.sql.Savepoint;
 import java.sql.Timestamp;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,7 +25,77 @@ public class JdbcPrepareStatementTransaction {
 //        batchInsert();
 //        selectById(3L);
 //        transactionalInsert();
-        transactionalSavepoint();
+//        transactionalSavepoint();
+//        executeInsertBatch();
+//        executeUpdateBatch();
+        executeDeleteBatch();
+    }
+
+    /**
+     * 批处理批量删除数据
+     */
+    private static void executeDeleteBatch() throws SQLException {
+        String deleteSql = "DELETE FROM `user` WHERE `id` = ?";
+        try (Connection conn = DBUtils.getConnection()) {
+            try (PreparedStatement stmt = conn.prepareStatement(deleteSql)) {
+                for (long id = 10000; id < 10018; id++) {
+                    stmt.setLong(1, id);
+                    stmt.addBatch();
+                }
+                stmt.executeBatch();
+            }
+        }
+    }
+
+    /**
+     * 批处理批量更新数据
+     */
+    private static void executeUpdateBatch() throws SQLException {
+        String updateSql = "UPDATE `user` SET `age` = ? WHERE `id` = ?";
+        try (Connection conn = DBUtils.getConnection()) {
+            try (PreparedStatement stmt = conn.prepareStatement(updateSql)) {
+                for (long id = 1; id < 100; id++) {
+                    stmt.setLong(1, 90);
+                    stmt.setLong(2, id);
+                    stmt.addBatch();
+                }
+                stmt.executeBatch();
+            }
+        }
+    }
+
+    /**
+     * 批处理批量插入数据
+     */
+    private static int[] executeInsertBatch() throws SQLException {
+        String insertSql = "INSERT INTO `user`(`name`, `age`, `nick`, `create_time`, `update_time`) " +
+                "VALUES(?, ?, ?, ?, ?)";
+        try (Connection conn = DBUtils.getConnection()) {
+            try (PreparedStatement stmt = conn.prepareStatement(insertSql)) {
+                Timestamp stamp = new Timestamp(new Date().getTime());
+                for (int i = 10001; i < 10003; i++) {
+                    stmt.setString(1, "user" + i);
+                    stmt.setInt(2, 30);
+                    stmt.setString(3, "user" + i);
+                    stmt.setTimestamp(4, stamp);
+                    stmt.setTimestamp(5, stamp);
+                    stmt.addBatch();
+
+                    /*
+                    if (i % 2000 == 0) {
+                        // 每2000条执行一次批处理
+                        stmt.executeBatch();
+                        // 执行完后清空这一批的批处理数据
+                        stmt.clearBatch();
+                    }
+                     */
+                }
+                // 返回的是一个数组，在 MySQL 中，每个元素代表着每条 SQL 对记录的影响行数
+                int[] rets = stmt.executeBatch();
+                System.out.println("batch insert successfully rets = " + Arrays.toString(rets));
+                return rets;
+            }
+        }
     }
 
     /**
@@ -117,7 +189,7 @@ public class JdbcPrepareStatementTransaction {
     }
 
     /**
-     * 批量插入数据
+     * 批量插入数据，多个 VALUES 语法
      */
     private static void batchInsert() throws SQLException {
         String sql = "INSERT INTO `user`(`name`, `age`, `nick`, `create_time`, `update_time`)";
@@ -166,6 +238,9 @@ public class JdbcPrepareStatementTransaction {
         DBUtils.executeUpdatePrepareStatement(sql, paramList);
     }
 
+    /**
+     * MessageFormat 示例
+     */
     private static void messageFormat() {
         String sql = "CREATE DATABASE IF NOT EXISTS {0} CHARACTER SET {1}";
         String format = MessageFormat.format(sql, "product", "utf8mb4");
