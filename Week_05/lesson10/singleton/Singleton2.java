@@ -24,6 +24,8 @@ public class Singleton2 implements Singleton, Serializable, Cloneable {
         return super.clone();
     }
 
-    private Singleton2() {}
+    private Singleton2() {
+        System.out.println("Singleton2");
+    }
 
 }

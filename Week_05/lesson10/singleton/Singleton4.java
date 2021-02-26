@@ -31,6 +31,8 @@ public class Singleton4 implements Singleton, Serializable, Cloneable {
         return super.clone();
     }
 
-    private Singleton4() {}
+    private Singleton4() {
+        System.out.println("Singleton4");
+    }
 
 }

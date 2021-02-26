@@ -12,7 +12,9 @@ public class Singleton1 implements Singleton, Serializable, Cloneable {
 
     private static final long serialVersionUID = 1L;
 
-    private static final Singleton1 INSTANCE = new Singleton1();
+    public static final int NUM = 5000;
+
+    private static Singleton1 INSTANCE = new Singleton1();
 
     public static Singleton1 getInstance() {
         return INSTANCE;
@@ -23,6 +25,8 @@ public class Singleton1 implements Singleton, Serializable, Cloneable {
         return super.clone();
     }
 
-    private Singleton1() {}
+    private Singleton1() {
+        System.out.println("Singleton1");
+    }
 
 }

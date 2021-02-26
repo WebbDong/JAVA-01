@@ -14,6 +14,10 @@ public enum Singleton6 {
 
     private AtomicLong id = new AtomicLong(0);
 
+    Singleton6() {
+        System.out.println("Singleton6");
+    }
+
     public long getId() {
         return id.incrementAndGet();
     }

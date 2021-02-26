@@ -37,6 +37,7 @@ public class Singleton8 implements Singleton, Serializable, Cloneable {
 
     // 防止反射破坏单例
     private Singleton8() {
+        System.out.println("Singleton8");
         if (firstCreate) {
             synchronized (Singleton8.class) {
                 if (firstCreate) {

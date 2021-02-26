@@ -25,6 +25,8 @@ public class Singleton7 implements Singleton, Serializable, Cloneable {
         return super.clone();
     }
 
-    private Singleton7() {}
+    private Singleton7() {
+        System.out.println("Singleton7");
+    }
 
 }

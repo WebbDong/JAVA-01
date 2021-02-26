@@ -29,6 +29,8 @@ public class Singleton5 implements Singleton, Serializable, Cloneable {
         return super.clone();
     }
 
-    private Singleton5() {}
+    private Singleton5() {
+        System.out.println("Singleton5");
+    }
 
 }
