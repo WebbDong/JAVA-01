@@ -1,0 +1,50 @@
+{
+  "groups": [
+    {
+      "name": "my.beans.student",
+      "type": "com.webbdong.autoconfigure.starter.bean.Student",
+      "sourceType": "com.webbdong.autoconfigure.starter.bean.Student"
+    },
+    {
+      "name": "my.beans.school",
+      "type": "com.webbdong.autoconfigure.starter.bean.School",
+      "sourceType": "com.webbdong.autoconfigure.starter.bean.School"
+    },
+    {
+      "name": "my.beans.klass",
+      "type": "com.webbdong.autoconfigure.starter.bean.Klass",
+      "sourceType": "com.webbdong.autoconfigure.starter.bean.Klass"
+    }
+  ],
+  "properties": [
+    {
+      "name": "my.beans.enabled",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "name": "my.beans.student.name",
+      "type": "java.lang.String",
+      "sourceType": "com.webbdong.autoconfigure.starter.bean.Student"
+    },
+    {
+      "name": "my.beans.student.age",
+      "type": "java.lang.Integer",
+      "sourceType": "com.webbdong.autoconfigure.starter.bean.Student"
+    },
+    {
+      "name": "my.beans.school.name",
+      "type": "java.lang.String",
+      "sourceType": "com.webbdong.autoconfigure.starter.bean.School"
+    },
+    {
+      "name": "my.beans.school.foundingYears",
+      "type": "java.lang.Integer",
+      "sourceType": "com.webbdong.autoconfigure.starter.bean.School"
+    },
+    {
+      "name": "my.beans.klass.name",
+      "type": "java.lang.String",
+      "sourceType": "com.webbdong.autoconfigure.starter.bean.Klass"
+    }
+  ]
+}
