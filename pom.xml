@@ -6,7 +6,26 @@
 
     <groupId>org.geekbang</groupId>
     <artifactId>JAVA-01</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+
+    <modules>
+        <module>Week_01</module>
+        <module>Week_02</module>
+        <module>Week_03</module>
+        <module>Week_04</module>
+        <module>Week_05</module>
+        <module>Week_06</module>
+        <module>Week_07</module>
+        <module>Week_08</module>
+        <module>Week_09</module>
+        <module>Week_10</module>
+        <module>Week_11</module>
+        <module>Week_12</module>
+        <module>Week_13</module>
+        <module>Week_14</module>
+        <module>Week_15</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
