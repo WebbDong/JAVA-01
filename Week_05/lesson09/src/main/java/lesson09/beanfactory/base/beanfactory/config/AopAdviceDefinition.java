@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Webb Dong
@@ -28,7 +27,7 @@ public class AopAdviceDefinition implements Comparable<AopAdviceDefinition> {
     private String method;
 
     @Override
-    public int compareTo(@NotNull AopAdviceDefinition o) {
+    public int compareTo(AopAdviceDefinition o) {
         return this.method.compareTo(o.method);
     }
 

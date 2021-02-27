@@ -17,7 +17,7 @@ public class XmlBeanFactoryTestMain {
 
     @SneakyThrows
     public static void main(String[] args) {
-        ApplicationContext ac = new ClassPathXmlApplicationContext("lesson09/beanfactory/xmlbeanfactory/beans.xml");
+        ApplicationContext ac = new ClassPathXmlApplicationContext("beans.xml");
         School school = (School) ac.getBean("school");
 //        school.introduce();
         Object ret = school.testMethod(3.45, 4.55);

@@ -15,6 +15,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -52,6 +53,10 @@ public class XmlBeanFactory extends AbstractBeanFactory {
     @SneakyThrows
     private void loadXml(String configLocation) {
         try (InputStream in = XmlBeanFactory.class.getClassLoader().getResourceAsStream(configLocation)) {
+            if (in == null) {
+                throw new FileNotFoundException(configLocation);
+            }
+
             SAXReader saxReader = new SAXReader();
             Document doc;
             try {

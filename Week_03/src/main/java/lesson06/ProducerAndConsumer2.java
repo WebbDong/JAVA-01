@@ -1,7 +1,5 @@
 package lesson06;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadFactory;
@@ -36,9 +34,10 @@ public class ProducerAndConsumer2 {
             private int count;
 
             @Override
-            public Thread newThread(@NotNull Runnable r) {
+            public Thread newThread(Runnable r) {
                 return new Thread(r, new StringBuilder("producer-pool-thread-").append(count++).toString());
             }
+
         });
         return producerPool;
     }
@@ -57,9 +56,10 @@ public class ProducerAndConsumer2 {
             private int count;
 
             @Override
-            public Thread newThread(@NotNull Runnable r) {
+            public Thread newThread(Runnable r) {
                 return new Thread(r, new StringBuilder("consumer-pool-thread-").append(count++).toString());
             }
+
         });
         return consumerPool;
     }

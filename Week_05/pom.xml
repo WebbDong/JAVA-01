@@ -10,6 +10,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>Week_05</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>lesson09</module>
+        <module>lesson10</module>
+        <module>spring-boot-autoconfigure-starter-demo</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
