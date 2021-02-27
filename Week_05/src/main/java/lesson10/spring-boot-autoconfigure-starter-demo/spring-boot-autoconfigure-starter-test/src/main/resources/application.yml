@@ -1,0 +1,11 @@
+my:
+  beans:
+    enabled: true
+    student:
+      name: "Adam"
+      age: 30
+    school:
+      founding-years: 1636
+      name: "哈佛大学"
+    klass:
+      name: "Hello Spring Autoconfigure"
