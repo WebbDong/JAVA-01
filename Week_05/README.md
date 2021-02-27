@@ -263,6 +263,6 @@ public class Singleton8 implements Singleton, Serializable, Cloneable {
 >> 2. 通过定义 readResolve 方法直接返回单例实例来防止反序列化破坏。
 >> 3. 通过定义私有无参构造器并定义一个全局布尔变量来防止反射破坏
 > 
-> 2.[使用 JDBC 原生接口，实现数据库的增删改查操作](https://github.com/WebbDong/JAVA-01/blob/main/Week_05/lesson10/src/main/java/lesson10/jdbc/JdbcCrud.java)   
-> 3.[使用事务，PrepareStatement 方式，批处理方式，改进上述操作](https://github.com/WebbDong/JAVA-01/blob/main/Week_05/lesson10/src/main/java/lesson10/jdbc/JdbcPrepareStatementTransaction.java)   
-> 4.[配置 Hikari 连接池，改进上述操作](https://github.com/WebbDong/JAVA-01/tree/main/Week_05/lesson10/src/main/java/lesson10/hikaricp)    
+> [2.使用 JDBC 原生接口，实现数据库的增删改查操作](https://github.com/WebbDong/JAVA-01/blob/main/Week_05/lesson10/src/main/java/lesson10/jdbc/JdbcCrud.java)   
+> [3.使用事务，PrepareStatement 方式，批处理方式，改进上述操作](https://github.com/WebbDong/JAVA-01/blob/main/Week_05/lesson10/src/main/java/lesson10/jdbc/JdbcPrepareStatementTransaction.java)   
+> [4.配置 Hikari 连接池，改进上述操作](https://github.com/WebbDong/JAVA-01/tree/main/Week_05/lesson10/src/main/java/lesson10/hikaricp)    
