@@ -1,7 +1,7 @@
 # 第一周第一课
 # 作业
   - 第一题: [字节码文件分析](#byteCodeFileAnalysis)
-  - 第二题: <https://github.com/WebbDong/JAVA-01/blob/main/Week_01/lesson01/classloader/HelloClassLoader.java>
+  - 第二题: [自定义一个 Classloader，加载一个 Hello.xlass 文件，执行 hello 方法](https://github.com/WebbDong/JAVA-01/blob/main/Week_01/src/main/java/lesson01/classloader/HelloClassLoader.java)
   - 第三题: [启动参数与 JVM 内存结构](#JVMMemoryStructureAndJMM)
   - 第四题: [jstat、jstack 和 jmap 使用示例](#jstatjstackjmapExample)
   

@@ -1,4 +1,4 @@
-# 第一题: 使用 [GCLogAnalysis.java](https://github.com/WebbDong/JAVA-01/blob/main/Week_02/lesson03/gc/GCLogAnalysis.java) 自己演练一遍串行 / 并行 /CMS/G1 的案例。
+# 第一题: 使用 [GCLogAnalysis.java](https://github.com/WebbDong/JAVA-01/blob/main/Week_02/src/main/java/lesson03/gc/GCLogAnalysis.java) 自己演练一遍串行 / 并行 /CMS/G1 的案例。
 ## 1. 测试环境
   - 操作系统: Windows 10
   - CPU: i9-9900KS 8核16线程

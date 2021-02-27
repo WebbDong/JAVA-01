@@ -8,13 +8,13 @@
   
 # 第二周作业
 ## 第三课: 
-  - 第一题: [GCLogAnalysis.java GC 日志演练](https://github.com/WebbDong/JAVA-01/tree/main/Week_02/lesson03/gc/FirstQuestion.md)
-  - 第四题: [GC 与堆内存总结](https://github.com/WebbDong/JAVA-01/tree/main/Week_02/lesson03/gc/FourthQuestion.md)
+  - 第一题: [GCLogAnalysis.java GC 日志演练](https://github.com/WebbDong/JAVA-01/tree/main/Week_02/src/main/java/lesson03/gc/FirstQuestion.md)
+  - 第四题: [GC 与堆内存总结](https://github.com/WebbDong/JAVA-01/tree/main/Week_02/src/main/java/lesson03/gc/FourthQuestion.md)
 ## 第四课: 
   - 第一题:
-    - [Java Socket](https://github.com/WebbDong/JAVA-01/tree/main/Week_02/lesson04/http)
-    - [Netty Demo](https://github.com/WebbDong/JAVA-01/tree/main/Week_02/lesson04/netty)
-  - 第二题: [OkHttp Demo](https://github.com/WebbDong/JAVA-01/blob/main/Week_02/lesson04/okhttp/OkHttpDemo.java)
+    - [Java Socket](https://github.com/WebbDong/JAVA-01/tree/main/Week_02/src/main/java/lesson04/http)
+    - [Netty Demo](https://github.com/WebbDong/JAVA-01/tree/main/Week_02/src/main/java/lesson04/netty)
+  - 第二题: [OkHttp Demo](https://github.com/WebbDong/JAVA-01/blob/main/Week_02/src/main/java/lesson04/okhttp/OkHttpDemo.java)
 
 # 第二周课程内容
 ## 第三课

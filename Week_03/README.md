@@ -5,7 +5,7 @@
 ## 第五课:
 - [用Netty实现自己的网关](https://github.com/WebbDong/my-gateway)
 ## 第六课:
-- [Java并发演练](https://github.com/WebbDong/JAVA-01/tree/main/Week_03/lesson06)
+- [Java并发演练](https://github.com/WebbDong/JAVA-01/tree/main/Week_03/src/main/java/lesson06)
 
 # 第三周课程内容
 ## 第五课

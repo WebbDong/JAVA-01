@@ -6,7 +6,7 @@
 # 第四周作业
 ## 第七课:
 - 第一题: [并发演练](https://github.com/WebbDong/java-concurrent)
-- 第二题: [WaysToCreateThreads.java](https://github.com/WebbDong/JAVA-01/blob/main/Week_04/lesson07/WaysToCreateThreads.java)
+- 第二题: [WaysToCreateThreads.java](https://github.com/WebbDong/JAVA-01/blob/main/Week_04/src/main/java/lesson07/WaysToCreateThreads.java)
 ## 第八课:
 - 第一题: 列举常用的并发操作 API 和工具类，简单分析其使用场景和优缺点。  
 >  1.synchronized 关键字    
@@ -132,7 +132,7 @@
 >> ThreadLocal 每个线程一个使用各自的实例，就可以避免并发问题。
 > 
 - 第四题: 并发脑图
-  ![alt 图片](./lesson08/img/Java并发.png "并发脑图")
+  ![alt 图片](./src/main/java/lesson08/img/Java并发.png "并发脑图")
 
 # 第四周课程内容
 ## 第七课

@@ -14,7 +14,7 @@
   - singleton: 单例相关
   - jdbc: JDBC 相关
   - hikaricp: HikariCP 数据库连接池相关
-  - spring-boot-autoconfigure-starter-demo: 自动配置 starter 相关
+- spring-boot-autoconfigure-starter-demo: 自动配置 starter 相关
 
 # 第五周课程内容
 ## 第九课
@@ -26,24 +26,24 @@
 # 第五周作业
 ## 第九课:
 > 1.使 Java 里的动态代理，实现一个简单的 AOP  
->> [1.1 JDK 动态代理方式实现一个简单的 AOP ](https://github.com/WebbDong/JAVA-01/tree/main/Week_05/lesson09/aop/jdkdp)   
->> [1.2 cglib 方式实现一个简单的 AOP](https://github.com/WebbDong/JAVA-01/tree/main/Week_05/lesson09/aop/cglibdp)  
+>> [1.1 JDK 动态代理方式实现一个简单的 AOP ](https://github.com/WebbDong/JAVA-01/tree/main/Week_05/lesson09/src/main/java/lesson09/aop/jdkdp)   
+>> [1.2 cglib 方式实现一个简单的 AOP](https://github.com/WebbDong/JAVA-01/tree/main/Week_05/lesson09/src/main/java/lesson09/aop/cglibdp)  
 >   
->> [简单 AOP 测试类](https://github.com/WebbDong/JAVA-01/blob/main/Week_05/lesson09/aop/AopTestMain.java)
+>> [简单 AOP 测试类](https://github.com/WebbDong/JAVA-01/blob/main/Week_05/lesson09/src/main/java/lesson09/aop/AopTestMain.java)
 > 
 > 2.写代码实现 Spring Bean 的装配，方式越多越好（XML、Annotation 都可以）
->> [2.1 XML 方式实现 Spring Bean 的装配与 AOP](https://github.com/WebbDong/JAVA-01/tree/main/Week_05/lesson09/beanfactory/xmlbeanfactory)   
->> [2.2 注解方式实现 Spring Bean 的装配与 AOP](https://github.com/WebbDong/JAVA-01/tree/main/Week_05/lesson09/beanfactory/annotationbeanfactory)   
+>> [2.1 XML 方式实现 Spring Bean 的装配与 AOP](https://github.com/WebbDong/JAVA-01/tree/main/Week_05/lesson09/src/main/java/lesson09/beanfactory/xmlbeanfactory)   
+>> [2.2 注解方式实现 Spring Bean 的装配与 AOP](https://github.com/WebbDong/JAVA-01/tree/main/Week_05/lesson09/src/main/java/lesson09/beanfactory/annotationbeanfactory)   
 > 
-> [3.实现一个 Spring XML 自定义配置，配置一组 Bean，例如: Student/Klass/School](https://github.com/WebbDong/JAVA-01/blob/main/Week_05/lesson09/beanfactory/xmlbeanfactory/beans.xml)    
+> [3.实现一个 Spring XML 自定义配置，配置一组 Bean，例如: Student/Klass/School](https://github.com/WebbDong/JAVA-01/blob/main/Week_05/lesson09/src/main/resources/beans.xml)    
 > 
-> [4.尝试使用 ByteBuddy 实现一个简单的基于类的 AOP](https://github.com/WebbDong/JAVA-01/tree/main/Week_05/lesson09/aop/bytebuddydp)    
+> [4.尝试使用 ByteBuddy 实现一个简单的基于类的 AOP](https://github.com/WebbDong/JAVA-01/tree/main/Week_05/lesson09/src/main/java/lesson09/aop/bytebuddydp)    
 > 
-> [5.尝试使用 ByteBuddy 与 Instrument 实现一个简单 JavaAgent 实现无侵入下的 AOP](https://github.com/WebbDong/JAVA-01/blob/main/Week_05/lesson09/bytebuddyagent/ByteBuddyAgentAopTest.java)      
+> [5.尝试使用 ByteBuddy 与 Instrument 实现一个简单 JavaAgent 实现无侵入下的 AOP](https://github.com/WebbDong/JAVA-01/blob/main/Week_05/lesson09/src/main/java/lesson09/bytebuddyagent/ByteBuddyAgentAopTest.java)      
 
 ## 第十课:
 > 1.总结一下，单例的各种写法，比较它们的优劣。
->> [各种单例写法的对比测试](https://github.com/WebbDong/JAVA-01/blob/main/Week_05/lesson10/singleton/SingletonTest.java)   
+>> [各种单例写法的对比测试](https://github.com/WebbDong/JAVA-01/blob/main/Week_05/lesson10/src/main/java/lesson10/singleton/SingletonTest.java)   
 >> 
 >> 1.1 写法一、饿汉式
 ```java
@@ -263,6 +263,6 @@ public class Singleton8 implements Singleton, Serializable, Cloneable {
 >> 2. 通过定义 readResolve 方法直接返回单例实例来防止反序列化破坏。
 >> 3. 通过定义私有无参构造器并定义一个全局布尔变量来防止反射破坏
 > 
-> 2.[使用 JDBC 原生接口，实现数据库的增删改查操作](https://github.com/WebbDong/JAVA-01/blob/main/Week_05/lesson10/jdbc/JdbcCrud.java)   
-> 3.[使用事务，PrepareStatement 方式，批处理方式，改进上述操作](https://github.com/WebbDong/JAVA-01/blob/main/Week_05/lesson10/jdbc/JdbcPrepareStatementTransaction.java)   
-> 4.[配置 Hikari 连接池，改进上述操作](https://github.com/WebbDong/JAVA-01/tree/main/Week_05/lesson10/hikaricp)    
+> 2.[使用 JDBC 原生接口，实现数据库的增删改查操作](https://github.com/WebbDong/JAVA-01/blob/main/Week_05/lesson10/src/main/java/lesson10/jdbc/JdbcCrud.java)   
+> 3.[使用事务，PrepareStatement 方式，批处理方式，改进上述操作](https://github.com/WebbDong/JAVA-01/blob/main/Week_05/lesson10/src/main/java/lesson10/jdbc/JdbcPrepareStatementTransaction.java)   
+> 4.[配置 Hikari 连接池，改进上述操作](https://github.com/WebbDong/JAVA-01/tree/main/Week_05/lesson10/src/main/java/lesson10/hikaricp)    
