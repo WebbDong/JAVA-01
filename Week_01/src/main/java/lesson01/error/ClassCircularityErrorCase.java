@@ -48,9 +48,9 @@ public class ClassCircularityErrorCase {
      */
     public static void main(String[] args) throws Exception {
         final String JAR1_PATH = ClassCircularityErrorCase.class.getClassLoader()
-                .getResource("lesson01/error/ClassCircularityErrorCaseJar1.jar").toString();
+                .getResource("lesson01/error/jar/ClassCircularityErrorCaseJar1.jar").toString();
         final String JAR2_PATH = ClassCircularityErrorCase.class.getClassLoader()
-                .getResource("lesson01/error/ClassCircularityErrorCaseJar2.jar").toString();
+                .getResource("lesson01/error/jar/ClassCircularityErrorCaseJar2.jar").toString();
         System.out.println(JAR1_PATH);
         System.out.println(JAR2_PATH);
         URLClassLoader urlClassLoader = (URLClassLoader) HelloURLClassLoader.class.getClassLoader();
