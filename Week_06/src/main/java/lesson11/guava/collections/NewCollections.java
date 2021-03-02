@@ -13,6 +13,8 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableMultiset;
+import com.google.common.collect.ImmutableRangeMap;
+import com.google.common.collect.ImmutableRangeSet;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.LinkedHashMultiset;
@@ -20,10 +22,15 @@ import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 import com.google.common.collect.MutableClassToInstanceMap;
+import com.google.common.collect.Range;
+import com.google.common.collect.RangeMap;
+import com.google.common.collect.RangeSet;
 import com.google.common.collect.SortedMultiset;
 import com.google.common.collect.Table;
 import com.google.common.collect.TreeMultimap;
 import com.google.common.collect.TreeMultiset;
+import com.google.common.collect.TreeRangeMap;
+import com.google.common.collect.TreeRangeSet;
 
 import java.util.ArrayList;
 import java.util.TreeMap;
@@ -32,12 +39,12 @@ import java.util.TreeMap;
  * 新集合类型
  *      Multiset 接口: Multiset 和 Set 的区别就是可以保存多个相同的对象。可以保存无序重复的数据
  *      SortedMultiset 接口: 支持高效地获取指定范围的子集，TreeMultiset 实现 SortedMultiset 接口
- *      Multimap 接口: Multimap 不是一个 Map，没有继承 java.util.Map 接口，将复杂的 Map 数据结构，例如 HashMap<K, Set<V>>
- *                      进行简化封装。
+ *      Multimap 接口: Multimap 不是一个 Map，没有继承 java.util.Map 接口，将复杂的 Map 数据结构，例如 HashMap<K, Set<V>> 进行简化封装。
  *      BiMap 接口: BiMap 是一种特殊的 Map，提供 inverse() 方法可以直接反转键值映射，保证值是唯一的，因此 values() 返回 Set 而不是普通的 Collection
  *      Table 接口: Table支持 row、column、value ，实现类似于 Map<R, Map<C, V>> 这种数据结构。
  *      ClassToInstanceMap 接口: 是一种特殊的 Map：它的键是 Class 类型，而值是符合键所指类型的对象。
- *      RangeSet 接口:
+ *      RangeSet 接口: 描述了一组不相连的、非空的区间。当把一个区间添加到可变的RangeSet时，所有相连的区间会被合并，空区间会被忽略。
+ *      RangeMap 接口: 描述了”不相交的、非空的区间”到特定值的映射。和 RangeSet 不同，RangeMap 不会合并相邻的映射，即便相邻的区间映射到相同的值。
  * @author Webb Dong
  * @date 2021-03-01 2:47 PM
  */
@@ -355,6 +362,42 @@ public class NewCollections {
 
     private static void rangeSetExample() {
         System.out.println("----------------- rangeSetExample ------------------");
+        RangeSet<Integer> treeRangeSet = TreeRangeSet.create();
+        treeRangeSet.add(Range.closed(1, 10));
+        treeRangeSet.add(Range.openClosed(11, 15));
+        treeRangeSet.add(Range.closedOpen(15, 20));
+        // 空区间会被忽略
+        treeRangeSet.add(Range.openClosed(0, 0));
+        System.out.println("treeRangeSet = " + treeRangeSet);
+        treeRangeSet.remove(Range.closed(12, 15));
+        System.out.println("treeRangeSet.remove(Range.closed(12, 15)) = " + treeRangeSet);
+        for (Range<Integer> r : treeRangeSet.asRanges()) {
+            System.out.println(r);
+        }
+        System.out.println("treeRangeSet.contains(12) = " + treeRangeSet.contains(12));
+        System.out.println("treeRangeSet.contains(19) = " + treeRangeSet.contains(19));
+
+        RangeSet<Integer> immutableRangeSet = ImmutableRangeSet.<Integer>builder()
+                .add(Range.closed(1, 10))
+                .add(Range.openClosed(12, 15))
+                .add(Range.closedOpen(16, 20))
+                .build();
+        System.out.println("immutableRangeSet = " + immutableRangeSet);
+    }
+
+    private static void rangeMapExample() {
+        System.out.println("----------------- rangeMapExample ------------------");
+        RangeMap<Integer, String> treeRangeMap = TreeRangeMap.create();
+        treeRangeMap.put(Range.closed(1, 5), "Kobe");
+        treeRangeMap.put(Range.openClosed(7, 10), "Wade");
+        System.out.println("treeRangeMap = " + treeRangeMap);
+        System.out.println("treeRangeMap.get(4) = " + treeRangeMap.get(4));
+        System.out.println("treeRangeMap.get(10) = " + treeRangeMap.get(10));
+
+        RangeMap<Integer, String> immutableRangeMap = ImmutableRangeMap.<Integer, String>builder()
+                .put(Range.open(15, 20), "Curry")
+                .build();
+        System.out.println("immutableRangeMap = " + immutableRangeMap);
     }
 
     public static void main(String[] args) {
@@ -365,6 +408,7 @@ public class NewCollections {
         tableExample();
         classToInstanceMapExample();
         rangeSetExample();
+        rangeMapExample();
     }
 
 }
