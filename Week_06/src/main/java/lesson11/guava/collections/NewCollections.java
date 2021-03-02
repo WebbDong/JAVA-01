@@ -2,10 +2,15 @@ package lesson11.guava.collections;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.BoundType;
+import com.google.common.collect.ClassToInstanceMap;
 import com.google.common.collect.ConcurrentHashMultiset;
+import com.google.common.collect.EnumBiMap;
+import com.google.common.collect.EnumHashBiMap;
+import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.HashMultiset;
+import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableMultiset;
 import com.google.common.collect.ImmutableSetMultimap;
@@ -14,7 +19,9 @@ import com.google.common.collect.LinkedHashMultiset;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
+import com.google.common.collect.MutableClassToInstanceMap;
 import com.google.common.collect.SortedMultiset;
+import com.google.common.collect.Table;
 import com.google.common.collect.TreeMultimap;
 import com.google.common.collect.TreeMultiset;
 
@@ -28,10 +35,33 @@ import java.util.TreeMap;
  *      Multimap 接口: Multimap 不是一个 Map，没有继承 java.util.Map 接口，将复杂的 Map 数据结构，例如 HashMap<K, Set<V>>
  *                      进行简化封装。
  *      BiMap 接口: BiMap 是一种特殊的 Map，提供 inverse() 方法可以直接反转键值映射，保证值是唯一的，因此 values() 返回 Set 而不是普通的 Collection
+ *      Table 接口: Table支持 row、column、value ，实现类似于 Map<R, Map<C, V>> 这种数据结构。
+ *      ClassToInstanceMap 接口: 是一种特殊的 Map：它的键是 Class 类型，而值是符合键所指类型的对象。
+ *      RangeSet 接口:
  * @author Webb Dong
  * @date 2021-03-01 2:47 PM
  */
 public class NewCollections {
+
+    private enum Week {
+        MONDAY,
+        TUESDAY,
+        WEDNESDAY,
+        THURSDAY,
+        FRIDAY,
+        SATURDAY,
+        SUNDAY
+    }
+
+    private enum Activity {
+        FOOTBALL,
+        BASKETBALL,
+        TENNIS,
+        BASEBALL,
+        SWIMMING,
+        BADMINTON,
+        FITNESS
+    }
 
     /**
      * Multiset 接口的一些实现类示例
@@ -260,7 +290,71 @@ public class NewCollections {
         System.out.println("hashBiMap = " + hashBiMap);
         System.out.println("hashBiMap.inverse() = " + hashBiMap.inverse());
 
+        // ImmutableBiMap 不可变 BiMap
+        ImmutableBiMap<String, String> immutableBiMap = ImmutableBiMap.<String, String>builder()
+                .put("k10", "Kobe")
+                .put("k11", "Wade")
+                .put("k12", "Chris")
+                .put("k13", "Paul")
+                .put("k14", "Curry")
+                .build();
+        System.out.println("immutableBiMap = " + immutableBiMap);
+        System.out.println("immutableBiMap.inverse() = " + immutableBiMap.inverse());
 
+        // EnumBiMap 枚举 BiMap，key 和 value 都必须是枚举类型
+        EnumBiMap<Week, Activity> enumBiMap = EnumBiMap.create(Week.class, Activity.class);
+        enumBiMap.put(Week.WEDNESDAY, Activity.BADMINTON);
+        enumBiMap.put(Week.SUNDAY, Activity.BASKETBALL);
+        enumBiMap.put(Week.MONDAY, Activity.FOOTBALL);
+        enumBiMap.put(Week.THURSDAY, Activity.BASEBALL);
+        enumBiMap.put(Week.SATURDAY, Activity.TENNIS);
+        enumBiMap.put(Week.FRIDAY, Activity.SWIMMING);
+        enumBiMap.put(Week.TUESDAY, Activity.FITNESS);
+        System.out.println("enumBiMap = " + enumBiMap);
+        System.out.println("enumBiMap.inverse() = " + enumBiMap.inverse());
+
+        // EnumHashBiMap ，key 必须是枚举，value 可以是任何其他类型
+        EnumHashBiMap<Week, Integer> enumHashBiMap = EnumHashBiMap.create(Week.class);
+        enumHashBiMap.put(Week.MONDAY, 10);
+        enumHashBiMap.put(Week.TUESDAY, 20);
+        enumHashBiMap.put(Week.WEDNESDAY, 30);
+        enumHashBiMap.put(Week.THURSDAY, 40);
+        enumHashBiMap.put(Week.FRIDAY, 50);
+        enumHashBiMap.put(Week.SATURDAY, 60);
+        enumHashBiMap.put(Week.SUNDAY, 70);
+        System.out.println("enumHashBiMap = " + enumHashBiMap);
+        System.out.println("enumHashBiMap.inverse() = " + enumHashBiMap.inverse());
+    }
+
+    /**
+     * Table有如下几种实现：
+     *      HashBasedTable：本质上用 HashMap<R, HashMap<C, V>>实现；
+     *      TreeBasedTable：本质上用 TreeMap<R, TreeMap<C,V>>实现；
+     *      ImmutableTable：本质上用 ImmutableMap<R, ImmutableMap<C, V>>实现；注：ImmutableTable对稀疏或密集的数据集都有优化。
+     *      ArrayTable：要求在构造时就指定行和列的大小，本质上由一个二维数组实现，以提升访问速度和密集Table的内存利用率。
+     *                  ArrayTable与其他Table的工作原理有点不同
+     */
+    private static void tableExample() {
+        System.out.println("----------------- tableExample ------------------");
+        Table<String, Integer, String> table = HashBasedTable.create();
+        table.put("IBM", 101, "Wade");
+        table.put("IBM", 102, "Kobe");
+        table.put("Microsoft", 103, "Chris");
+        table.put("Microsoft", 104, "Paul");
+        table.put("Google", 105, "James");
+        System.out.println("table = " + table);
+        System.out.println("table.get(\"IBM\", 102) = " + table.get("IBM", 102));
+    }
+
+    private static void classToInstanceMapExample() {
+        System.out.println("----------------- classToInstanceMapExample ------------------");
+        ClassToInstanceMap<String> classToInstanceMap1 = MutableClassToInstanceMap.create();
+        classToInstanceMap1.putInstance(String.class, "str1");
+        System.out.println("classToInstanceMap1 = " + classToInstanceMap1);
+    }
+
+    private static void rangeSetExample() {
+        System.out.println("----------------- rangeSetExample ------------------");
     }
 
     public static void main(String[] args) {
@@ -268,6 +362,9 @@ public class NewCollections {
         sortedMultisetExample();
         multimapExample();
         biMapExample();
+        tableExample();
+        classToInstanceMapExample();
+        rangeSetExample();
     }
 
 }
