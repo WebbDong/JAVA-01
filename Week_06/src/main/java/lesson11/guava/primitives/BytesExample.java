@@ -2,8 +2,10 @@ package lesson11.guava.primitives;
 
 import com.google.common.primitives.Bytes;
 import com.google.common.primitives.SignedBytes;
+import com.google.common.primitives.UnsignedBytes;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -39,6 +41,9 @@ public class BytesExample {
         System.out.println(bytes3.length);
     }
 
+    /**
+     * 有符号 byte 工具类
+     */
     private static void signedBytesExample() {
         System.out.println("----------------- signedBytesExample ------------------");
         // 检查传入的 long 型数字是否在 byte 类型的取值范围内，如果超出范围抛出 IllegalArgumentException 异常，
@@ -58,15 +63,29 @@ public class BytesExample {
         // 返回 Byte.MAX_VALUE
         SignedBytes.saturatedCast(128);
 
-        byte[] bytes1 = {(byte) 100, (byte) 20, (byte) 10, (byte) 5, (byte) 2};
+        byte[] bytes1 = {(byte) 127, (byte) 20, (byte) 10, (byte) 5, (byte) 2};
         // 降序排序
         SignedBytes.sortDescending(bytes1);
         System.out.println(Arrays.toString(bytes1));
+
+        byte[] bytes2 = {120, 30, 20, 10, 7};
+        Comparator<byte[]> comparator = SignedBytes.lexicographicalComparator();
+        System.out.println(comparator.compare(bytes1, bytes2));
+    }
+
+    /**
+     * 无符号 byte 工具类
+     */
+    private static void unsignedBytesExample() {
+        System.out.println("----------------- unsignedBytesExample ------------------");
+        System.out.println(UnsignedBytes.checkedCast(127));
+        System.out.println(UnsignedBytes.saturatedCast(-1));
     }
 
     public static void main(String[] args) {
         bytesExample();
         signedBytesExample();
+        unsignedBytesExample();
     }
 
 }
