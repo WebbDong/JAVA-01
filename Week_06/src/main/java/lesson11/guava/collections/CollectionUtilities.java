@@ -3,14 +3,19 @@ package lesson11.guava.collections;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.MapDifference;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Multimaps;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
 import com.google.common.collect.Queues;
 import com.google.common.collect.Range;
+import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
+import com.google.common.collect.Table;
+import com.google.common.collect.Tables;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -290,20 +295,55 @@ public class CollectionUtilities {
         Multiset<Integer> unionMultiset = Multisets.union(multiset1, multiset2);
         System.out.println("unionMultiset = " + unionMultiset);
 
+        Multiset<Integer> differenceMultiset = Multisets.difference(multiset2, multiset1);
+        System.out.println("differenceMultiset = " + differenceMultiset);
     }
 
     private static void multimapsExample() {
+        System.out.println("----------------- multimapsExample ------------------");
+        ListMultimap<String, Integer> listMultimap = Multimaps.newListMultimap(
+                new HashMap<>(), () -> new ArrayList<>());
+        listMultimap.put("k1", 10);
+        listMultimap.put("k1", 10);
+        listMultimap.put("k1", 10);
+        listMultimap.put("k2", 120);
+        listMultimap.put("k3", 30);
+        listMultimap.put("k4", 40);
+        listMultimap.put("k5", 50);
+        System.out.println("listMultimap = " + listMultimap);
+
+        SetMultimap<Integer, String> setMultimap = Multimaps.newSetMultimap(
+                new HashMap<>(), () -> new HashSet<>());
+        setMultimap.put(3, "Iverson");
+        setMultimap.put(3, "Wade");
+        setMultimap.put(3, "Paul");
+        setMultimap.put(1, "T-Mac");
+        setMultimap.put(8, "Kobe");
+        setMultimap.put(13, "Harden");
+        System.out.println("setMultimap = " + setMultimap);
     }
 
     private static void tablesExample() {
+        System.out.println("----------------- tablesExample ------------------");
+        Table<String, Integer, String> table1 = Tables.newCustomTable(
+                new HashMap<>(), () -> new HashMap<>());
+        table1.put("IBM", 101, "Wade");
+        table1.put("IBM", 102, "Kobe");
+        table1.put("Microsoft", 103, "Chris");
+        table1.put("Microsoft", 104, "Paul");
+        table1.put("Google", 105, "James");
+        System.out.println("table1 = " + table1);
+
+        Table<Integer, String, String> transposeTable = Tables.transpose(table1);
+        System.out.println("transposeTable = " + transposeTable);
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         collections2Example();
         listsExample();
         setsExample();
         mapsExample();
-//        queuesExample();
+        queuesExample();
         multisetsExample();
         multimapsExample();
         tablesExample();
