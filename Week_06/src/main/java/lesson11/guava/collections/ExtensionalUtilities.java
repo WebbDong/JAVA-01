@@ -1,10 +1,12 @@
 package lesson11.guava.collections;
 
 import com.google.common.collect.AbstractIterator;
+import com.google.common.collect.AbstractSequentialIterator;
 import com.google.common.collect.ForwardingList;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 import com.google.common.collect.PeekingIterator;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.Iterator;
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.List;
  *      PeekingIterator: Iterators提供一个 Iterators.peekingIterator(Iterator) 方法，来把 Iterator 包装为 PeekingIterator，
  *                       这是 Iterator 的子类，它能让你事先窥视 [peek()] 到下一次调用 next() 返回的元素。
  *      AbstractIterator: 自定义 Iterator
- *      AbstractSequentialIterator:
+ *      AbstractSequentialIterator
  *
  * @author Webb Dong
  * @date 2021-03-02 23:50
@@ -114,9 +116,29 @@ public class ExtensionalUtilities {
         }
     }
 
+    /**
+     * computeNext(T) 方法，它能接受前一个值作为参数。
+     * 必须额外传入一个初始值，或者传入 null 让迭代立即结束
+     * computeNext(T) 假定 null 值意味着迭代的末尾 AbstractSequentialIterator 不能用来实现可能返回 null 的迭代器
+     */
     private static void abstractSequentialIteratorExample() {
         System.out.println("----------------- abstractSequentialIteratorExample ------------------");
+        Iterator<Long> iterator = new AbstractSequentialIterator<Long>(1L) {
 
+            @Override
+            protected @Nullable Long computeNext(Long previous) {
+                long newVal = previous * 2;
+                if (newVal >= Integer.MAX_VALUE) {
+                    return null;
+                }
+                return newVal;
+            }
+
+        };
+
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
     }
 
     public static void main(String[] args) {
