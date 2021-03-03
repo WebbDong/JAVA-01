@@ -1,0 +1,25 @@
+DROP TABLE IF EXISTS `oms_order_item`;
+CREATE TABLE `oms_order_item` (
+    `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+    `order_id` BIGINT(20) DEFAULT NULL COMMENT '订单id',
+    `order_no` VARCHAR(64) DEFAULT NULL COMMENT '订单编号',
+    `product_id` BIGINT(20) DEFAULT NULL COMMENT '商品id',
+    `product_pic` VARCHAR(500) DEFAULT NULL COMMENT '商品图片id',
+    `product_name` VARCHAR(200) DEFAULT NULL COMMENT '商品名称',
+    `product_brand` VARCHAR(200) DEFAULT NULL COMMENT '商品品牌',
+    `product_no` VARCHAR(64) DEFAULT NULL COMMENT '商品货号',
+    `product_price` DECIMAL(10,2) DEFAULT NULL COMMENT '销售价格',
+    `product_quantity` INT(11) DEFAULT NULL COMMENT '购买数量',
+    `product_sku_id` BIGINT(20) DEFAULT NULL COMMENT '商品sku id',
+    `product_sku_code` VARCHAR(50) DEFAULT NULL COMMENT '商品sku条码',
+    `product_category_id` BIGINT(20) DEFAULT NULL COMMENT '商品分类id',
+    `promotion_name` VARCHAR(200) DEFAULT NULL COMMENT '商品促销名称',
+    `promotion_amount` DECIMAL(10,2) DEFAULT NULL COMMENT '商品促销分解金额',
+    `coupon_amount` DECIMAL(10,2) DEFAULT NULL COMMENT '优惠券优惠分解金额',
+    `integration_amount` DECIMAL(10,2) DEFAULT NULL COMMENT '积分优惠分解金额',
+    `real_amount` DECIMAL(10,2) DEFAULT NULL COMMENT '该商品经过优惠后的分解金额',
+    `gift_integration` INT(11) DEFAULT '0' COMMENT '赠送积分',
+    `gift_growth` INT(11) DEFAULT '0' COMMENT '赠送成长值',
+    `product_attr` VARCHAR(500) DEFAULT NULL COMMENT '商品销售属性:[{"key":"颜色","value":"颜色"},{"key":"容量","value":"4G"}]',
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单商品项';
