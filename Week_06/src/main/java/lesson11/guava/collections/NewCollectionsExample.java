@@ -48,7 +48,7 @@ import java.util.TreeMap;
  * @author Webb Dong
  * @date 2021-03-01 2:47 PM
  */
-public class NewCollections {
+public class NewCollectionsExample {
 
     private enum Week {
         MONDAY,

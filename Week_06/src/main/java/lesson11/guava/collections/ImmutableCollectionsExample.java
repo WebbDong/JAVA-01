@@ -30,7 +30,7 @@ import java.util.Set;
  * @author Webb Dong
  * @date 2021-03-01 12:49 PM
  */
-public class ImmutableCollections {
+public class ImmutableCollectionsExample {
 
     /**
      * ImmutableList

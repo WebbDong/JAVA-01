@@ -43,7 +43,7 @@ import java.util.concurrent.ArrayBlockingQueue;
  * @author Webb Dong
  * @date 2021-03-02 12:14 PM
  */
-public class CollectionUtilities {
+public class CollectionUtilitiesExample {
 
     private static void collections2Example() {
         System.out.println("----------------- collections2Example ------------------");

@@ -22,7 +22,7 @@ import java.util.List;
  * @author Webb Dong
  * @date 2021-03-02 23:50
  */
-public class ExtensionalUtilities {
+public class ExtensionalUtilitiesExample {
 
     /**
      * Forwarding 装饰器
