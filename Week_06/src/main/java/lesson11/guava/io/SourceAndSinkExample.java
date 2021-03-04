@@ -5,6 +5,7 @@ import com.google.common.base.Charsets;
 import com.google.common.base.Splitter;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
+import com.google.common.graph.Traverser;
 import com.google.common.hash.HashCode;
 import com.google.common.hash.Hashing;
 import com.google.common.io.CharSource;
@@ -84,6 +85,16 @@ public class SourceAndSinkExample {
     }
 
     private static void filesExample() {
+        System.out.println("----------------- filesExample ------------------");
+        // 获取文件扩展名
+        System.out.println(Files.getFileExtension("text2.txt"));
+        // 获取去除了扩展名的文件名
+        System.out.println(Files.getNameWithoutExtension("text2.txt"));
+
+        // 遍历指定目录的文件和文件夹
+        Traverser<File> traverser = Files.fileTraverser();
+        Iterable<File> iterable = traverser.breadthFirst(new File("/Users/dongwenbin/Develop"));
+        iterable.forEach(f -> System.out.println(f.getName()));
     }
 
     public static void main(String[] args) {
