@@ -3,7 +3,6 @@ package lesson11.guava.ranges;
 import com.google.common.collect.BoundType;
 import com.google.common.collect.ContiguousSet;
 import com.google.common.collect.DiscreteDomain;
-import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Range;
 import com.google.common.primitives.Ints;
 
