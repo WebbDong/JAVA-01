@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS `oms_order_item`;
-CREATE TABLE `oms_order_item` (
+DROP TABLE IF EXISTS `t_order_item`;
+CREATE TABLE `t_order_item` (
     `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
     `order_id` BIGINT(20) DEFAULT NULL COMMENT '订单id',
     `order_no` VARCHAR(64) DEFAULT NULL COMMENT '订单编号',
