@@ -1,4 +1,4 @@
-package util;
+package lesson13.util;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -98,23 +98,19 @@ public enum HikaricpUtils {
 
     /**
      * 批量处理，手动控制事务
-     * @param sql sql 语句
      * @param stmt PreparedStatement
      * @param paramCountPreBatch 每个批次有多少个参数
      * @param paramList 参数列表
      * @param commitPreCount 达到多少数据后提交一批数据
      */
-    public List<Integer> executeBatchByManualTransaction(String sql,
-                                                         PreparedStatement stmt,
-                                                         int paramCountPreBatch,
-                                                         List<Object> paramList,
-                                                         int commitPreCount) throws SQLException {
+    public void executeBatchByManualTransaction(PreparedStatement stmt,
+                                                int paramCountPreBatch,
+                                                List<Object> paramList,
+                                                int commitPreCount) throws SQLException {
         if (paramList == null) {
-            return null;
+            return;
         }
 
-        List<Integer> retList = new ArrayList<>(paramList.size());
-        int[] retInts;
         for (int i = 0, size = paramList.size(); i < size;) {
             for (int j = 0; i < size && j < paramCountPreBatch; j++) {
                 stmt.setObject(j + 1, paramList.get(i++));
@@ -122,13 +118,10 @@ public enum HikaricpUtils {
             stmt.addBatch();
 
             if (i % commitPreCount == 0) {
-                retInts = stmt.executeBatch();
-                Arrays.stream(retInts).forEach(integer -> retList.add(integer));
+                stmt.executeBatch();
             }
         }
-        retInts = stmt.executeBatch();
-        Arrays.stream(retInts).forEach(i -> retList.add(i));
-        return retList;
+        stmt.executeBatch();
     }
 
     public int executeBatchInsertByValues(String sql, int row, int column,
