@@ -1,8 +1,8 @@
 package lesson11.guava.io;
 
 import com.google.common.io.ByteStreams;
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 /**
@@ -22,9 +22,9 @@ public class ByteStreamsExample {
 
         try (InputStream in = ByteStreamsExample.class
                 .getClassLoader().getResourceAsStream("text.txt")) {
-            ByteOutputStream out = new ByteOutputStream();
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
             ByteStreams.copy(in, out);
-            System.out.println(new String(out.getBytes()));
+            System.out.println(new String(out.toByteArray()));
         }
         System.out.println();
 
