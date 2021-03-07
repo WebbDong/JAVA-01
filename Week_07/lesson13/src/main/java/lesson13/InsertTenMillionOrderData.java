@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 按自己设计的表结构，插入1000万订单模拟数据，测试不同方式的插入效率。
+ *
  * @author Webb Dong
  * @date 2021-03-07 10:42 AM
  */
