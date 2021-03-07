@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    dynamic:
+      primary: db1
+      datasource:
+        db1:
+          url: jdbc:mysql://localhost:3306/test?rewriteBatchedStatements=true&max_allowed_packet=10M
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          username: root
+          password: 123456
+        db2:
+          url: jdbc:mysql://192.168.238.150:33006/test?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&useSSL=false
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          username: root
+          password: 123456
+mybatis:
+  type-aliases-package: com.webbdong.dynamicdatasource.entity
