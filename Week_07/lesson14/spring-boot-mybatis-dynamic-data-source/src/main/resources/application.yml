@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/test?rewriteBatchedStatements=true&max_allowed_packet=10M
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+    slave:
+      names: mysql2
+      mysql2:
+        url: jdbc:mysql://192.168.238.150:33006/test?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&useSSL=false
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: 123456
+mybatis:
+  type-aliases-package: com.webbdong.dynamicdatasource.entity
