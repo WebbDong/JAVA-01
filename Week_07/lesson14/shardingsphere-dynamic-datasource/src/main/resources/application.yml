@@ -1,0 +1,35 @@
+spring:
+  shardingsphere:
+    enabled: true
+    datasource:
+      names: db1,db2
+      db1:
+        jdbc-url: jdbc:mysql://localhost:3306/test?rewriteBatchedStatements=true&max_allowed_packet=10M&allowPublicKeyRetrieval=true
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: 123456
+      db2:
+        jdbc-url: jdbc:mysql://192.168.238.150:33006/test?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: 123456
+    sharding:
+      default-database-strategy:
+        hint:
+          algorithm-class-name: com.webbdong.shardingsphere.dynamicdatasource.algorithm.DatasourceRoutingAlgorithm
+      tables:
+        student:
+          actualDataNodes: db2.student
+        t_user:
+          actualDataNodes: db1.t_user
+      default-table-strategy:
+        none:
+          any: ""
+    props:
+      sql.show: true
+mybatis:
+  type-aliases-package: com.webbdong.shardingsphere.dynamicdatasource.entity
+
+
