@@ -18,7 +18,7 @@ public interface UserDao {
     List<User> selectAll();
 
     @Insert("INSERT INTO `t_user`(`username`, `pwd`, `gender`, `birthday`, `state`, `created_time`, `updated_time`) " +
-            "VALUES(#{username}, #{pwd}, #{gender}, #{birthday}, #{state}, #{created_time}, #{updated_time})")
+            "VALUES(#{username}, #{pwd}, #{gender}, #{birthday}, #{state}, #{createdTime}, #{updatedTime})")
     int insert(User user);
 
 }

@@ -2,23 +2,24 @@ spring:
   shardingsphere:
     enabled: true
     datasource:
-      names: ds_master,ds_slave0,ds_slave1
+      # 数据源名字不可以带下划线
+      names: master,slave0,slave1
       # 主库
-      ds_master:
+      master:
         jdbc-url: jdbc:mysql://localhost:3306/db?rewriteBatchedStatements=true&max_allowed_packet=10M&allowPublicKeyRetrieval=true
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
         username: root
         password: 123456
       # 从库 1
-      ds_slave0:
+      slave0:
         jdbc-url: jdbc:mysql://192.168.238.150:33006/db?rewriteBatchedStatements=true&max_allowed_packet=10M&allowPublicKeyRetrieval=true
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
         username: root
         password: 123456
       # 从库 2
-      ds_slave1:
+      slave1:
         jdbc-url: jdbc:mysql://192.168.238.151:33006/db?rewriteBatchedStatements=true&max_allowed_packet=10M&allowPublicKeyRetrieval=true
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
@@ -27,8 +28,8 @@ spring:
     masterslave:
       load-balance-algorithm-type: round_robin
       name: ms
-      master-data-source-name: ds_master
-      slave-data-source-names: ds_slave0,ds_slave1
+      master-data-source-name: master
+      slave-data-source-names: slave0,slave1
     props:
       sql.show: true
 mybatis:
