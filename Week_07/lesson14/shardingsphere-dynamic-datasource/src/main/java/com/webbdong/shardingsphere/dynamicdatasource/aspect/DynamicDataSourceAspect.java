@@ -29,7 +29,7 @@ public class DynamicDataSourceAspect {
     public void changeDataSource(DS ds) {
         String dbName = ds.value();
         HintManager.getInstance().setDatabaseShardingValue(dbName);
-        log.info("使用数据源 {}", ds.value());
+        log.info("使用数据源 {}", dbName);
     }
 
     @After("@annotation(ds)")
