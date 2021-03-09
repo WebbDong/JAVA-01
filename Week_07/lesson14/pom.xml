@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>spring-boot-mybatis-dynamic-data-source</module>
+        <module>abstract-routing-dynamic-data-source</module>
         <module>mybatis-plus-dynamic-datasource-spring-boot</module>
         <module>shardingsphere-dynamic-datasource</module>
         <module>shardingsphere-read-write-split</module>
