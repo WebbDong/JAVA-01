@@ -5,6 +5,7 @@
 
 - lesson14: 第七周第十四课
   - abstract-routing-dynamic-data-source: 基于 AbstractRoutingDataSource 实现动态数据源
+  - abstract-routing-read-write-split: 基于 AbstractRoutingDataSource 实现读写分离
   - mybatis-plus-dynamic-datasource-spring-boot: 基于 MyBatis Plus 的 dynamic-datasource-spring-boot-starter 实现动态数据源
   - shardingsphere-dynamic-datasource: 基于 ShardingSphere 实现动态数据源
   - shardingsphere-proxy-read-write-split: 基于 ShardingSphere Proxy 实现读写分离
