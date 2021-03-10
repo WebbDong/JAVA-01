@@ -18,7 +18,7 @@ public class DynamicDataSourceContextHolder {
     /**
      * 存放数据源id
      */
-    public static List<String> dataSourceIds = new ArrayList<>();
+    private static List<String> dataSourceIds = new ArrayList<>();
 
     /**
      * 设置数据源
@@ -50,6 +50,10 @@ public class DynamicDataSourceContextHolder {
      */
     public static boolean isContainsDataSource(String dataSourceId) {
         return dataSourceIds.contains(dataSourceId);
+    }
+
+    public static void addDataSourceId(String id) {
+        dataSourceIds.add(id);
     }
 
 }

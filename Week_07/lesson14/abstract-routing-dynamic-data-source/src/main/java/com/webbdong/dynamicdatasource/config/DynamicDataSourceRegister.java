@@ -45,11 +45,11 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
         Map<Object, Object> targetDataSources = new HashMap<>(6);
         // 添加默认数据源
         targetDataSources.put("dataSource", this.defaultDataSource);
-        DynamicDataSourceContextHolder.dataSourceIds.add("dataSource");
+        DynamicDataSourceContextHolder.addDataSourceId("dataSource");
         // 添加其他数据源
         targetDataSources.putAll(slaveDataSources);
         for (String key : slaveDataSources.keySet()) {
-            DynamicDataSourceContextHolder.dataSourceIds.add(key);
+            DynamicDataSourceContextHolder.addDataSourceId(key);
         }
 
         // 创建DynamicDataSource
