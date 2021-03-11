@@ -16,6 +16,7 @@
         <module>abstract-routing-dynamic-data-source</module>
         <module>abstract-routing-read-write-split</module>
         <module>mybatis-plus-dynamic-datasource-spring-boot</module>
+        <module>mybatis-plus-dynamic-datasource-read-write-split</module>
         <module>shardingsphere-dynamic-datasource</module>
         <module>shardingsphere-read-write-split</module>
         <module>shardingsphere-proxy-read-write-split</module>
