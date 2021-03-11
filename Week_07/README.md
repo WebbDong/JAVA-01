@@ -6,6 +6,7 @@
 - lesson14: 第七周第十四课
   - abstract-routing-dynamic-data-source: 基于 AbstractRoutingDataSource 实现动态数据源
   - abstract-routing-read-write-split: 基于 AbstractRoutingDataSource 实现读写分离
+  - mybatis-plus-dynamic-datasource-read-write-split: 基于 MyBatis Plus 的 dynamic-datasource-spring-boot-starter 实现读写分离
   - mybatis-plus-dynamic-datasource-spring-boot: 基于 MyBatis Plus 的 dynamic-datasource-spring-boot-starter 实现动态数据源
   - shardingsphere-dynamic-datasource: 基于 ShardingSphere 实现动态数据源
   - shardingsphere-proxy-read-write-split: 基于 ShardingSphere Proxy 实现读写分离
@@ -65,5 +66,3 @@
 >> 2.1 使用批量插入方式 + 手动控制事务并且分批提交事务 + 多线程      
 >> 插入策略1，每 50000 条一个批次，耗时: 177080 ms          
 >> 插入策略2，每 100000 条一个批次，耗时: 179366 ms      
-
-## 第十四课
