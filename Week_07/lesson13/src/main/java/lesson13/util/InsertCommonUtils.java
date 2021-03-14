@@ -13,7 +13,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class InsertCommonUtils {
 
-    public static final String INSERT_INTO_SQL = "INSERT INTO `test`.`t_order`(" +
+    public static final String INSERT_INTO_SQL = "INSERT INTO `order`.`t_order`(" +
             "`user_id`, `coupon_id`, `order_no`, `total_amount`, `pay_amount`," +
             "`freight_amount`, `promotion_amount`, `integration_amount`," +
             "`coupon_amount`, `pay_type`, `source_type`, `status`," +
@@ -27,13 +27,15 @@ public class InsertCommonUtils {
     public static final String INSERT_INTO_VALUES_SQL = INSERT_INTO_SQL +
             " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 
+    private static final SnowFlake snowFlake = new SnowFlake(3, 6);
+
     public static void fillOrderParamList(List<Object> paramList, int i) {
         // 用户id
-        paramList.add(170916032679263335L);
+        paramList.add(snowFlake.nextId());
         // 优惠券id
-        paramList.add(170916032679263341L);
+        paramList.add(snowFlake.nextId());
         // 订单编号
-        paramList.add("170916032679263329");
+        paramList.add(String.valueOf(snowFlake.nextId()));
         // 订单总金额
         paramList.add(20.0 + i);
         // 应付金额
@@ -97,11 +99,11 @@ public class InsertCommonUtils {
     @SneakyThrows
     public static void setStmt(PreparedStatement stmt, int j) {
         // 用户id
-        stmt.setObject(1, 170916032679263335L);
+        stmt.setObject(1, snowFlake.nextId());
         // 优惠券id
-        stmt.setObject(2, 170916032679263341L);
+        stmt.setObject(2, snowFlake.nextId());
         // 订单编号
-        stmt.setObject(3, "170916032679263329");
+        stmt.setObject(3, String.valueOf(snowFlake.nextId()));
         // 订单总金额
         stmt.setObject(4, 20.0 + j);
         // 应付金额
