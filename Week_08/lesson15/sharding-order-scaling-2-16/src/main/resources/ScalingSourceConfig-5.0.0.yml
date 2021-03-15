@@ -1,0 +1,35 @@
+dataSources:
+  order_ds_0:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    props:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      jdbcUrl: jdbc:mysql://localhost:33010/order?rewriteBatchedStatements=true&max_allowed_packet=10M&allowPublicKeyRetrieval=true
+      username: root
+      password: 123456
+rules:
+- !SHARDING
+  tables:
+    t_order:
+      actualDataNodes: order_ds_0.t_order
+      databaseStrategy:
+        standard:
+          shardingColumn: user_id
+          shardingAlgorithmName: database_inline
+      tableStrategy:
+        standard:
+          shardingColumn: id
+          shardingAlgorithmName: t_order_inline
+  shardingAlgorithms:
+    database_inline:
+      type: INLINE
+      props:
+        algorithm-expression: order_ds_0
+    t_order_inline:
+      type: INLINE
+      props:
+        algorithm-expression: t_order
+
+
+
+
+

@@ -1,0 +1,22 @@
+# hardingsphere-4.1.0-sharding-scaling 源配置
+# 将一个 1000 万条订单数据的单库单表
+order_ds_0: !!org.apache.shardingsphere.orchestration.core.configuration.YamlDataSourceConfiguration
+  dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+  properties:
+    jdbcUrl: jdbc:mysql://localhost:33010/order?rewriteBatchedStatements=true&max_allowed_packet=10M&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+    connectionTimeout: 30000
+    idleTimeout: 60000
+    maxLifetime: 1800000
+    maxPoolSize: 100
+    minPoolSize: 10
+    maintenanceIntervalMilliseconds: 30000
+    readOnly: false
+tables:
+  t_order:
+    actualDataNodes: order_ds_0.t_order
+    keyGenerator:
+      column: id
+      type: SNOWFLAKE
