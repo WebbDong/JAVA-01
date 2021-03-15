@@ -241,7 +241,7 @@ public class InsertOneMillionOrderData {
             System.out.println("耗时: " + (System.currentTimeMillis() - start));
             executor.shutdown();
         });
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < THREAD_BATCH_COUNT; i++) {
             final int s = i;
             executor.execute(() -> {
                 try (Connection conn = HikaricpUtils.INSTANCE.getConnection()) {
