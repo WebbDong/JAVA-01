@@ -1,0 +1,43 @@
+spring:
+  shardingsphere:
+    datasource:
+      names: orderds0,orderds1
+    # 订单分库 1
+      orderds0:
+        jdbc-url: jdbc:mysql://localhost:33008/order?rewriteBatchedStatements=true&max_allowed_packet=10M&allowPublicKeyRetrieval=true
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: 123456
+      # 订单分库 2
+      orderds1:
+        jdbc-url: jdbc:mysql://localhost:33009/order?rewriteBatchedStatements=true&max_allowed_packet=10M&allowPublicKeyRetrieval=true
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: 123456
+    sharding:
+      # 分库规则
+      default-database-strategy:
+        inline:
+          # 数据库名按照 user_id 字段拆分
+          sharding-column: user_id
+          algorithm-expression: orderds$->{user_id % 2}
+      binding-tables: t_order
+      tables:
+        t_order:
+          # 库名与表名规则，库名 orderds0 - orderds1，表名 t_order_0 - t_order_15
+          actual-data-nodes: orderds$->{0..1}.t_order_$->{0..15}
+          table-strategy:
+            inline:
+              # 分表规则
+              sharding-column: id
+              algorithm-expression: t_order_$->{id % 16}
+          key-generate-strategy:
+            column: id
+            key-generator-name: snowflake
+mybatis-plus:
+  type-aliases-package: com.webbdong.sharding.entity
+  configuration:
+    # 设置驼峰命名规则
+    map-underscore-to-camel-case: true
