@@ -35,13 +35,13 @@ public class InsertTenMillionOrderData {
                 new ThreadPoolExecutor.AbortPolicy());
 
         final int THREAD_BATCH_RECORD_COUNT = RECORD_COUNT / THREAD_BATCH_COUNT;
-        final int BATCH_COUNT = 100000;
+        final int BATCH_COUNT = 50000;
         long start = System.currentTimeMillis();
         CyclicBarrier cyclicBarrier = new CyclicBarrier(THREAD_BATCH_COUNT, () -> {
             System.out.println("耗时: " + (System.currentTimeMillis() - start));
             executor.shutdown();
         });
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < THREAD_BATCH_COUNT; i++) {
             final int s = i;
             executor.execute(() -> {
                 try (Connection conn = HikaricpUtils.INSTANCE.getConnection()) {
