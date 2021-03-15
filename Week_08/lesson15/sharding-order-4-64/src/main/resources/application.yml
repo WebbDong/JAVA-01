@@ -1,0 +1,57 @@
+spring:
+  shardingsphere:
+    datasource:
+      names: orderds0,orderds1,orderds2,orderds3
+    # 订单分库 1
+      orderds0:
+        jdbc-url: jdbc:mysql://localhost:33011/order?rewriteBatchedStatements=true&max_allowed_packet=10M&allowPublicKeyRetrieval=true
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: 123456
+      # 订单分库 2
+      orderds1:
+        jdbc-url: jdbc:mysql://localhost:33012/order?rewriteBatchedStatements=true&max_allowed_packet=10M&allowPublicKeyRetrieval=true
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: 123456
+      # 订单分库 3
+      orderds2:
+        jdbc-url: jdbc:mysql://localhost:33013/order?rewriteBatchedStatements=true&max_allowed_packet=10M&allowPublicKeyRetrieval=true
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: 123456
+      # 订单分库 4
+      orderds3:
+        jdbc-url: jdbc:mysql://localhost:33014/order?rewriteBatchedStatements=true&max_allowed_packet=10M&allowPublicKeyRetrieval=true
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: 123456
+    sharding:
+      # 分库规则
+      default-database-strategy:
+        inline:
+          # 数据库名按照 user_id 字段拆分
+          sharding-column: user_id
+          algorithm-expression: orderds$->{user_id % 4}
+      binding-tables: t_order
+      tables:
+        t_order:
+          # 库名与表名规则，库名 orderds0 - orderds3，表名 t_order_0 - t_order_63
+          actual-data-nodes: orderds$->{0..3}.t_order_$->{0..63}
+          table-strategy:
+            inline:
+              # 分表规则
+              sharding-column: id
+              algorithm-expression: t_order_$->{id % 64}
+          key-generate-strategy:
+            column: id
+            key-generator-name: snowflake
+mybatis-plus:
+  type-aliases-package: com.webbdong.sharding.entity
+  configuration:
+    # 设置驼峰命名规则
+    map-underscore-to-camel-case: true
