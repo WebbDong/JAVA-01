@@ -28,7 +28,8 @@ public class ScalingUtils {
     private ScalingUtils() {}
 
     @SneakyThrows
-    public static void startScaling(String scalingServerUrl, InputStream configIn, DataSourceParameter target) {
+    public static void sendScalingJob(String scalingServerUrl, InputStream configIn,
+                                      DataSourceParameter target, int concurrencyCount) {
         StringBuilder sourceSB = new StringBuilder();
         StringBuilder sourceRulesSB = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(configIn))) {
@@ -56,7 +57,7 @@ public class ScalingUtils {
         }
 
         startScaling(scalingServerUrl,
-                createScalingStartRequest(sourceSB.toString(), sourceRulesSB.toString(), target, 16));
+                createScalingStartRequest(sourceSB.toString(), sourceRulesSB.toString(), target, concurrencyCount));
     }
 
     @SneakyThrows
@@ -65,8 +66,11 @@ public class ScalingUtils {
         String requestJson = new GsonBuilder().disableHtmlEscaping().create().toJson(scalingStartRequest);
         System.out.println(requestJson);
         OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(500, TimeUnit.MILLISECONDS)
-                .readTimeout(1, TimeUnit.SECONDS)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .callTimeout(30, TimeUnit.SECONDS)
+                .pingInterval(5, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
                 .build();
         Request request = new Request.Builder()
                 .url(scalingServerUrl)
