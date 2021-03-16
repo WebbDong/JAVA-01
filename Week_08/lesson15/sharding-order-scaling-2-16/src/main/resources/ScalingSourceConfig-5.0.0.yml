@@ -1,5 +1,5 @@
 dataSources:
-  order_ds_0:
+  order_ds:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     props:
       driverClassName: com.mysql.cj.jdbc.Driver
@@ -10,7 +10,7 @@ rules:
 - !SHARDING
   tables:
     t_order:
-      actualDataNodes: order_ds_0.t_order
+      actualDataNodes: order_ds.t_order
       databaseStrategy:
         standard:
           shardingColumn: user_id
@@ -23,7 +23,7 @@ rules:
     database_inline:
       type: INLINE
       props:
-        algorithm-expression: order_ds_0
+        algorithm-expression: order_ds
     t_order_inline:
       type: INLINE
       props:

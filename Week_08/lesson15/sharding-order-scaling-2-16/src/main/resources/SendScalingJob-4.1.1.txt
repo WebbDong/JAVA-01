@@ -1,0 +1,17 @@
+curl -X POST --url http://localhost:8888/shardingscaling/job/start \
+--header 'content-type: application/json' \
+--data '{
+   "ruleConfiguration": {
+      "sourceDatasource": "order_ds_0: !!org.apache.shardingsphere.orchestration.core.configuration.YamlDataSourceConfiguration\n  dataSourceClassName: com.zaxxer.hikari.HikariDataSource\n  properties:\n    jdbcUrl: jdbc:mysql://localhost:33010/order?rewriteBatchedStatements=true&max_allowed_packet=10M&allowPublicKeyRetrieval=true&serverTimezone=UTC\n    driverClassName: com.mysql.cj.jdbc.Driver\n    username: root\n    password: 123456\n    connectionTimeout: 30000\n    idleTimeout: 60000\n    maxLifetime: 1800000\n    maxPoolSize: 100\n    minPoolSize: 10\n    maintenanceIntervalMilliseconds: 30000\n    readOnly: false\n",
+      "sourceRule": "tables:\n  t_order:\n    actualDataNodes: order_ds_0.t_order\n    keyGenerator:\n      column: id\n      type: SNOWFLAKE",
+      "destinationDataSources": {
+         "name": "order_sharding_2_16_db",
+         "password": "123456",
+         "url": "jdbc:mysql://localhost:3307/order_sharding_2_16_db?serverTimezone=UTC&useSSL=false",
+         "username": "root"
+      }
+   },
+   "jobConfiguration": {
+      "concurrency": 8
+   }
+}'

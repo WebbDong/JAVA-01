@@ -1,5 +1,6 @@
 # hardingsphere-4.1.0-sharding-scaling 源配置
-# 将一个 1000 万条订单数据的单库单表
+# 将一个1000万条订单数据的单库单表，迁移到2个订单分库，每个库16张订单分表中
+# 目标库使用 proxy
 order_ds_0: !!org.apache.shardingsphere.orchestration.core.configuration.YamlDataSourceConfiguration
   dataSourceClassName: com.zaxxer.hikari.HikariDataSource
   properties:
