@@ -1,0 +1,17 @@
+curl -X POST --url http://localhost:8888/shardingscaling/job/start \
+--header 'content-type: application/json' \
+--data '{
+   "ruleConfiguration": {
+      "sourceDatasource": "",
+      "sourceRule": "",
+      "destinationDataSources": {
+         "name": "order_sharding_2_16_db",
+         "password": "123456",
+         "url": "jdbc:mysql://localhost:3307/order_sharding_2_16_db?serverTimezone=UTC&useSSL=false",
+         "username": "root"
+      }
+   },
+   "jobConfiguration": {
+      "concurrency": 8
+   }
+}'

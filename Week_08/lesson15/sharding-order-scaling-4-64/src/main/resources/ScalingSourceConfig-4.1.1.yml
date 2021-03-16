@@ -1,0 +1,69 @@
+# hardingsphere-4.1.0-sharding-scaling 源配置
+# 将一个2个订单分库，每个库16张订单分表，迁移到4个订单分库，每个库64张订单分表中
+
+# 源库和目标库使用 proxy
+order_ds_0: !!org.apache.shardingsphere.orchestration.core.configuration.YamlDataSourceConfiguration
+  dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+  properties:
+    jdbcUrl: jdbc:mysql://localhost:3307/order_sharding_2_16_db?serverTimezone=UTC&useSSL=false
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+    connectionTimeout: 30000
+    idleTimeout: 60000
+    maxLifetime: 1800000
+    maxPoolSize: 100
+    minPoolSize: 10
+    maintenanceIntervalMilliseconds: 30000
+    readOnly: false
+tables:
+  t_order:
+    actualDataNodes: order_ds_0.t_order
+    keyGenerator:
+      column: id
+      type: SNOWFLAKE
+
+# 目标库使用 proxy
+#order_ds_0: !!org.apache.shardingsphere.orchestration.core.configuration.YamlDataSourceConfiguration
+#  dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+#  properties:
+#    jdbcUrl: jdbc:mysql://localhost:33008/order?rewriteBatchedStatements=true&max_allowed_packet=10M&allowPublicKeyRetrieval=true&serverTimezone=UTC
+#    driverClassName: com.mysql.cj.jdbc.Driver
+#    username: root
+#    password: 123456
+#    connectionTimeout: 30000
+#    idleTimeout: 60000
+#    maxLifetime: 1800000
+#    maxPoolSize: 100
+#    minPoolSize: 10
+#    maintenanceIntervalMilliseconds: 30000
+#    readOnly: false
+#order_ds_1: !!org.apache.shardingsphere.orchestration.core.configuration.YamlDataSourceConfiguration
+#  dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+#  properties:
+#    jdbcUrl: jdbc:mysql://localhost:33009/order?rewriteBatchedStatements=true&max_allowed_packet=10M&allowPublicKeyRetrieval=true&serverTimezone=UTC
+#    driverClassName: com.mysql.cj.jdbc.Driver
+#    username: root
+#    password: 123456
+#    connectionTimeout: 30000
+#    idleTimeout: 60000
+#    maxLifetime: 1800000
+#    maxPoolSize: 100
+#    minPoolSize: 10
+#    maintenanceIntervalMilliseconds: 30000
+#    readOnly: false
+#tables:
+#  t_order:
+#    actualDataNodes: order_ds_${0..1}.t_order_${0..15}
+#    keyGenerator:
+#      column: id
+#      type: SNOWFLAKE
+#  logicTable: t_order
+#  databaseStrategy:
+#    inline:
+#      shardingColumn: user_id
+#      algorithmExpression: order_ds_${user_id % 2}
+#  tableStrategy:
+#    inline:
+#      shardingColumn: id
+#      algorithmExpression: t_order_${id % 16}
